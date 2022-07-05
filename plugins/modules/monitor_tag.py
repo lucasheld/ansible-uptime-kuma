@@ -1,6 +1,7 @@
 #!/usr/bin/python
 from __future__ import (absolute_import, division, print_function)
 from ansible.module_utils.basic import AnsibleModule
+from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common import common_module_args
 
 from uptimekumaapi import UptimeKumaApi
 
@@ -16,13 +17,21 @@ DOCUMENTATION = r'''
 
 EXAMPLES = r'''
 - name: Add monitor tag
-  uptime_kuma_monitor_tag:
+  lucasheld.uptime_kuma.monitor_tag:
     monitor_name: Peer 1
     tag_name: Tag 1
-    value: Tag Value
+    value: Tag value
     state: present
+
+# - name: Edit monitor tag
+#   lucasheld.uptime_kuma.monitor_tag:
+#     monitor_name: Peer 1
+#     tag_name: Tag 1
+#     value: New value
+#     state: present
+
 - name: Remove monitor tag
-  uptime_kuma_monitor_tag:
+  lucasheld.uptime_kuma.monitor_tag:
     monitor_name: Peer 1
     tag_name: Tag 1
     value: Tag Value
@@ -35,7 +44,7 @@ RETURN = r'''
 
 def get_monitor_by_name(api, name):
     monitors = api.get_monitors()
-    for monitor_data in monitors.values():
+    for monitor_data in monitors:
         if monitor_data["name"] == name:
             return monitor_data
 
@@ -56,19 +65,6 @@ def get_monitor_tag(monitor, tag, value):
 
 def main():
     module_args = {
-        "api_url": {
-            "type": str,
-            "required": True
-        },
-        "api_username": {
-            "type": str,
-            "required": True
-        },
-        "api_password": {
-            "type": str,
-            "required": True,
-            "no_log": True
-        },
         "monitor_name": {
             "type": str,
             "required": True
@@ -89,6 +85,8 @@ def main():
             ]
         }
     }
+    module_args.update(common_module_args)
+
     module = AnsibleModule(module_args)
     params = module.params
 
@@ -109,7 +107,7 @@ def main():
     monitor_tag = get_monitor_tag(monitor, tag, value)
 
     changed = False
-    failed_msg = False
+    failed_msg = None
     result = {}
     if state == "present":
         if not monitor_tag:
@@ -117,6 +115,12 @@ def main():
             if not r["ok"]:
                 failed_msg = r["msg"]
             changed = True
+        # else:
+        #     if monitor_tag["value"] != params["value"]:
+        #         result = api.edit_monitor_tag(tag_id, monitor_id, value)
+        #         if not r["ok"]:
+        #             failed_msg = r["msg"]
+        #         changed = True
     elif state == "absent":
         if monitor_tag:
             r = api.delete_monitor_tag(tag_id, monitor_id, value)

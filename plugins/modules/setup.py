@@ -1,6 +1,7 @@
 #!/usr/bin/python
 from __future__ import (absolute_import, division, print_function)
 from ansible.module_utils.basic import AnsibleModule
+from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common import common_module_args
 
 from uptimekumaapi import UptimeKumaApi
 
@@ -30,21 +31,9 @@ def get_notification_by_name(api, name):
 
 
 def main():
-    module_args = {
-        "api_url": {
-            "type": str,
-            "required": True
-        },
-        "api_username": {
-            "type": str,
-            "required": True
-        },
-        "api_password": {
-            "type": str,
-            "required": True,
-            "no_log": True
-        }
-    }
+    module_args = {}
+    module_args.update(common_module_args)
+
     module = AnsibleModule(module_args)
     params = module.params
 
@@ -55,11 +44,13 @@ def main():
     api = UptimeKumaApi(api_url)
 
     changed = False
-    failed_msg = False
+    failed_msg = None
     result = {}
     need_setup = api.need_setup()
     if need_setup:
-        api.setup(api_username, api_password)
+        r = api.setup(api_username, api_password)
+        if not r["ok"]:
+            failed_msg = r["msg"]
         changed = True
 
     r = api.login(api_username, api_password)
