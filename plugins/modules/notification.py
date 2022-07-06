@@ -20,9 +20,9 @@ EXAMPLES = r'''
     api_password: secret
     name: Notification 1
     type: telegram
-    isDefault: false
-    telegramBotToken: 1111
-    telegramChatID: 2222
+    default: false
+    telegram_bot_token: 1111
+    telegram_chat_id: 2222
     state: present
 
 - name: Edit notification
@@ -32,9 +32,9 @@ EXAMPLES = r'''
     api_password: secret
     name: Notification 1
     type: telegram
-    isDefault: false
-    telegramBotToken: 6666
-    telegramChatID: 7777
+    default: false
+    telegram_bot_token: 6666
+    telegram_chat_id: 7777
     state: present
 
 - name: Remove notification
