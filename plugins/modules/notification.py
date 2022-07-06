@@ -4,7 +4,7 @@ from ansible.module_utils.basic import AnsibleModule
 from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common import object_changed, clear_params, common_module_args
 
 import os, re
-from uptimekumaapi import UptimeKumaApi, convert_from_socket, convert_to_socket, params_map_notification, notification_provider_options, NotificationType
+from uptimekumaapi import UptimeKumaApi, convert_from_socket, convert_to_socket, params_map_notification, notification_provider_options, NotificationType, get_notification_by_name
 
 __metaclass__ = type
 
@@ -18,6 +18,9 @@ DOCUMENTATION = r'''
 EXAMPLES = r'''
 - name: Add notification
   lucasheld.uptime_kuma.notification:
+    api_url: http://192.168.1.10:3001
+    api_username: admin
+    api_password: secret
     name: Notification 1
     type: telegram
     isDefault: false
@@ -27,6 +30,9 @@ EXAMPLES = r'''
 
 - name: Edit notification
   lucasheld.uptime_kuma.notification:
+    api_url: http://192.168.1.10:3001
+    api_username: admin
+    api_password: secret
     name: Notification 1
     type: telegram
     isDefault: false
@@ -36,19 +42,15 @@ EXAMPLES = r'''
 
 - name: Remove notification
   lucasheld.uptime_kuma.notification:
+    api_url: http://192.168.1.10:3001
+    api_username: admin
+    api_password: secret
     name: Notification 1
     state: absent
 '''
 
 RETURN = r'''
 '''
-
-
-def get_notification_by_name(api, name):
-    notifications = api.get_notifications()
-    for notification in notifications:
-        if notification["name"] == name:
-            return notification
 
 
 def build_notification_provider_map():
@@ -93,27 +95,12 @@ def main():
     provider_args = convert_from_socket(notification_provider_map, provider_args)
     
     
-    module_args = {
-        "name": {
-            "type": str,
-            "required": True
-        },
-        "type_": {
-            "type": str,
-            "choices": notification_prover_types
-        },
-        "default": {
-            "type": bool,
-            "default": False
-        },
-        "state": {
-            "default": "present",
-            "choices": [
-                "present",
-                "absent"
-            ]
-        }
-    }
+    module_args = dict(
+        name=dict(type="str", required=True),
+        type=dict(type="str", choices=notification_prover_types),
+        default=dict(type="bool", default=False),
+        state=dict(type="str", default="present", choices=["present", "absent"])
+    )
     module_args.update(provider_args)
     module_args.update(common_module_args)
 
@@ -122,6 +109,10 @@ def main():
 
     api = UptimeKumaApi(params["api_url"])
     api.login(params["api_username"], params["api_password"])
+
+    # type -> type_
+    params["type_"] = params["type"]
+    del params["type"]
 
     name = params["name"]
     state = params["state"]

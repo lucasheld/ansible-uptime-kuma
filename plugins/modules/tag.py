@@ -8,28 +8,24 @@ from uptimekumaapi import UptimeKumaApi
 __metaclass__ = type
 
 
-# TODO:
-# tag edit
-
-
 DOCUMENTATION = r'''
 '''
 
 EXAMPLES = r'''
 - name: Add tag
   uptime_kuma_tag:
+    api_url: http://192.168.1.10:3001
+    api_username: admin
+    api_password: secret
     name: Tag 1
     color: "#ff0000"
     state: present
 
-# - name: Edit tag
-#   uptime_kuma_tag:
-#     name: Tag 1
-#     color: "#bbbbbb"
-#     state: present
-
 - name: Remove tag
   uptime_kuma_tag:
+    api_url: http://192.168.1.10:3001
+    api_username: admin
+    api_password: secret
     name: Tag 1
     state: absent
 '''
@@ -47,22 +43,11 @@ def get_tag_by_name(api, name):
 
 
 def main():
-    module_args = {
-        "name": {
-            "type": str,
-            "required": True
-        },
-        "color": {
-            "type": str
-        },
-        "state": {
-            "default": "present",
-            "choices": [
-                "present",
-                "absent"
-            ]
-        }
-    }
+    module_args = dict(
+        name=dict(type="str", required=True),
+        color=dict(type="str"),
+        state=dict(type="str", default="present", choices=["present", "absent"])
+    )
     module_args.update(common_module_args)
 
     module = AnsibleModule(module_args)
@@ -86,12 +71,6 @@ def main():
             if not r["ok"]:
                 failed_msg = r["msg"]
             changed = True
-        # else:
-        #     if tag["color"] != params["color"]:
-        #         r = api.edit_tag(tag["id"], tag["name"], params["color"])
-        #         if not r["ok"]:
-        #             failed_msg = r["msg"]
-        #         changed = True
     elif state == "absent":
         if tag:
             r = api.delete_tag(tag["id"])

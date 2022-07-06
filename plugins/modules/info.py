@@ -20,61 +20,97 @@ DOCUMENTATION = r'''
 EXAMPLES = r'''
 - name: list monitors
   lucasheld.uptime_kuma.info:
+    api_url: http://192.168.1.10:3001
+    api_username: admin
+    api_password: secret
     monitors: yes
   register: result
 
 - name: list notifications
   lucasheld.uptime_kuma.info:
+    api_url: http://192.168.1.10:3001
+    api_username: admin
+    api_password: secret
     notifications: yes
   register: result
 
 - name: list proxies
   lucasheld.uptime_kuma.info:
+    api_url: http://192.168.1.10:3001
+    api_username: admin
+    api_password: secret
     proxies: yes
   register: result
 
 - name: list status pages
   lucasheld.uptime_kuma.info:
+    api_url: http://192.168.1.10:3001
+    api_username: admin
+    api_password: secret
     status_pages: yes
   register: result
 
 - name: list heartbeats
   lucasheld.uptime_kuma.info:
+    api_url: http://192.168.1.10:3001
+    api_username: admin
+    api_password: secret
     heartbeats: yes
   register: result
 
 - name: list important heartbeats
   lucasheld.uptime_kuma.info:
+    api_url: http://192.168.1.10:3001
+    api_username: admin
+    api_password: secret
     important_heartbeats: yes
   register: result
 
 - name: list avg ping
   lucasheld.uptime_kuma.info:
+    api_url: http://192.168.1.10:3001
+    api_username: admin
+    api_password: secret
     avg_ping: yes
   register: result
 
 - name: list uptime
   lucasheld.uptime_kuma.info:
+    api_url: http://192.168.1.10:3001
+    api_username: admin
+    api_password: secret
     uptime: yes
   register: result
 
 - name: list heartbeat
   lucasheld.uptime_kuma.info:
+    api_url: http://192.168.1.10:3001
+    api_username: admin
+    api_password: secret
     heartbeat: yes
   register: result
 
 - name: list info
   lucasheld.uptime_kuma.info:
+    api_url: http://192.168.1.10:3001
+    api_username: admin
+    api_password: secret
     info: yes
   register: result
 
 - name: list monitor beats
   lucasheld.uptime_kuma.info:
+    api_url: http://192.168.1.10:3001
+    api_username: admin
+    api_password: secret
     monitor_beats: yes
   register: result
 
 - name: list tags
   lucasheld.uptime_kuma.info:
+    api_url: http://192.168.1.10:3001
+    api_username: admin
+    api_password: secret
     tags: yes
   register: result
 '''
@@ -84,41 +120,19 @@ RETURN = r'''
 
 
 def main():
-    module_args = {
-        "monitors": {
-            "type": bool
-        },
-        "notifications": {
-            "type": bool
-        },
-        "proxies": {
-            "type": bool
-        },
-        "status_pages": {
-            "type": bool
-        },
-        "heartbeats": {
-            "type": bool
-        },
-        "important_heartbeats": {
-            "type": bool
-        },
-        "avg_ping": {
-            "type": bool
-        },
-        "uptime": {
-            "type": bool
-        },
-        "heartbeat": {
-            "type": bool
-        },
-        "info": {
-            "type": bool
-        },
-        "tags": {
-            "type": bool
-        },
-    }
+    module_args = dict(
+        monitors=dict(type="bool"),
+        notifications=dict(type="bool"),
+        proxies=dict(type="bool"),
+        status_pages=dict(type="bool"),
+        heartbeats=dict(type="bool"),
+        important_heartbeats=dict(type="bool"),
+        avg_ping=dict(type="bool"),
+        uptime=dict(type="bool"),
+        heartbeat=dict(type="bool"),
+        info=dict(type="bool"),
+        tags=dict(type="bool"),
+    )
     module_args.update(common_module_args)
 
     module = AnsibleModule(module_args)

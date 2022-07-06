@@ -14,9 +14,9 @@ DOCUMENTATION = r'''
 EXAMPLES = r'''
 - name: Setup
   lucasheld.uptime_kuma.setup:
-    api_url: 
-    api_username: 
-    api_password: 
+    api_url: http://192.168.1.10:3001
+    api_username: admin
+    api_password: secret
 '''
 
 RETURN = r'''
