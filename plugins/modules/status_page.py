@@ -1,7 +1,5 @@
 #!/usr/bin/python
 from __future__ import (absolute_import, division, print_function)
-from email.policy import default
-from tkinter.messagebox import NO
 from ansible.module_utils.basic import AnsibleModule
 from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common import object_changed, clear_params, common_module_args
 
