@@ -5,7 +5,7 @@ from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common impor
 
 import traceback
 
-from uptimekumaapi import UptimeKumaApi
+from uptime_kuma_api import UptimeKumaApi
 
 __metaclass__ = type
 
