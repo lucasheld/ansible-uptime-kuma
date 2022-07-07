@@ -3,7 +3,9 @@ from __future__ import (absolute_import, division, print_function)
 from ansible.module_utils.basic import AnsibleModule
 from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common import object_changed, clear_params, common_module_args, get_proxy_by_protocol_host_port
 
-from uptimekumaapi import UptimeKumaApi, convert_from_socket, params_map_proxy
+import traceback
+
+from uptimekumaapi import UptimeKumaApi
 
 __metaclass__ = type
 
@@ -46,6 +48,26 @@ EXAMPLES = r'''
 RETURN = r'''
 '''
 
+def run(api, params, result):
+    state = params["state"]
+    options = clear_params(params)
+
+    proxy = get_proxy_by_protocol_host_port(api, params["protocol"], params["host"], params["port"])
+
+    if state == "present":
+        if not proxy:
+            api.add_proxy(**options)
+            result["changed"] = True
+        else:
+            changed_keys = object_changed(proxy, options, {"apply_existing": [False, None]})
+            if changed_keys:
+                api.edit_proxy(proxy["id"], **options)
+                result["changed"] = True
+    elif state == "absent":
+        if proxy:
+            api.delete_proxy(proxy["id"])
+            result["changed"] = True
+
 
 def main():
     module_args = dict(
@@ -68,44 +90,19 @@ def main():
     api = UptimeKumaApi(params["api_url"])
     api.login(params["api_username"], params["api_password"])
 
-    protocol = params["protocol"]
-    host = params["host"]
-    port = params["port"]
-    state = params["state"]
-    options = clear_params(params)
+    result = {
+        "changed": False
+    }
 
-    proxy = get_proxy_by_protocol_host_port(api, protocol, host, port)
+    try:
+        run(api, params, result)
 
-    changed = False
-    failed_msg = None
-    result = {}
-    if state == "present":
-        if not proxy:
-            r = api.add_proxy(**options)
-            if not r["ok"]:
-                failed_msg = r["msg"]
-            changed = True
-        else:
-            proxy = convert_from_socket(params_map_proxy, proxy)
-            changed_keys = object_changed(proxy, options, {"apply_existing": [False, None]})
-            if changed_keys:
-                r = api.edit_proxy(proxy["id"], **options)
-                if not r["ok"]:
-                    failed_msg = r["msg"]
-                changed = True
-    elif state == "absent":
-        if proxy:
-            r = api.delete_proxy(proxy["id"])
-            if not r["ok"]:
-                failed_msg = r["msg"]
-            changed = True
-    api.disconnect()
-
-    if failed_msg:
-        module.fail_json(msg=failed_msg, **result)
-
-    result["changed"] = changed
-    module.exit_json(**result)
+        api.disconnect()
+        module.exit_json(**result)
+    except Exception as e:
+        api.disconnect()
+        error = traceback.format_exc()
+        module.fail_json(msg=error, **result)
 
 
 if __name__ == '__main__':

@@ -3,6 +3,8 @@ from __future__ import (absolute_import, division, print_function)
 from ansible.module_utils.basic import AnsibleModule
 from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common import common_module_args
 
+import traceback
+
 from uptimekumaapi import UptimeKumaApi
 
 __metaclass__ = type
@@ -119,32 +121,7 @@ RETURN = r'''
 '''
 
 
-def main():
-    module_args = dict(
-        monitors=dict(type="bool"),
-        notifications=dict(type="bool"),
-        proxies=dict(type="bool"),
-        status_pages=dict(type="bool"),
-        heartbeats=dict(type="bool"),
-        important_heartbeats=dict(type="bool"),
-        avg_ping=dict(type="bool"),
-        uptime=dict(type="bool"),
-        heartbeat=dict(type="bool"),
-        info=dict(type="bool"),
-        tags=dict(type="bool"),
-    )
-    module_args.update(common_module_args)
-
-    module = AnsibleModule(module_args)
-    params = module.params
-
-    api = UptimeKumaApi(params["api_url"])
-    api.login(params["api_username"], params["api_password"])
-
-    failed_msg = None
-    result = {
-        "changed": True
-    }
+def run(api, params, result):
     if params.get("monitors"):
         r = api.get_monitors()
         result["monitors"] = r
@@ -177,17 +154,44 @@ def main():
         result["info"] = r
     if params.get("tags"):
         r = api.get_tags()
-        if r["ok"]:
-            result["tags"] = r
-        else:
-            failed_msg = r["msg"]
+        result["tags"] = r
 
-    api.disconnect()
 
-    if failed_msg:
-        module.fail_json(msg=failed_msg, **result)
+def main():
+    module_args = dict(
+        monitors=dict(type="bool"),
+        notifications=dict(type="bool"),
+        proxies=dict(type="bool"),
+        status_pages=dict(type="bool"),
+        heartbeats=dict(type="bool"),
+        important_heartbeats=dict(type="bool"),
+        avg_ping=dict(type="bool"),
+        uptime=dict(type="bool"),
+        heartbeat=dict(type="bool"),
+        info=dict(type="bool"),
+        tags=dict(type="bool"),
+    )
+    module_args.update(common_module_args)
 
-    module.exit_json(**result)
+    module = AnsibleModule(module_args)
+    params = module.params
+
+    api = UptimeKumaApi(params["api_url"])
+    api.login(params["api_username"], params["api_password"])
+
+    result = {
+        "changed": True
+    }
+
+    try:
+        run(api, params, result)
+
+        api.disconnect()
+        module.exit_json(**result)
+    except Exception as e:
+        api.disconnect()
+        error = traceback.format_exc()
+        module.fail_json(msg=error, **result)
 
 
 if __name__ == '__main__':

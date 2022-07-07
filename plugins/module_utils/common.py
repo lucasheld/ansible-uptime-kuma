@@ -30,6 +30,20 @@ def get_notification_by_name(api, name):
             return notification
 
 
+def get_monitor_by_name(api, name):
+    monitors = api.get_monitors()
+    for monitor in monitors:
+        if monitor["name"] == name:
+            return monitor
+
+
+def get_tag_by_name(api, name):
+    tags = api.get_tags()
+    for tag in tags:
+        if tag["name"] == name:
+            return tag
+
+
 common_module_args = dict(
     api_url=dict(type="str", default="http://127.0.0.1:3001"),
     api_username=dict(type="str", required=True),

@@ -1,9 +1,11 @@
 #!/usr/bin/python
 from __future__ import (absolute_import, division, print_function)
 from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common import object_changed, clear_params, common_module_args, get_proxy_by_protocol_host_port, get_notification_by_name
+from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common import object_changed, clear_params, common_module_args, get_proxy_by_protocol_host_port, get_notification_by_name, get_monitor_by_name
 
-from uptimekumaapi import UptimeKumaApi, convert_from_socket, params_map_monitor
+import traceback
+
+from uptimekumaapi import UptimeKumaApi
 
 __metaclass__ = type
 
@@ -62,11 +64,57 @@ RETURN = r'''
 '''
 
 
-def get_monitor_by_name(api, name):
-    monitors = api.get_monitors()
-    for monitor in monitors:
-        if monitor["name"] == name:
-            return monitor
+def run(api, params, result):
+    if not params["accepted_status_codes"]:
+        params["accepted_status_codes"] = ["200-299"]
+    
+    # type -> type_
+    params["type_"] = params.pop("type")
+    
+    # notifications -> notification_ids
+    dict_notification_ids = {}
+    if params["notifications"]:
+        for notification_name in params["notifications"]:
+            notification = get_notification_by_name(api, notification_name)
+            notification_id = notification["id"]
+            dict_notification_ids[notification_id] = True
+    params["notification_ids"] = dict_notification_ids
+    del params["notifications"]
+
+    # proxy -> proxy_id
+    if params["proxy"]:
+        proxy = get_proxy_by_protocol_host_port(api, params["proxy"]["protocol"], params["proxy"]["host"], params["proxy"]["port"])
+        params["proxy_id"] = proxy["id"]
+    else:
+        params["proxy_id"] = params["proxy"]
+    del params["proxy"]
+
+    state = params["state"]
+    options = clear_params(params)
+
+    monitor = get_monitor_by_name(api, params["name"])
+
+    if state == "present":
+        if not monitor:
+            api.add_monitor(**options)
+            result["changed"] = True
+        else:
+            changed_keys = object_changed(monitor, options)
+            if changed_keys:
+                api.edit_monitor(monitor["id"], **options)
+                result["changed"] = True
+    elif state == "absent":
+        if monitor:
+            api.delete_monitor(monitor["id"])
+            result["changed"] = True
+    elif state == "paused":
+        if monitor and monitor["active"]:
+            api.pause_monitor(monitor["id"])
+            result["changed"] = True
+    elif state == "resumed":
+        if monitor and not monitor["active"]:
+            api.resume_monitor(monitor["id"])
+            result["changed"] = True
 
 
 def main():
@@ -135,79 +183,19 @@ def main():
     api = UptimeKumaApi(params["api_url"])
     api.login(params["api_username"], params["api_password"])
 
-    if not params["accepted_status_codes"]:
-        params["accepted_status_codes"] = ["200-299"]
-    
-    # type -> type_
-    params["type_"] = params["type"]
-    del params["type"]
-    
-    # notifications -> notification_ids
-    dict_notification_ids = {}
-    if params["notifications"]:
-        for notification_name in params["notifications"]:
-            notification = get_notification_by_name(api, notification_name)
-            notification_id = notification["id"]
-            dict_notification_ids[notification_id] = True
-    params["notification_ids"] = dict_notification_ids
-    del params["notifications"]
+    result = {
+        "changed": False
+    }
 
-    # proxy -> proxy_id
-    if params["proxy"]:
-        proxy = get_proxy_by_protocol_host_port(api, params["proxy"]["protocol"], params["proxy"]["host"], params["proxy"]["port"])
-        params["proxy_id"] = proxy["id"]
-    else:
-        params["proxy_id"] = params["proxy"]
-    del params["proxy"]
+    try:
+        run(api, params, result)
 
-    state = params["state"]
-    options = clear_params(params)
-
-    monitor = get_monitor_by_name(api, params["name"])
-
-    changed = False
-    failed_msg = None
-    result = {}
-    if state == "present":
-        if not monitor:
-            r = api.add_monitor(**options)
-            if not r["ok"]:
-                failed_msg = r["msg"]
-            changed = True
-        else:
-            monitor = convert_from_socket(params_map_monitor, monitor)
-            changed_keys = object_changed(monitor, options)
-            if changed_keys:
-                r = api.edit_monitor(monitor["id"], **options)
-                if not r["ok"]:
-                    failed_msg = r["msg"]
-                changed = True
-                result["changed_keys"] = changed_keys
-    elif state == "absent":
-        if monitor:
-            r = api.delete_monitor(monitor["id"])
-            if not r["ok"]:
-                failed_msg = r["msg"]
-            changed = True
-    elif state == "paused":
-        if monitor and monitor["active"] == 1:
-            r = api.pause_monitor(monitor["id"])
-            if not r["ok"]:
-                failed_msg = r["msg"]
-            changed = True
-    elif state == "resumed":
-        if monitor and monitor["active"] == 0:
-            r = api.resume_monitor(monitor["id"])
-            if not r["ok"]:
-                failed_msg = r["msg"]
-            changed = True
-    api.disconnect()
-
-    if failed_msg:
-        module.fail_json(msg=failed_msg, **result)
-
-    result["changed"] = changed
-    module.exit_json(**result)
+        api.disconnect()
+        module.exit_json(**result)
+    except Exception as e:
+        api.disconnect()
+        error = traceback.format_exc()
+        module.fail_json(msg=error, **result)
 
 
 if __name__ == '__main__':

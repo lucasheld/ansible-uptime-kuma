@@ -1,7 +1,9 @@
 #!/usr/bin/python
 from __future__ import (absolute_import, division, print_function)
 from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common import common_module_args
+from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common import common_module_args, get_monitor_by_name, get_tag_by_name
+
+import traceback
 
 from uptimekumaapi import UptimeKumaApi
 
@@ -41,25 +43,34 @@ RETURN = r'''
 '''
 
 
-def get_monitor_by_name(api, name):
-    monitors = api.get_monitors()
-    for monitor_data in monitors:
-        if monitor_data["name"] == name:
-            return monitor_data
-
-
-def get_tag_by_name(api, name):
-    r = api.get_tags()
-    tags = r["tags"]
-    for tag in tags:
-        if tag["name"] == name:
-            return tag
-
-
 def get_monitor_tag(monitor, tag, value):
     for monitor_tag in monitor["tags"]:
         if monitor_tag["name"] == tag["name"] and monitor_tag["color"] == tag["color"] and monitor_tag["value"] == value:
             return monitor_tag
+
+
+def run(api, params, result):
+    monitor_name = params["monitor_name"]
+    tag_name = params["tag_name"]
+    value = params["value"]
+    state = params["state"]
+
+    monitor = get_monitor_by_name(api, monitor_name)
+    tag = get_tag_by_name(api, tag_name)
+
+    tag_id = tag["id"]
+    monitor_id = monitor["id"]
+
+    monitor_tag = get_monitor_tag(monitor, tag, value)
+
+    if state == "present":
+        if not monitor_tag:
+            api.add_monitor_tag(tag_id, monitor_id, value)
+            result["changed"] = True
+    elif state == "absent":
+        if monitor_tag:
+            api.delete_monitor_tag(tag_id, monitor_id, value)
+            result["changed"] = True
 
 
 def main():
@@ -77,41 +88,19 @@ def main():
     api = UptimeKumaApi(params["api_url"])
     api.login(params["api_username"], params["api_password"])
 
-    monitor_name = params["monitor_name"]
-    tag_name = params["tag_name"]
-    value = params["value"]
-    state = params["state"]
+    result = {
+        "changed": False
+    }
 
-    monitor = get_monitor_by_name(api, monitor_name)
-    tag = get_tag_by_name(api, tag_name)
+    try:
+        run(api, params, result)
 
-    tag_id = tag["id"]
-    monitor_id = monitor["id"]
-
-    monitor_tag = get_monitor_tag(monitor, tag, value)
-
-    changed = False
-    failed_msg = None
-    result = {}
-    if state == "present":
-        if not monitor_tag:
-            r = api.add_monitor_tag(tag_id, monitor_id, value)
-            if not r["ok"]:
-                failed_msg = r["msg"]
-            changed = True
-    elif state == "absent":
-        if monitor_tag:
-            r = api.delete_monitor_tag(tag_id, monitor_id, value)
-            if not r["ok"]:
-                failed_msg = r["msg"]
-            changed = True
-    api.disconnect()
-
-    if failed_msg:
-        module.fail_json(msg=failed_msg, **result)
-
-    result["changed"] = changed
-    module.exit_json(**result)
+        api.disconnect()
+        module.exit_json(**result)
+    except Exception as e:
+        api.disconnect()
+        error = traceback.format_exc()
+        module.fail_json(msg=error, **result)
 
 
 if __name__ == '__main__':

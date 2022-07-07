@@ -5,7 +5,9 @@ from tkinter.messagebox import NO
 from ansible.module_utils.basic import AnsibleModule
 from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common import object_changed, clear_params, common_module_args
 
-from uptimekumaapi import UptimeKumaApi, convert_from_socket, params_map_status_page
+import traceback
+
+from uptimekumaapi import UptimeKumaApi
 
 __metaclass__ = type
 
@@ -49,6 +51,43 @@ RETURN = r'''
 '''
 
 
+def run(api, params, result):
+    slug = params["slug"]
+    state = params["state"]
+
+    options = clear_params(params)
+    del options["incident"]
+
+    try:
+        status_page = api.get_status_page(slug)
+    except Exception:
+        status_page = None
+
+    if state == "present":
+        status_page_exists = True if status_page else False
+        if not status_page:
+            api.add_status_page(slug, params["title"])
+            api.save_status_page(**options)
+            status_page_exists = True
+            result["changed"] = True
+        else:
+            changed_keys = object_changed(status_page, options, {"custom_css": "body {\n  \n}\n"})
+            if changed_keys:
+                api.save_status_page(**options)
+                result["changed"] = True
+        if status_page_exists:
+            if params["incident"]:
+                api.post_incident(slug, **params["incident"])
+            else:
+                api.unpin_incident(slug)
+            # There is no way to check if an incident is already pinned or not. So we have to assume that something has been changed.
+            result["changed"] = True
+    elif state == "absent":
+        if status_page:
+            api.delete_status_page(slug)
+            result["changed"] = True
+
+
 def main():
     module_args = dict(
         slug=dict(type="str", required=True),
@@ -58,7 +97,7 @@ def main():
 
         title=dict(type="str"),
         description=dict(type="str", default=None),
-        dark_theme=dict(type="bool", default=False),
+        theme=dict(type="str", default="light", choices=["light", "dark"]),
         published=dict(type="bool", default=True),
         show_tags=dict(type="bool", default=False),
         domain_name_list=dict(type="list", options="str", default=[]),
@@ -84,65 +123,19 @@ def main():
     api = UptimeKumaApi(params["api_url"])
     api.login(params["api_username"], params["api_password"])
 
+    result = {
+        "changed": False
+    }
+
     try:
-        slug = params["slug"]
-        state = params["state"]
-
-        options = clear_params(params)
-        del options["incident"]
-
-        status_page = api.get_status_page(slug)
-        if not status_page["ok"]:
-            status_page = None
-
-        changed = False
-        failed_msg = None
-        result = {}
-        if state == "present":
-            status_page_exists = True if status_page else False
-            if not status_page:
-                r = api.add_status_page(slug, params["title"])
-                if not r["ok"]:
-                    failed_msg = r["msg"]
-                r = api.save_status_page(**options)
-                if not r["ok"]:
-                    failed_msg = r["msg"]
-                status_page_exists = True
-                changed = True
-            else:
-                status_page = convert_from_socket(params_map_status_page, status_page)
-                changed_keys = object_changed(status_page, options, {"dark_theme": True if status_page["dark_theme"] == "dark" else False, "custom_css": "body {\n  \n}\n"})
-                if changed_keys:
-                    r = api.save_status_page(**options)
-                    if not r["ok"]:
-                        failed_msg = r["msg"]
-                    changed = True
-                result["changed_keys"] = changed_keys
-            if status_page_exists:
-                if params["incident"]:
-                    api.post_incident(slug, **params["incident"])
-                else:
-                    api.unpin_incident(slug)
-                # There is no way to check if an incident is already pinned or not. So we have to assume that something has been changed.
-                changed = True
-        elif state == "absent":
-            if status_page:
-                r = api.delete_status_page(slug)
-                if not r["ok"]:
-                    failed_msg = r["msg"]
-                changed = True
-
-        if failed_msg:
-            module.fail_json(msg=failed_msg, **result)
-
-        result["changed"] = changed
+        run(api, params, result)
 
         api.disconnect()
         module.exit_json(**result)
-
     except Exception as e:
         api.disconnect()
-        module.fail_json(msg=str(e), **result)
+        error = traceback.format_exc()
+        module.fail_json(msg=error, **result)
 
 
 if __name__ == '__main__':
