@@ -76,10 +76,6 @@ options:
     type: dict
     default: !!null
     suboptions:
-      protocol:
-        description: TODO
-        type: str
-        required: true
       host:
         description: TODO
         type: str
@@ -227,7 +223,7 @@ import traceback
 
 from ansible.module_utils.basic import AnsibleModule, missing_required_lib
 from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common import object_changed, clear_params, common_module_args, \
-    get_proxy_by_protocol_host_port, get_notification_by_name, get_monitor_by_name
+    get_proxy_by_host_port, get_notification_by_name, get_monitor_by_name
 
 try:
     from uptime_kuma_api import UptimeKumaApi
@@ -255,7 +251,7 @@ def run(api, params, result):
 
     # proxy -> proxy_id
     if params["proxy"]:
-        proxy = get_proxy_by_protocol_host_port(api, params["proxy"]["protocol"], params["proxy"]["host"], params["proxy"]["port"])
+        proxy = get_proxy_by_host_port(api, params["proxy"]["host"], params["proxy"]["port"])
         params["proxy_id"] = proxy["id"]
     else:
         params["proxy_id"] = params["proxy"]
@@ -309,7 +305,6 @@ def main():
         accepted_status_codes=dict(type="list", default=None, elements="str"),
         # proxy_id=dict(type="int", default=None),
         proxy=dict(type="dict", default=None, options=dict(
-            protocol=dict(type="str", required=True),
             host=dict(type="str", required=True),
             port=dict(type="int", required=True)
         )),

@@ -9,9 +9,6 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 
-# TODO: host und port ist ausreichend, protocol entfernen
-
-
 DOCUMENTATION = r'''
 ---
 extends_documentation_fragment:
@@ -27,7 +24,6 @@ options:
   protocol:
     description: TODO
     type: str
-    required: true
   host:
     description: TODO
     type: str
@@ -83,9 +79,9 @@ EXAMPLES = r'''
     api_url: http://192.168.1.10:3001
     api_username: admin
     api_password: secret
-    protocol: https
     host: 127.0.0.1
     port: 8080
+    active: false
     state: present
 
 - name: Remove proxy
@@ -93,7 +89,6 @@ EXAMPLES = r'''
     api_url: http://192.168.1.10:3001
     api_username: admin
     api_password: secret
-    protocol: http
     host: 127.0.0.1
     port: 8080
     state: absent
@@ -106,7 +101,7 @@ import traceback
 
 from ansible.module_utils.basic import AnsibleModule, missing_required_lib
 from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common import object_changed, clear_params, common_module_args, \
-    get_proxy_by_protocol_host_port
+    get_proxy_by_host_port
 
 try:
     from uptime_kuma_api import UptimeKumaApi
@@ -119,7 +114,7 @@ def run(api, params, result):
     state = params["state"]
     options = clear_params(params)
 
-    proxy = get_proxy_by_protocol_host_port(api, params["protocol"], params["host"], params["port"])
+    proxy = get_proxy_by_host_port(api, params["host"], params["port"])
 
     if state == "present":
         if not proxy:
@@ -138,7 +133,7 @@ def run(api, params, result):
 
 def main():
     module_args = dict(
-        protocol=dict(type="str", required=True),
+        protocol=dict(type="str", required=False),
         host=dict(type="str", required=True),
         port=dict(type="int", required=True),
         auth=dict(type="bool", default=False),

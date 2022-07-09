@@ -24,9 +24,6 @@ options:
   id:
     description: The proxy id.
     type: int
-  protocol:
-    description: TODO
-    type: str
   host:
     description: TODO
     type: str
@@ -50,7 +47,7 @@ RETURN = r'''
 import traceback
 
 from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common import common_module_args, get_proxy_by_protocol_host_port
+from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common import common_module_args, get_proxy_by_host_port
 from ansible.module_utils.basic import missing_required_lib
 
 try:
@@ -63,15 +60,14 @@ except ImportError:
 def run(api, params, result):
     id_ = params.get("id")
 
-    protocol = params.get("protocol")
     host = params.get("host")
     port = params.get("port")
 
     if id_:
         proxy = api.get_proxy(id_)
         result["proxies"] = [proxy]
-    elif protocol and host and port:
-        proxy = get_proxy_by_protocol_host_port(api, protocol, host, port)
+    elif host and port:
+        proxy = get_proxy_by_host_port(api, host, port)
         result["proxies"] = [proxy]
     else:
         result["proxies"] = api.get_proxies()
@@ -80,7 +76,6 @@ def run(api, params, result):
 def main():
     module_args = dict(
         id=dict(type="int"),
-        protocol=dict(type="str"),
         host=dict(type="str"),
         port=dict(type="int"),
     )

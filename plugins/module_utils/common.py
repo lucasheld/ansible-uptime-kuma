@@ -23,10 +23,10 @@ def clear_params(params: dict):
     return {k: v for k, v in params.items() if k not in ["api_url", "api_username", "api_password", "state"]}
 
 
-def get_proxy_by_protocol_host_port(api, protocol, host, port):
+def get_proxy_by_host_port(api, host, port):
     proxies = api.get_proxies()
     for proxy in proxies:
-        if proxy["protocol"] == protocol and proxy["host"] == host and proxy["port"] == port:
+        if proxy["host"] == host and proxy["port"] == port:
             return proxy
 
 
