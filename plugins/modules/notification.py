@@ -21,10 +21,12 @@ short_description: TODO
 description: TODO
 
 options:
+  id:
+    description: TODO
+    type: int
   name:
     description: TODO
     type: str
-    required: true
   default:
     description: TODO
     type: bool
@@ -100,13 +102,15 @@ def run(api, params, result):
     # type -> type_
     params["type_"] = params.pop("type")
 
-    name = params["name"]
     state = params["state"]
     options = clear_params(params)
     # remove unset notification provider options
     options = {k: v for k, v in options.items() if not (k in notification_provider_options and v is None)}
 
-    notification = get_notification_by_name(api, name)
+    if params["id"]:
+        notification = api.get_notification(params["id"])
+    else:
+        notification = get_notification_by_name(api, params["name"])
 
     if state == "present":
         if not notification:
@@ -125,7 +129,8 @@ def run(api, params, result):
 
 def main():
     module_args = dict(
-        name=dict(type="str", required=True),
+        id=dict(type="int"),
+        name=dict(type="str"),
         default=dict(type="bool", default=False),
         state=dict(type="str", default="present", choices=["present", "absent"])
     )

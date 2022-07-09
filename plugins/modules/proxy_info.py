@@ -58,16 +58,11 @@ except ImportError:
 
 
 def run(api, params, result):
-    id_ = params.get("id")
-
-    host = params.get("host")
-    port = params.get("port")
-
-    if id_:
-        proxy = api.get_proxy(id_)
+    if params["id"]:
+        proxy = api.get_proxy(params["id"])
         result["proxies"] = [proxy]
-    elif host and port:
-        proxy = get_proxy_by_host_port(api, host, port)
+    elif params["host"] and params["port"]:
+        proxy = get_proxy_by_host_port(api, params["host"], params["port"])
         result["proxies"] = [proxy]
     else:
         result["proxies"] = api.get_proxies()

@@ -21,10 +21,12 @@ short_description: TODO
 description: TODO
 
 options:
+  id:
+    description: TODO
+    type: int
   name:
     description: TODO
     type: str
-    required: true
   color:
     description: TODO
     type: str
@@ -70,15 +72,16 @@ except ImportError:
 
 
 def run(api, params, result):
-    name = params["name"]
-    color = params["color"]
     state = params["state"]
 
-    tag = get_tag_by_name(api, name)
+    if params["id"]:
+        tag = api.get_tag(params["id"])
+    else:
+        tag = get_tag_by_name(api, params["name"])
 
     if state == "present":
         if not tag:
-            api.add_tag(name, color)
+            api.add_tag(params["name"], params["color"])
             result["changed"] = True
     elif state == "absent":
         if tag:
@@ -88,7 +91,8 @@ def run(api, params, result):
 
 def main():
     module_args = dict(
-        name=dict(type="str", required=True),
+        id=dict(type="int"),
+        name=dict(type="str"),
         color=dict(type="str"),
         state=dict(type="str", default="present", choices=["present", "absent"])
     )

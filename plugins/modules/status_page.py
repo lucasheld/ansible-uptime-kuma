@@ -182,10 +182,7 @@ def run(api, params, result):
 def main():
     module_args = dict(
         slug=dict(type="str", required=True),
-
-        # TODO
         # id_=dict(type="int"),
-
         title=dict(type="str"),
         description=dict(type="str", default=None),
         theme=dict(type="str", default="light", choices=["light", "dark"]),
@@ -197,13 +194,11 @@ def main():
         show_powered_by=dict(type="bool", default=True),
         img_data_url=dict(type="str", default="/icon.svg"),
         monitors=dict(type="list", elements="str"),
-
         incident=dict(type="dict", default=None, options=dict(
             title=dict(type="str", required=True),
             content=dict(type="str", required=True),
             style=dict(type="str", default="primary", choices=["info", "warning", "danger", "primary", "light", "dark"])
         )),
-
         state=dict(type="str", default="present", choices=["present", "absent"])
     )
     module_args.update(common_module_args)

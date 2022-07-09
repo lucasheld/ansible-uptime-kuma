@@ -55,14 +55,11 @@ except ImportError:
 
 
 def run(api, params, result):
-    id_ = params.get("id")
-    name = params.get("name")
-
-    if id_:
-        monitor = api.get_monitor(id_)
+    if params["id"]:
+        monitor = api.get_monitor(params["id"])
         result["monitors"] = [monitor]
-    elif name:
-        monitor = get_monitor_by_name(api, name)
+    elif params["name"]:
+        monitor = get_monitor_by_name(api, params["name"])
         result["monitors"] = [monitor]
     else:
         result["monitors"] = api.get_monitors()

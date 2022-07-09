@@ -55,14 +55,11 @@ except ImportError:
 
 
 def run(api, params, result):
-    id_ = params.get("id")
-    name = params.get("name")
-
-    if id_:
-        notification = api.get_notification(id_)
+    if params["id"]:
+        notification = api.get_notification(params["id"])
         result["notifications"] = [notification]
-    elif name:
-        notification = get_notification_by_name(api, name)
+    elif params["name"]:
+        notification = get_notification_by_name(api, params["name"])
         result["notifications"] = [notification]
     else:
         result["notifications"] = api.get_notifications()

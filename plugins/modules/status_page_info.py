@@ -52,10 +52,8 @@ except ImportError:
 
 
 def run(api, params, result):
-    slug = params.get("slug")
-
-    if slug:
-        status_page = api.get_status_page(slug)
+    if params["slug"]:
+        status_page = api.get_status_page(params["slug"])
         result["status_pages"] = [status_page]
     else:
         result["status_pages"] = api.get_status_pages()

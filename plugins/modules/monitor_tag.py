@@ -9,10 +9,6 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 
-# monitor tag edit not possible, because we are using the tag name and value to identify the monitor tag
-# so you have to delete the moninor tag first and crete a new one
-
-
 DOCUMENTATION = r'''
 ---
 extends_documentation_fragment:
@@ -25,14 +21,18 @@ short_description: TODO
 description: TODO
 
 options:
+  monitor_id:
+    description: The id of the monitor to which the tag should be assigned.
+    type: int
   monitor_name:
     description: The name of the monitor to which the tag should be assigned.
     type: str
-    required: true
+  tag_id:
+    description: The id of the tag that should be assigned.
+    type: int
   tag_name:
     description: The name of the tag that should be assigned.
     type: str
-    required: true
   value:
     description: The value that should be assigned.
     type: str
@@ -88,16 +88,19 @@ def get_monitor_tag(monitor, tag, value):
 
 
 def run(api, params, result):
-    monitor_name = params["monitor_name"]
-    tag_name = params["tag_name"]
     value = params["value"]
     state = params["state"]
 
-    monitor = get_monitor_by_name(api, monitor_name)
-    tag = get_tag_by_name(api, tag_name)
-
-    tag_id = tag["id"]
-    monitor_id = monitor["id"]
+    monitor_id = params["monitor_id"]
+    tag_id = params["tag_id"]
+    if monitor_id and tag_id:
+        monitor = api.get_monitor(monitor_id)
+        tag = api.get_tag(tag_id)
+    else:
+        monitor = get_monitor_by_name(api, params["monitor_name"])
+        tag = get_tag_by_name(api, params["tag_name"])
+        tag_id = tag["id"]
+        monitor_id = monitor["id"]
 
     monitor_tag = get_monitor_tag(monitor, tag, value)
 
@@ -113,8 +116,10 @@ def run(api, params, result):
 
 def main():
     module_args = dict(
-        monitor_name=dict(type="str", required=True),
-        tag_name=dict(type="str", required=True),
+        monitor_id=dict(type="int"),
+        tag_id=dict(type="int"),
+        monitor_name=dict(type="str"),
+        tag_name=dict(type="str"),
         value=dict(type="str", required=True),
         state=dict(type="str", default="present", choices=["present", "absent"])
     )

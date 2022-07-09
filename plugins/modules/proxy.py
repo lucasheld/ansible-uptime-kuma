@@ -21,9 +21,9 @@ short_description: TODO
 description: TODO
 
 options:
-  protocol:
+  id:
     description: TODO
-    type: str
+    type: int
   host:
     description: TODO
     type: str
@@ -32,6 +32,9 @@ options:
     description: TODO
     type: int
     required: true
+  protocol:
+    description: TODO
+    type: str
   auth:
     description: TODO
     type: bool
@@ -114,7 +117,10 @@ def run(api, params, result):
     state = params["state"]
     options = clear_params(params)
 
-    proxy = get_proxy_by_host_port(api, params["host"], params["port"])
+    if params["id"]:
+        proxy = api.get_proxy(params["id"])
+    else:
+        proxy = get_proxy_by_host_port(api, params["host"], params["port"])
 
     if state == "present":
         if not proxy:
@@ -133,9 +139,10 @@ def run(api, params, result):
 
 def main():
     module_args = dict(
-        protocol=dict(type="str", required=False),
+        id=dict(type="int"),
         host=dict(type="str", required=True),
         port=dict(type="int", required=True),
+        protocol=dict(type="str"),
         auth=dict(type="bool", default=False),
         username=dict(type="str", default=None),
         password=dict(type="str", default=None, no_log=True),

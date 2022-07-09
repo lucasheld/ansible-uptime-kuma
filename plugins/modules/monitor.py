@@ -21,10 +21,12 @@ short_description: TODO
 description: TODO
 
 options:
+  id:
+    description: TODO
+    type: int
   name:
     description: TODO
     type: str
-    required: true
   type:
     description: TODO
     type: str
@@ -260,7 +262,10 @@ def run(api, params, result):
     state = params["state"]
     options = clear_params(params)
 
-    monitor = get_monitor_by_name(api, params["name"])
+    if params["id"]:
+        monitor = api.get_monitor(params["id"])
+    else:
+        monitor = get_monitor_by_name(api, params["name"])
 
     if state == "present":
         if not monitor:
@@ -287,7 +292,8 @@ def run(api, params, result):
 
 def main():
     module_args = dict(
-        name=dict(type="str", required=True),
+        id=dict(type="int"),
+        name=dict(type="str"),
         type=dict(type="str", choices=["http", "port", "ping", "keyword", "dns", "push", "steam", "mqtt", "sqlserver"]),
         heartbeat_interval=dict(type="int", default=60),
         heartbeat_retry_interval=dict(type="int", default=60),

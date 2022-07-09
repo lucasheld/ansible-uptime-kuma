@@ -55,14 +55,11 @@ except ImportError:
 
 
 def run(api, params, result):
-    id_ = params.get("id")
-    name = params.get("name")
-
-    if id_:
-        tag = api.get_tag(id_)
+    if params["id"]:
+        tag = api.get_tag(params["id"])
         result["tags"] = [tag]
-    elif name:
-        tag = get_tag_by_name(api, name)
+    elif params["name"]:
+        tag = get_tag_by_name(api, params["name"])
         result["tags"] = [tag]
     else:
         result["tags"] = api.get_tags()
