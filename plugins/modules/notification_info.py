@@ -14,44 +14,28 @@ DOCUMENTATION = r'''
 extends_documentation_fragment:
   - lucasheld.uptime_kuma.uptime_kuma
 
-module: tag
+module: notification_info
 version_added: 0.0.0
 author: Lucas Held (@lucasheld)
 short_description: TODO
 description: TODO
 
 options:
+  id:
+    description: The notification id.
+    type: int
   name:
-    description: TODO
+    description: The notification name.
     type: str
-    required: true
-  color:
-    description: TODO
-    type: str
-  state:
-    description: TODO
-    type: str
-    default: "present"
-    choices: ["present", "absent"]
 '''
 
 EXAMPLES = r'''
-- name: Add tag
-  uptime_kuma_tag:
+- name: list notifications
+  lucasheld.uptime_kuma.notification_info:
     api_url: http://192.168.1.10:3001
     api_username: admin
     api_password: secret
-    name: Tag 1
-    color: "#ff0000"
-    state: present
-
-- name: Remove tag
-  uptime_kuma_tag:
-    api_url: http://192.168.1.10:3001
-    api_username: admin
-    api_password: secret
-    name: Tag 1
-    state: absent
+  register: result
 '''
 
 RETURN = r'''
@@ -59,8 +43,9 @@ RETURN = r'''
 
 import traceback
 
-from ansible.module_utils.basic import AnsibleModule, missing_required_lib
-from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common import common_module_args, get_tag_by_name
+from ansible.module_utils.basic import AnsibleModule
+from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common import common_module_args, get_notification_by_name
+from ansible.module_utils.basic import missing_required_lib
 
 try:
     from uptime_kuma_api import UptimeKumaApi
@@ -70,31 +55,27 @@ except ImportError:
 
 
 def run(api, params, result):
-    name = params["name"]
-    color = params["color"]
-    state = params["state"]
+    id_ = params.get("id")
+    name = params.get("name")
 
-    tag = get_tag_by_name(api, name)
-
-    if state == "present":
-        if not tag:
-            api.add_tag(name, color)
-            result["changed"] = True
-    elif state == "absent":
-        if tag:
-            api.delete_tag(tag["id"])
-            result["changed"] = True
+    if id_:
+        notification = api.get_notification(id_)
+        result["notifications"] = [notification]
+    elif name:
+        notification = get_notification_by_name(api, name)
+        result["notifications"] = [notification]
+    else:
+        result["notifications"] = api.get_notifications()
 
 
 def main():
     module_args = dict(
-        name=dict(type="str", required=True),
-        color=dict(type="str"),
-        state=dict(type="str", default="present", choices=["present", "absent"])
+        id=dict(type="int"),
+        name=dict(type="str"),
     )
     module_args.update(common_module_args)
 
-    module = AnsibleModule(module_args)
+    module = AnsibleModule(module_args, supports_check_mode=True)
     params = module.params
 
     if not HAS_UPTIME_KUMA_API:

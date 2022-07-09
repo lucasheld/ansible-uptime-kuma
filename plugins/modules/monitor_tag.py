@@ -21,8 +21,8 @@ extends_documentation_fragment:
 module: monitor_tag
 version_added: 0.0.0
 author: Lucas Held (@lucasheld)
-short_description: Return information about the Uptime Kuma instance
-description: Return information about the Uptime Kuma instance
+short_description: TODO
+description: TODO
 
 options:
   monitor_name:

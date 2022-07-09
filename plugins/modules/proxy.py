@@ -9,6 +9,9 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 
+# TODO: host und port ist ausreichend, protocol entfernen
+
+
 DOCUMENTATION = r'''
 ---
 extends_documentation_fragment:
@@ -17,8 +20,8 @@ extends_documentation_fragment:
 module: proxy
 version_added: 0.0.0
 author: Lucas Held (@lucasheld)
-short_description: Return information about the Uptime Kuma instance
-description: Return information about the Uptime Kuma instance
+short_description: TODO
+description: TODO
 
 options:
   protocol:
