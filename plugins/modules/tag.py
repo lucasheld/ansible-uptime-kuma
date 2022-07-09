@@ -1,16 +1,38 @@
 #!/usr/bin/python
-from __future__ import (absolute_import, division, print_function)
-from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common import common_module_args, get_tag_by_name
+# -*- coding: utf-8 -*-
 
-import traceback
+# Copyright: (c) 2022, Lucas Held <lucasheld@hotmail.de>
+# GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
-from uptime_kuma_api import UptimeKumaApi
+from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
 
 DOCUMENTATION = r'''
+---
+extends_documentation_fragment:
+  - lucasheld.uptime_kuma.uptime_kuma
+
+module: tag
+version_added: 0.0.0
+author: Lucas Held (@lucasheld)
+short_description: Return information about the Uptime Kuma instance
+description: Return information about the Uptime Kuma instance
+
+options:
+  name:
+    description: TODO
+    type: str
+    required: true
+  color:
+    description: TODO
+    type: str
+  state:
+    description: TODO
+    type: str
+    default: "present"
+    choices: ["present", "absent"]
 '''
 
 EXAMPLES = r'''
@@ -34,6 +56,17 @@ EXAMPLES = r'''
 
 RETURN = r'''
 '''
+
+import traceback
+
+from ansible.module_utils.basic import AnsibleModule, missing_required_lib
+from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common import common_module_args, get_tag_by_name
+
+try:
+    from uptime_kuma_api import UptimeKumaApi
+    HAS_UPTIME_KUMA_API = True
+except ImportError:
+    HAS_UPTIME_KUMA_API = False
 
 
 def run(api, params, result):
@@ -63,6 +96,9 @@ def main():
 
     module = AnsibleModule(module_args)
     params = module.params
+
+    if not HAS_UPTIME_KUMA_API:
+        module.fail_json(msg=missing_required_lib("uptime_kuma_api"))
 
     api = UptimeKumaApi(params["api_url"])
     api.login(params["api_username"], params["api_password"])

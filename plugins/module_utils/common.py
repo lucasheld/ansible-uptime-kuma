@@ -1,3 +1,10 @@
+# Copyright: (c) 2022, Lucas Held <lucasheld@hotmail.de>
+
+from __future__ import absolute_import, division, print_function
+
+__metaclass__ = type
+
+
 def object_changed(object: dict, options: dict, ignore: dict = None):
     changed_keys = []
     for key, value in options.items():

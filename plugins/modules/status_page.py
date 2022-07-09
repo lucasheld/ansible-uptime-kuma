@@ -1,16 +1,98 @@
 #!/usr/bin/python
-from __future__ import (absolute_import, division, print_function)
-from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common import object_changed, clear_params, common_module_args
+# -*- coding: utf-8 -*-
 
-import traceback
+# Copyright: (c) 2022, Lucas Held <lucasheld@hotmail.de>
+# GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
-from uptime_kuma_api import UptimeKumaApi
+from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
 
 DOCUMENTATION = r'''
+---
+extends_documentation_fragment:
+  - lucasheld.uptime_kuma.uptime_kuma
+
+module: status_page
+version_added: 0.0.0
+author: Lucas Held (@lucasheld)
+short_description: Return information about the Uptime Kuma instance
+description: Return information about the Uptime Kuma instance
+
+options:
+  slug:
+    description: TODO
+    type: str
+    required: true
+  title:
+    description: TODO
+    type: str
+  description:
+    description: TODO
+    type: str
+    default: !!null
+  theme:
+    description: TODO
+    type: str
+    default: "light"
+    choices: ["light", "dark"]
+  published:
+    description: TODO
+    type: bool
+    default: true
+  show_tags:
+    description: TODO
+    type: bool
+    default: false
+  domain_name_list:
+    description: TODO
+    type: list
+    elements: "str"
+    default: []
+  custom_css:
+    description: TODO
+    type: str
+    default: ""
+  footer_text:
+    description: TODO
+    type: str
+    default: !!null
+  show_powered_by:
+    description: TODO
+    type: bool
+    default: true
+  img_data_url:
+    description: TODO
+    type: str
+    default: "/icon.svg"
+  monitors:
+    description: TODO
+    type: list
+    elements: "str"
+  incident:
+    description: TODO
+    type: dict
+    default: !!null
+    suboptions:
+      title:
+        description: TODO
+        type: str
+        required: true
+      content:
+        description: TODO
+        type: str
+        required: true
+      style:
+        description: TODO
+        type: str
+        default: "primary"
+        choices: ["info", "warning", "danger", "primary", "light", "dark"]
+  state:
+    description: TODO
+    type: str
+    default: "present"
+    choices: ["present", "absent"]
 '''
 
 EXAMPLES = r'''
@@ -47,6 +129,17 @@ EXAMPLES = r'''
 
 RETURN = r'''
 '''
+
+import traceback
+
+from ansible.module_utils.basic import AnsibleModule, missing_required_lib
+from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common import object_changed, clear_params, common_module_args
+
+try:
+    from uptime_kuma_api import UptimeKumaApi
+    HAS_UPTIME_KUMA_API = True
+except ImportError:
+    HAS_UPTIME_KUMA_API = False
 
 
 def run(api, params, result):
@@ -98,12 +191,12 @@ def main():
         theme=dict(type="str", default="light", choices=["light", "dark"]),
         published=dict(type="bool", default=True),
         show_tags=dict(type="bool", default=False),
-        domain_name_list=dict(type="list", options="str", default=[]),
+        domain_name_list=dict(type="list", elements="str", default=[]),
         custom_css=dict(type="str", default=""),
         footer_text=dict(type="str", default=None),
         show_powered_by=dict(type="bool", default=True),
         img_data_url=dict(type="str", default="/icon.svg"),
-        monitors=dict(type="list", options="str", default=None),
+        monitors=dict(type="list", elements="str"),
 
         incident=dict(type="dict", default=None, options=dict(
             title=dict(type="str", required=True),
@@ -117,6 +210,9 @@ def main():
 
     module = AnsibleModule(module_args)
     params = module.params
+
+    if not HAS_UPTIME_KUMA_API:
+        module.fail_json(msg=missing_required_lib("uptime_kuma_api"))
 
     api = UptimeKumaApi(params["api_url"])
     api.login(params["api_username"], params["api_password"])
