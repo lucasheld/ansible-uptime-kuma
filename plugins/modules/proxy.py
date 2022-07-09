@@ -38,31 +38,25 @@ options:
   auth:
     description: TODO
     type: bool
-    default: false
   username:
     description: TODO
     type: str
-    default: !!null
   password:
     description: TODO
     type: str
-    default: !!null
   active:
     description: TODO
     type: bool
-    default: true
   default:
     description: TODO
     type: bool
-    default: false
   apply_existing:
     description: TODO
     type: bool
-    default: false
   state:
     description: TODO
     type: str
-    default: "present"
+    default: present
     choices: ["present", "absent"]
 '''
 
@@ -104,7 +98,7 @@ import traceback
 
 from ansible.module_utils.basic import AnsibleModule, missing_required_lib
 from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common import object_changed, clear_params, common_module_args, \
-    get_proxy_by_host_port
+    get_proxy_by_host_port, clear_unset_params
 
 try:
     from uptime_kuma_api import UptimeKumaApi
@@ -116,6 +110,7 @@ except ImportError:
 def run(api, params, result):
     state = params["state"]
     options = clear_params(params)
+    options = clear_unset_params(options)
 
     if params["id"]:
         proxy = api.get_proxy(params["id"])
@@ -143,12 +138,12 @@ def main():
         host=dict(type="str", required=True),
         port=dict(type="int", required=True),
         protocol=dict(type="str"),
-        auth=dict(type="bool", default=False),
-        username=dict(type="str", default=None),
-        password=dict(type="str", default=None, no_log=True),
-        active=dict(type="bool", default=True),
-        default=dict(type="bool", default=False),
-        apply_existing=dict(type="bool", default=False),
+        auth=dict(type="bool"),
+        username=dict(type="str"),
+        password=dict(type="str", no_log=True),
+        active=dict(type="bool"),
+        default=dict(type="bool"),
+        apply_existing=dict(type="bool"),
         state=dict(type="str", default="present", choices=["present", "absent"])
     )
     module_args.update(common_module_args)

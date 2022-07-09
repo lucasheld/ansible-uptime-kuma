@@ -33,7 +33,7 @@ options:
   state:
     description: TODO
     type: str
-    default: "present"
+    default: present
     choices: ["present", "absent"]
 '''
 

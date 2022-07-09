@@ -30,7 +30,6 @@ options:
   default:
     description: TODO
     type: bool
-    default: false
   state:
     description: TODO
     type: str
@@ -78,7 +77,8 @@ RETURN = r'''
 import traceback
 
 from ansible.module_utils.basic import AnsibleModule, missing_required_lib
-from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common import object_changed, clear_params, common_module_args, get_notification_by_name
+from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common import object_changed, clear_params, common_module_args, get_notification_by_name, \
+    clear_unset_params
 
 try:
     from uptime_kuma_api import UptimeKumaApi, params_map_notification_provider, NotificationType
@@ -104,8 +104,7 @@ def run(api, params, result):
 
     state = params["state"]
     options = clear_params(params)
-    # remove unset notification provider options
-    options = {k: v for k, v in options.items() if not (k in notification_provider_options and v is None)}
+    options = clear_unset_params(options)
 
     if params["id"]:
         notification = api.get_notification(params["id"])
@@ -131,7 +130,7 @@ def main():
     module_args = dict(
         id=dict(type="int"),
         name=dict(type="str"),
-        default=dict(type="bool", default=False),
+        default=dict(type="bool"),
         state=dict(type="str", default="present", choices=["present", "absent"])
     )
 

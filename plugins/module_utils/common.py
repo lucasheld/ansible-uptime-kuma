@@ -23,6 +23,10 @@ def clear_params(params: dict):
     return {k: v for k, v in params.items() if k not in ["api_url", "api_username", "api_password", "state"]}
 
 
+def clear_unset_params(params: dict):
+    return {k: v for k, v in params.items() if v is not None}
+
+
 def get_proxy_by_host_port(api, host, port):
     proxies = api.get_proxies()
     for proxy in proxies:

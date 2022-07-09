@@ -31,41 +31,32 @@ options:
   description:
     description: TODO
     type: str
-    default: !!null
   theme:
     description: TODO
     type: str
-    default: "light"
     choices: ["light", "dark"]
   published:
     description: TODO
     type: bool
-    default: true
   show_tags:
     description: TODO
     type: bool
-    default: false
   domain_name_list:
     description: TODO
     type: list
     elements: "str"
-    default: []
   custom_css:
     description: TODO
     type: str
-    default: ""
   footer_text:
     description: TODO
     type: str
-    default: !!null
   show_powered_by:
     description: TODO
     type: bool
-    default: true
   img_data_url:
     description: TODO
     type: str
-    default: "/icon.svg"
   monitors:
     description: TODO
     type: list
@@ -73,7 +64,6 @@ options:
   incident:
     description: TODO
     type: dict
-    default: !!null
     suboptions:
       title:
         description: TODO
@@ -86,12 +76,11 @@ options:
       style:
         description: TODO
         type: str
-        default: "primary"
         choices: ["info", "warning", "danger", "primary", "light", "dark"]
   state:
     description: TODO
     type: str
-    default: "present"
+    default: present
     choices: ["present", "absent"]
 '''
 
@@ -133,7 +122,7 @@ RETURN = r'''
 import traceback
 
 from ansible.module_utils.basic import AnsibleModule, missing_required_lib
-from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common import object_changed, clear_params, common_module_args
+from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common import object_changed, clear_params, common_module_args, clear_unset_params
 
 try:
     from uptime_kuma_api import UptimeKumaApi
@@ -147,6 +136,7 @@ def run(api, params, result):
     state = params["state"]
 
     options = clear_params(params)
+    options = clear_unset_params(options)
     del options["incident"]
 
     try:
@@ -184,20 +174,20 @@ def main():
         slug=dict(type="str", required=True),
         # id_=dict(type="int"),
         title=dict(type="str"),
-        description=dict(type="str", default=None),
-        theme=dict(type="str", default="light", choices=["light", "dark"]),
-        published=dict(type="bool", default=True),
-        show_tags=dict(type="bool", default=False),
-        domain_name_list=dict(type="list", elements="str", default=[]),
-        custom_css=dict(type="str", default=""),
-        footer_text=dict(type="str", default=None),
-        show_powered_by=dict(type="bool", default=True),
-        img_data_url=dict(type="str", default="/icon.svg"),
+        description=dict(type="str"),
+        theme=dict(type="str", choices=["light", "dark"]),
+        published=dict(type="bool"),
+        show_tags=dict(type="bool"),
+        domain_name_list=dict(type="list", elements="str"),
+        custom_css=dict(type="str"),
+        footer_text=dict(type="str"),
+        show_powered_by=dict(type="bool"),
+        img_data_url=dict(type="str"),
         monitors=dict(type="list", elements="str"),
-        incident=dict(type="dict", default=None, options=dict(
+        incident=dict(type="dict", options=dict(
             title=dict(type="str", required=True),
             content=dict(type="str", required=True),
-            style=dict(type="str", default="primary", choices=["info", "warning", "danger", "primary", "light", "dark"])
+            style=dict(type="str", choices=["info", "warning", "danger", "primary", "light", "dark"])
         )),
         state=dict(type="str", default="present", choices=["present", "absent"])
     )

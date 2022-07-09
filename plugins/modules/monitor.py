@@ -34,49 +34,38 @@ options:
   heartbeat_interval:
     description: TODO
     type: int
-    default: 60
   heartbeat_retry_interval:
     description: TODO
     type: int
-    default: 60
   retries:
     description: TODO
     type: int
-    default: 0
   upside_down_mode:
     description: TODO
     type: bool
-    default: False
   notifications:
     description: TODO
     type: list
-    default: !!null
     elements: str
   url:
     description: TODO
     type: str
-    default: !!null
   certificate_expiry_notification:
     description: TODO
     type: bool
-    default: False
   ignore_tls_error:
     description: TODO
     type: bool
-    default: False
   max_redirects:
     description: TODO
     type: int
-    default: 10
   accepted_status_codes:
     description: TODO
     type: list
-    default: !!null
     elements: str
   proxy:
     description: TODO
     type: dict
-    default: !!null
     suboptions:
       host:
         description: TODO
@@ -89,85 +78,65 @@ options:
   http_method:
     description: TODO
     type: str
-    default: "GET"
   http_body:
     description: TODO
     type: str
-    default: ""
   http_headers:
     description: TODO
     type: str
-    default: ""
   auth_method:
     description: TODO
     type: str
-    default: ""
     choices: ["", "basic", "ntlm"]
   auth_user:
     description: TODO
     type: str
-    default: ""
   auth_pass:
     description: TODO
     type: str
-    default: ""
   auth_domain:
     description: TODO
     type: str
-    default: ""
   auth_workstation:
     description: TODO
     type: str
-    default: ""
   keyword:
     description: TODO
     type: str
-    default: ""
   hostname:
     description: TODO
     type: str
-    default: ""
   port:
     description: TODO
     type: int
-    default: 53
   dns_resolve_server:
     description: TODO
     type: str
-    default: "1.1.1.1"
   dns_resolve_type:
     description: TODO
     type: str
-    default: "A"
   mqtt_username:
     description: TODO
     type: str
-    default: ""
   mqtt_password:
     description: TODO
     type: str
-    default: ""
   mqtt_topic:
     description: TODO
     type: str
-    default: ""
   mqtt_success_message:
     description: TODO
     type: str
-    default: ""
   sqlserver_connection_string:
     description: TODO
     type: str
-    default: "Server=<hostname>,<port>;Database=<your database>;User Id=<your user id>;Password=<your password>;Encrypt=<true/false>;\
-      TrustServerCertificate=<Yes/No>;Connection Timeout=<int>"
   sqlserver_query:
     description: TODO
     type: str
-    default: !!null
   state:
     description: TODO
     type: str
-    default: "present"
+    default: present
     choices: ["present", "absent", "paused", "resumed"]
 '''
 
@@ -225,7 +194,7 @@ import traceback
 
 from ansible.module_utils.basic import AnsibleModule, missing_required_lib
 from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common import object_changed, clear_params, common_module_args, \
-    get_proxy_by_host_port, get_notification_by_name, get_monitor_by_name
+    get_proxy_by_host_port, get_notification_by_name, get_monitor_by_name, clear_unset_params
 
 try:
     from uptime_kuma_api import UptimeKumaApi
@@ -261,6 +230,7 @@ def run(api, params, result):
 
     state = params["state"]
     options = clear_params(params)
+    options = clear_unset_params(options)
 
     if params["id"]:
         monitor = api.get_monitor(params["id"])
@@ -295,60 +265,58 @@ def main():
         id=dict(type="int"),
         name=dict(type="str"),
         type=dict(type="str", choices=["http", "port", "ping", "keyword", "dns", "push", "steam", "mqtt", "sqlserver"]),
-        heartbeat_interval=dict(type="int", default=60),
-        heartbeat_retry_interval=dict(type="int", default=60),
-        retries=dict(type="int", default=0),
-        upside_down_mode=dict(type="bool", default=False),
+        heartbeat_interval=dict(type="int"),
+        heartbeat_retry_interval=dict(type="int"),
+        retries=dict(type="int"),
+        upside_down_mode=dict(type="bool"),
         # tags=dict(type="list", elements="dict", options=dict()),
-        # notification_ids=dict(type="list", default=None, elements="int"),
-        notifications=dict(type="list", default=None, elements="str"),
+        # notification_ids=dict(type="list", elements="int"),
+        notifications=dict(type="list", elements="str"),
 
         # HTTP, KEYWORD
-        url=dict(type="str", default=None),
-        certificate_expiry_notification=dict(type="bool", default=False),
-        ignore_tls_error=dict(type="bool", default=False),
-        max_redirects=dict(type="int", default=10),
-        accepted_status_codes=dict(type="list", default=None, elements="str"),
-        # proxy_id=dict(type="int", default=None),
-        proxy=dict(type="dict", default=None, options=dict(
+        url=dict(type="str"),
+        certificate_expiry_notification=dict(type="bool"),
+        ignore_tls_error=dict(type="bool"),
+        max_redirects=dict(type="int"),
+        accepted_status_codes=dict(type="list", elements="str"),
+        # proxy_id=dict(type="int"),
+        proxy=dict(type="dict", options=dict(
             host=dict(type="str", required=True),
             port=dict(type="int", required=True)
         )),
-        http_method=dict(type="str", default="GET"),
-        http_body=dict(type="str", default=None),
-        http_headers=dict(type="str", default=None),
-        auth_method=dict(type="str", default="", choices=["", "basic", "ntlm"]),
-        auth_user=dict(type="str", default=None),
-        auth_pass=dict(type="str", default=None, no_log=True),
-        auth_domain=dict(type="str", default=None),
-        auth_workstation=dict(type="str", default=None),
+        http_method=dict(type="str"),
+        http_body=dict(type="str"),
+        http_headers=dict(type="str"),
+        auth_method=dict(type="str", choices=["", "basic", "ntlm"]),
+        auth_user=dict(type="str"),
+        auth_pass=dict(type="str", no_log=True),
+        auth_domain=dict(type="str"),
+        auth_workstation=dict(type="str"),
 
         # KEYWORD
-        keyword=dict(type="str", default=None),
+        keyword=dict(type="str"),
 
         # DNS, PING, STEAM, MQTT
-        hostname=dict(type="str", default=None),
+        hostname=dict(type="str"),
 
         # DNS, STEAM, MQTT
-        port=dict(type="int", default=53),
+        port=dict(type="int"),
 
         # DNS
-        dns_resolve_server=dict(type="str", default="1.1.1.1"),
-        dns_resolve_type=dict(type="str", default="A"),
+        dns_resolve_server=dict(type="str"),
+        dns_resolve_type=dict(type="str"),
 
         # MQTT
-        mqtt_username=dict(type="str", default=None),
-        mqtt_password=dict(type="str", default=None, no_log=True),
-        mqtt_topic=dict(type="str", default=None),
-        mqtt_success_message=dict(type="str", default=None),
+        mqtt_username=dict(type="str"),
+        mqtt_password=dict(type="str", no_log=True),
+        mqtt_topic=dict(type="str"),
+        mqtt_success_message=dict(type="str"),
 
         # SQLSERVER
         sqlserver_connection_string=dict(
             type="str",
-            default="Server=<hostname>,<port>;Database=<your database>;User Id=<your user id>;Password=<your password>;Encrypt=<true/false>;" \
-                    "TrustServerCertificate=<Yes/No>;Connection Timeout=<int>"
         ),
-        sqlserver_query=dict(type="str", default=None),
+        sqlserver_query=dict(type="str"),
 
         state=dict(type="str", default="present", choices=["present", "absent", "paused", "resumed"])
     )
