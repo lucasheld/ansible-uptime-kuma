@@ -17,44 +17,46 @@ extends_documentation_fragment:
 module: proxy
 version_added: 0.0.0
 author: Lucas Held (@lucasheld)
-short_description: TODO
-description: TODO
+short_description: Manages proxies.
+description: Manages proxies.
 
 options:
   id:
-    description: TODO
+    description: The id of the proxy.
     type: int
   host:
-    description: TODO
+    description: The host of the proxy.
     type: str
     required: true
   port:
-    description: TODO
+    description: The port of the proxy.
     type: int
     required: true
   protocol:
-    description: TODO
+    description: The protocol of the proxy.
     type: str
   auth:
-    description: TODO
+    description: True if the authentication is enabled.
     type: bool
   username:
-    description: TODO
+    description: The username of the proxy.
     type: str
   password:
-    description: TODO
+    description: The password of the proxy.
     type: str
   active:
-    description: TODO
+    description: True if the proxy is active.
     type: bool
   default:
-    description: TODO
+    description: True if the proxy is the default.
     type: bool
   apply_existing:
-    description: TODO
+    description: True if the proxy is applied to existing monitors.
     type: bool
   state:
-    description: TODO
+    description:
+      - Set to C(present) to create/update a proxy.
+      - Set to C(absent) to delete a proxy.
     type: str
     default: present
     choices: ["present", "absent"]

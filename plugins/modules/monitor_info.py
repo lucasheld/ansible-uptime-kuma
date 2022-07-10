@@ -17,20 +17,20 @@ extends_documentation_fragment:
 module: monitor_info
 version_added: 0.0.0
 author: Lucas Held (@lucasheld)
-short_description: TODO
-description: TODO
+short_description: Retrieves facts about a monitor.
+description: Retrieves facts about a monitor.
 
 options:
   id:
-    description: The monitor id.
+    description: The id of the monitor to inspect.
     type: int
   name:
-    description: The monitor name.
+    description: The name of the monitor to inspect.
     type: str
 '''
 
 EXAMPLES = r'''
-- name: list monitors
+- name: get all monitors
   lucasheld.uptime_kuma.monitor_info:
     api_url: http://192.168.1.10:3001
     api_username: admin
@@ -39,6 +39,11 @@ EXAMPLES = r'''
 '''
 
 RETURN = r'''
+monitors:
+  description: The monitors as list
+  returned: always
+  type: list
+  elements: dict
 '''
 
 import traceback

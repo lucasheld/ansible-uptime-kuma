@@ -17,17 +17,17 @@ extends_documentation_fragment:
 module: status_page_info
 version_added: 0.0.0
 author: Lucas Held (@lucasheld)
-short_description: TODO
-description: TODO
+short_description: Retrieves facts about a status page.
+description: Retrieves facts about a status page.
 
 options:
   slug:
-    description: The status page slug.
+    description: The slug of the status page to inspect.
     type: str
 '''
 
 EXAMPLES = r'''
-- name: list status_pages
+- name: get all status_pages
   lucasheld.uptime_kuma.status_page_info:
     api_url: http://192.168.1.10:3001
     api_username: admin
@@ -36,6 +36,11 @@ EXAMPLES = r'''
 '''
 
 RETURN = r'''
+status_pages:
+  description: The status pages as list
+  returned: always
+  type: list
+  elements: dict
 '''
 
 import traceback

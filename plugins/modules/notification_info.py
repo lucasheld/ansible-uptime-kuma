@@ -17,20 +17,20 @@ extends_documentation_fragment:
 module: notification_info
 version_added: 0.0.0
 author: Lucas Held (@lucasheld)
-short_description: TODO
-description: TODO
+short_description: Retrieves facts about a notification.
+description: Retrieves facts about a notification.
 
 options:
   id:
-    description: The notification id.
+    description: The id of the notification to inspect.
     type: int
   name:
-    description: The notification name.
+    description: The name of the notification to inspect.
     type: str
 '''
 
 EXAMPLES = r'''
-- name: list notifications
+- name: get all notifications
   lucasheld.uptime_kuma.notification_info:
     api_url: http://192.168.1.10:3001
     api_username: admin
@@ -39,6 +39,11 @@ EXAMPLES = r'''
 '''
 
 RETURN = r'''
+notifications:
+  description: The notifications as list
+  returned: always
+  type: list
+  elements: dict
 '''
 
 import traceback

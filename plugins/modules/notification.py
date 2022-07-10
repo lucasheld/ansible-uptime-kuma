@@ -17,21 +17,23 @@ extends_documentation_fragment:
 module: notification
 version_added: 0.0.0
 author: Lucas Held (@lucasheld)
-short_description: TODO
-description: TODO
+short_description: Manages notifications.
+description: Manages notifications.
 
 options:
   id:
-    description: TODO
+    description: The id of the notification.
     type: int
   name:
-    description: TODO
+    description: The name of the notification.
     type: str
   default:
-    description: TODO
+    description: True if the notification is the default.
     type: bool
   state:
-    description: TODO
+    description:
+      - Set to C(present) to create/update a notification.
+      - Set to C(absent) to delete a notification.
     type: str
     default: present
     choices: ["present", "absent"]

@@ -17,68 +17,70 @@ extends_documentation_fragment:
 module: status_page
 version_added: 0.0.0
 author: Lucas Held (@lucasheld)
-short_description: TODO
-description: TODO
+short_description: Manages status pages.
+description: Manages status pages.
 
 options:
   slug:
-    description: TODO
+    description: The slug of the status page.
     type: str
     required: true
   title:
-    description: TODO
+    description: The title of the status page.
     type: str
   description:
-    description: TODO
+    description: The description of the status page.
     type: str
   theme:
-    description: TODO
+    description: The theme of the status page.
     type: str
     choices: ["light", "dark"]
   published:
-    description: TODO
+    description: True if the status page is published.
     type: bool
   show_tags:
-    description: TODO
+    description: True if the tags are shown.
     type: bool
   domain_name_list:
-    description: TODO
+    description: The domain_name_list of the status page.
     type: list
     elements: "str"
   custom_css:
-    description: TODO
+    description: The custom_css of the status page.
     type: str
   footer_text:
-    description: TODO
+    description: The footer_text of the status page.
     type: str
   show_powered_by:
-    description: TODO
+    description: True if the powered by is shown.
     type: bool
   img_data_url:
-    description: TODO
+    description: The img_data_url of the status page.
     type: str
   monitors:
-    description: TODO
+    description: The monitors of the status page.
     type: list
     elements: "str"
   incident:
-    description: TODO
+    description: The incident of the status page.
     type: dict
     suboptions:
       title:
-        description: TODO
+        description: The title of the status page.
         type: str
         required: true
       content:
-        description: TODO
+        description: The content of the status page.
         type: str
         required: true
       style:
-        description: TODO
+        description: The style of the status page.
         type: str
         choices: ["info", "warning", "danger", "primary", "light", "dark"]
   state:
-    description: TODO
+    description:
+      - Set to C(present) to create/update a status page.
+      - Set to C(absent) to delete a status page.
     type: str
     default: present
     choices: ["present", "absent"]

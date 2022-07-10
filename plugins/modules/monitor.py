@@ -17,131 +17,135 @@ extends_documentation_fragment:
 module: monitor
 version_added: 0.0.0
 author: Lucas Held (@lucasheld)
-short_description: TODO
-description: TODO
+short_description: Manages monitors.
+description: Manages monitors.
 
 options:
   id:
-    description: TODO
+    description: The id of the monitor.
     type: int
   name:
-    description: TODO
+    description: The name of the monitor.
     type: str
   type:
-    description: TODO
+    description: The type of the monitor.
     type: str
     choices: ["http", "port", "ping", "keyword", "dns", "push", "steam", "mqtt", "sqlserver"]
   heartbeat_interval:
-    description: TODO
+    description: The heartbeat interval of the monitor.
     type: int
   heartbeat_retry_interval:
-    description: TODO
+    description: The heartbeat retry interval of the monitor.
     type: int
   retries:
-    description: TODO
+    description: The retries of the monitor.
     type: int
   upside_down_mode:
-    description: TODO
+    description: True if upside down mode is enabled.
     type: bool
   notifications:
-    description: TODO
+    description: The notification names of the monitor.
     type: list
     elements: str
   url:
-    description: TODO
+    description: The url of the monitor.
     type: str
   certificate_expiry_notification:
-    description: TODO
+    description: True if certificate expiry notification is enabled.
     type: bool
   ignore_tls_error:
-    description: TODO
+    description: True if ignore tls error is enabled.
     type: bool
   max_redirects:
-    description: TODO
+    description: The max redirects of the monitor.
     type: int
   accepted_status_codes:
-    description: TODO
+    description: The accepted status codes of the monitor.
     type: list
     elements: str
   proxy:
-    description: TODO
+    description: The proxy of the monitor.
     type: dict
     suboptions:
       host:
-        description: TODO
+        description: The host of the proxy.
         type: str
         required: true
       port:
-        description: TODO
+        description: The port of the proxy.
         type: int
         required: true
   http_method:
-    description: TODO
+    description: The http method of the monitor.
     type: str
   http_body:
-    description: TODO
+    description: The http body of the monitor.
     type: str
   http_headers:
-    description: TODO
+    description: The http headers of the monitor.
     type: str
   auth_method:
-    description: TODO
+    description: The auth method of the monitor.
     type: str
     choices: ["", "basic", "ntlm"]
   auth_user:
-    description: TODO
+    description: The auth user of the monitor.
     type: str
   auth_pass:
-    description: TODO
+    description: The auth pass of the monitor.
     type: str
   auth_domain:
-    description: TODO
+    description: The auth domain of the monitor.
     type: str
   auth_workstation:
-    description: TODO
+    description: The auth workstation of the monitor.
     type: str
   keyword:
-    description: TODO
+    description: The keyword of the monitor.
     type: str
   hostname:
-    description: TODO
+    description: The hostname of the monitor.
     type: str
   port:
-    description: TODO
+    description: The port of the monitor.
     type: int
   dns_resolve_server:
-    description: TODO
+    description: The dns resolve server of the monitor.
     type: str
   dns_resolve_type:
-    description: TODO
+    description: The dns resolve type of the monitor.
     type: str
   mqtt_username:
-    description: TODO
+    description: The mqtt username of the monitor.
     type: str
   mqtt_password:
-    description: TODO
+    description: The mqtt password of the monitor.
     type: str
   mqtt_topic:
-    description: TODO
+    description: The mqtt topic of the monitor.
     type: str
   mqtt_success_message:
-    description: TODO
+    description: The mqtt success message of the monitor.
     type: str
   sqlserver_connection_string:
-    description: TODO
+    description: The sqlserver connection string of the monitor.
     type: str
   sqlserver_query:
-    description: TODO
+    description: The sqlserver query of the monitor.
     type: str
   state:
-    description: TODO
+    description:
+      - Set to C(present) to create/update a monitor.
+      - Set to C(absent) to delete a monitor.
+      - Set to C(paused) to pause a monitor.
+      - Set to C(resumed) to resume a monitor.
     type: str
     default: present
     choices: ["present", "absent", "paused", "resumed"]
 '''
 
 EXAMPLES = r'''
-- name: Add monitor
+- name: Add a monitor
   lucasheld.uptime_kuma.monitor:
     api_url: http://192.168.1.10:3001
     api_username: admin
@@ -152,7 +156,7 @@ EXAMPLES = r'''
     keyword: healthy
     state: present
 
-- name: Edit monitor
+- name: Edit a monitor
   lucasheld.uptime_kuma.monitor:
     api_url: http://192.168.1.10:3001
     api_username: admin
@@ -162,7 +166,7 @@ EXAMPLES = r'''
     url: http://192.168.20.135
     state: present
 
-- name: Remove monitor
+- name: Remove a monitor
   lucasheld.uptime_kuma.monitor:
     api_url: http://192.168.1.10:3001
     api_username: admin
@@ -170,7 +174,7 @@ EXAMPLES = r'''
     name: Peer 1
     state: absent
 
-- name: Pause monitor
+- name: Pause a monitor
   lucasheld.uptime_kuma.monitor:
     api_url: http://192.168.1.10:3001
     api_username: admin
@@ -178,7 +182,7 @@ EXAMPLES = r'''
     name: Peer 1
     state: paused
 
-- name: Resume monitor
+- name: Resume a monitor
   lucasheld.uptime_kuma.monitor:
     api_url: http://192.168.1.10:3001
     api_username: admin

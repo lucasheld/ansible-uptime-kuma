@@ -17,21 +17,23 @@ extends_documentation_fragment:
 module: tag
 version_added: 0.0.0
 author: Lucas Held (@lucasheld)
-short_description: TODO
-description: TODO
+short_description: Manages tags.
+description: Manages tags.
 
 options:
   id:
-    description: TODO
+    description: The id of the tag.
     type: int
   name:
-    description: TODO
+    description: The name of the tag.
     type: str
   color:
-    description: TODO
+    description: The color of the tag.
     type: str
   state:
-    description: TODO
+    description:
+      - Set to C(present) to create a tag.
+      - Set to C(absent) to delete a tag.
     type: str
     default: present
     choices: ["present", "absent"]

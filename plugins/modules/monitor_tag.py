@@ -17,8 +17,8 @@ extends_documentation_fragment:
 module: monitor_tag
 version_added: 0.0.0
 author: Lucas Held (@lucasheld)
-short_description: TODO
-description: TODO
+short_description: Manages monitor tags.
+description: Manages monitor tags.
 
 options:
   monitor_id:
@@ -38,14 +38,16 @@ options:
     type: str
     required: true
   state:
-    description: State in which to leave the alias
+    description:
+      - Set to C(present) to create a monitor tag.
+      - Set to C(absent) to delete a monitor tag.
     type: str
     default: present
     choices: ["present", "absent"]
 '''
 
 EXAMPLES = r'''
-- name: Add monitor tag
+- name: Add a monitor tag
   lucasheld.uptime_kuma.monitor_tag:
     api_url: http://192.168.1.10:3001
     api_username: admin
@@ -55,7 +57,7 @@ EXAMPLES = r'''
     value: Tag value
     state: present
 
-- name: Remove monitor tag
+- name: Remove a monitor tag
   lucasheld.uptime_kuma.monitor_tag:
     api_url: http://192.168.1.10:3001
     api_username: admin

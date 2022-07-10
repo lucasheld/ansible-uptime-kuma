@@ -17,20 +17,20 @@ extends_documentation_fragment:
 module: tag_info
 version_added: 0.0.0
 author: Lucas Held (@lucasheld)
-short_description: TODO
-description: TODO
+short_description: Retrieves facts about a tag.
+description: Retrieves facts about a tag.
 
 options:
   id:
-    description: The tag id.
+    description: The id of the tag to inspect.
     type: int
   name:
-    description: The tag name.
+    description: The name of the tag to inspect.
     type: str
 '''
 
 EXAMPLES = r'''
-- name: list tags
+- name: get all tags
   lucasheld.uptime_kuma.tag_info:
     api_url: http://192.168.1.10:3001
     api_username: admin
@@ -39,6 +39,11 @@ EXAMPLES = r'''
 '''
 
 RETURN = r'''
+tags:
+  description: The tags as list
+  returned: always
+  type: list
+  elements: dict
 '''
 
 import traceback

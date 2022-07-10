@@ -17,23 +17,23 @@ extends_documentation_fragment:
 module: proxy_info
 version_added: 0.0.0
 author: Lucas Held (@lucasheld)
-short_description: TODO
-description: TODO
+short_description: Retrieves facts about a proxy.
+description: Retrieves facts about a proxy.
 
 options:
   id:
-    description: The proxy id.
+    description: The id of the proxy to inspect.
     type: int
   host:
-    description: TODO
+    description: The host of the proxy to inspect.
     type: str
   port:
-    description: TODO
+    description: The port of the proxy to inspect.
     type: int
 '''
 
 EXAMPLES = r'''
-- name: list proxies
+- name: get all proxies
   lucasheld.uptime_kuma.proxy_info:
     api_url: http://192.168.1.10:3001
     api_username: admin
@@ -42,6 +42,11 @@ EXAMPLES = r'''
 '''
 
 RETURN = r'''
+proxies:
+  description: The proxies as list
+  returned: always
+  type: list
+  elements: dict
 '''
 
 import traceback
