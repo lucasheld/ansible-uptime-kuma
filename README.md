@@ -1,6 +1,6 @@
 # ansible-uptime-kuma
 
-This collection contains modules that allow to configure Uptime Kuma with ansible.
+This collection contains modules that allow to configure Uptime Kuma with Ansible.
 
 ## Installation
 
