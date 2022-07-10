@@ -12,11 +12,15 @@ ansible-galaxy collection install lucasheld.uptime_kuma
 
 The following modules are available:
 
-- [info](https://github.com/lucasheld/ansible-uptime-kuma/wiki/info)
-- [monitor_tag](https://github.com/lucasheld/ansible-uptime-kuma/wiki/info)
-- [monitor](https://github.com/lucasheld/ansible-uptime-kuma/wiki/info)
-- [notification](https://github.com/lucasheld/ansible-uptime-kuma/wiki/info)
-- [proxy](https://github.com/lucasheld/ansible-uptime-kuma/wiki/info)
-- [setup](https://github.com/lucasheld/ansible-uptime-kuma/wiki/info)
-- [status_page](https://github.com/lucasheld/ansible-uptime-kuma/wiki/info)
-- [tag](https://github.com/lucasheld/ansible-uptime-kuma/wiki/info)
+- [monitor](https://github.com/lucasheld/ansible-uptime-kuma/wiki/monitor)
+- [monitor_info](https://github.com/lucasheld/ansible-uptime-kuma/wiki/monitor_info)
+- [monitor_tag](https://github.com/lucasheld/ansible-uptime-kuma/wiki/monitor_tag)
+- [notification](https://github.com/lucasheld/ansible-uptime-kuma/wiki/notification)
+- [notification_info](https://github.com/lucasheld/ansible-uptime-kuma/wiki/notification_info)
+- [proxy](https://github.com/lucasheld/ansible-uptime-kuma/wiki/proxy)
+- [proxy_info](https://github.com/lucasheld/ansible-uptime-kuma/wiki/proxy_info)
+- [setup](https://github.com/lucasheld/ansible-uptime-kuma/wiki/setup)
+- [status_page](https://github.com/lucasheld/ansible-uptime-kuma/wiki/status_page)
+- [status_page_info](https://github.com/lucasheld/ansible-uptime-kuma/wiki/status_page_info)
+- [tag](https://github.com/lucasheld/ansible-uptime-kuma/wiki/tag)
+- [tag_info](https://github.com/lucasheld/ansible-uptime-kuma/wiki/tag_info)
