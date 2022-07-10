@@ -15,7 +15,6 @@ extends_documentation_fragment:
   - lucasheld.uptime_kuma.uptime_kuma
 
 module: monitor_info
-version_added: 0.0.0
 author: Lucas Held (@lucasheld)
 short_description: Retrieves facts about a monitor.
 description: Retrieves facts about a monitor.

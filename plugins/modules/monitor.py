@@ -15,7 +15,6 @@ extends_documentation_fragment:
   - lucasheld.uptime_kuma.uptime_kuma
 
 module: monitor
-version_added: 0.0.0
 author: Lucas Held (@lucasheld)
 short_description: Manages monitors.
 description: Manages monitors.
@@ -281,8 +280,8 @@ def main():
         retries=dict(type="int"),
         upside_down_mode=dict(type="bool"),
         # tags=dict(type="list", elements="dict", options=dict()),
-        # notification_ids=dict(type="list", elements="int"),
-        notifications=dict(type="list", elements="str"),
+        notification_ids=dict(type="list", elements="int"),
+        notification_names=dict(type="list", elements="str"),
 
         # HTTP, KEYWORD
         url=dict(type="str"),
@@ -292,8 +291,9 @@ def main():
         accepted_status_codes=dict(type="list", elements="str"),
         # proxy_id=dict(type="int"),
         proxy=dict(type="dict", options=dict(
-            host=dict(type="str", required=True),
-            port=dict(type="int", required=True)
+            id=dict(type="int"),
+            host=dict(type="str"),
+            port=dict(type="int")
         )),
         http_method=dict(type="str"),
         http_body=dict(type="str"),

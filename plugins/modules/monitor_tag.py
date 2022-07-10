@@ -15,7 +15,6 @@ extends_documentation_fragment:
   - lucasheld.uptime_kuma.uptime_kuma
 
 module: monitor_tag
-version_added: 0.0.0
 author: Lucas Held (@lucasheld)
 short_description: Manages monitor tags.
 description: Manages monitor tags.

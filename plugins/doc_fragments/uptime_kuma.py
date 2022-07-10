@@ -16,11 +16,11 @@ options:
     type: str
     default: http://127.0.0.1:3001
   api_username:
-    description: The Uptime Kuma Username.
+    description: The Uptime Kuma username.
     type: str
     required: true
   api_password:
-    description: The Uptime Kuma Password.
+    description: The Uptime Kuma password.
     type: str
     required: true
 

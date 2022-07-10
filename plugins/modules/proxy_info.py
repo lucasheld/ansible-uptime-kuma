@@ -15,7 +15,6 @@ extends_documentation_fragment:
   - lucasheld.uptime_kuma.uptime_kuma
 
 module: proxy_info
-version_added: 0.0.0
 author: Lucas Held (@lucasheld)
 short_description: Retrieves facts about a proxy.
 description: Retrieves facts about a proxy.
