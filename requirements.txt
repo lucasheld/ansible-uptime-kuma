@@ -1,1 +1,0 @@
-uptime_kuma_api
