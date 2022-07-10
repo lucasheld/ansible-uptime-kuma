@@ -43,7 +43,11 @@ options:
   upside_down_mode:
     description: True if upside down mode is enabled.
     type: bool
-  notifications:
+  notification_ids:
+    description: The notification ids of the monitor.
+    type: list
+    elements: int
+  notification_names:
     description: The notification names of the monitor.
     type: list
     elements: str
@@ -67,14 +71,15 @@ options:
     description: The proxy of the monitor.
     type: dict
     suboptions:
+      id:
+        description: The id of the proxy.
+        type: int
       host:
         description: The host of the proxy.
         type: str
-        required: true
       port:
         description: The port of the proxy.
         type: int
-        required: true
   http_method:
     description: The http method of the monitor.
     type: str
@@ -214,22 +219,24 @@ def run(api, params, result):
     # type -> type_
     params["type_"] = params.pop("type")
 
-    # notifications -> notification_ids
-    dict_notification_ids = {}
-    if params["notifications"]:
-        for notification_name in params["notifications"]:
+    # notification_names -> notification_ids
+    if params["notification_names"]:
+        notification_ids = []
+        for notification_name in params["notification_names"]:
             notification = get_notification_by_name(api, notification_name)
-            notification_id = notification["id"]
-            dict_notification_ids[notification_id] = True
-    params["notification_ids"] = dict_notification_ids
-    del params["notifications"]
+            notification_ids.append(notification["id"])
+        params["notification_ids"] = notification_ids
+    del params["notification_names"]
 
     # proxy -> proxy_id
     if params["proxy"]:
-        proxy = get_proxy_by_host_port(api, params["proxy"]["host"], params["proxy"]["port"])
-        params["proxy_id"] = proxy["id"]
+        if params["proxy"]["id"]:
+            params["proxy_id"] = params["proxy"]["id"]
+        else:
+            proxy = get_proxy_by_host_port(api, params["proxy"]["host"], params["proxy"]["port"])
+            params["proxy_id"] = proxy["id"]
     else:
-        params["proxy_id"] = params["proxy"]
+        params["proxy_id"] = None
     del params["proxy"]
 
     state = params["state"]
