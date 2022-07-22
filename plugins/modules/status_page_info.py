@@ -76,7 +76,11 @@ def main():
         module.fail_json(msg=missing_required_lib("uptime_kuma_api"))
 
     api = UptimeKumaApi(params["api_url"])
-    api.login(params["api_username"], params["api_password"])
+    api_token = params.get("api_token")
+    if api_token:
+      api.login_by_token(api_token)
+    else:
+      api.login(params["api_username"], params["api_password"])
 
     result = {
         "changed": False

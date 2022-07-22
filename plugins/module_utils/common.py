@@ -20,7 +20,7 @@ def object_changed(object: dict, options: dict, ignore: dict = None):
 
 
 def clear_params(params: dict):
-    return {k: v for k, v in params.items() if k not in ["api_url", "api_username", "api_password", "state"]}
+    return {k: v for k, v in params.items() if k not in ["api_url", "api_username", "api_password", "api_token", "state"]}
 
 
 def clear_unset_params(params: dict):
@@ -57,6 +57,7 @@ def get_tag_by_name(api, name):
 
 common_module_args = dict(
     api_url=dict(type="str", default="http://127.0.0.1:3001"),
-    api_username=dict(type="str", required=True),
-    api_password=dict(type="str", required=True, no_log=True)
+    api_username=dict(type="str"),
+    api_password=dict(type="str", no_log=True),
+    api_token=dict(type="str", no_log=True)
 )

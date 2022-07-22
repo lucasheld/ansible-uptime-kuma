@@ -18,11 +18,12 @@ options:
   api_username:
     description: The Uptime Kuma username.
     type: str
-    required: true
   api_password:
     description: The Uptime Kuma password.
     type: str
-    required: true
+  api_token:
+    description: The Uptime Kuma login token.
+    type: str
 
 requirements:
   - uptime_kuma_api
