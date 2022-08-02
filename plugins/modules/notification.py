@@ -86,14 +86,14 @@ from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common impor
     clear_unset_params
 
 try:
-    from uptime_kuma_api import UptimeKumaApi, params_map_notification_provider, NotificationType
+    from uptime_kuma_api import UptimeKumaApi, params_map_notification_providers, params_map_notification_provider_options, NotificationType
 
     HAS_UPTIME_KUMA_API = True
 except ImportError:
     HAS_UPTIME_KUMA_API = False
 
 
-def build_provider_args():
+def build_provider_args(notification_provider_options):
     provider_args = {}
     for notification_provider_param in notification_provider_options:
         arg_data = dict(type="str")
@@ -101,6 +101,18 @@ def build_provider_args():
             arg_data["no_log"] = True
         provider_args[notification_provider_param] = arg_data
     return provider_args
+
+
+def build_providers():
+    return list(params_map_notification_providers.values())
+
+
+def build_provider_options():
+    options = []
+    for provider_option in params_map_notification_provider_options.values():
+        for provider_option_py in provider_option.values():
+            options.append(provider_option_py)
+    return options
 
 
 def run(api, params, result):
@@ -140,13 +152,11 @@ def main():
     )
 
     if HAS_UPTIME_KUMA_API:
-        global notification_provider_types
-        global notification_provider_options
-        notification_provider_types = list(NotificationType.__dict__["_value2member_map_"].keys())
-        notification_provider_options = list(params_map_notification_provider.values())
+        notification_provider_types = build_providers()
+        notification_provider_options = build_provider_options()
 
         module_args.update(type=dict(type="str", choices=notification_provider_types))
-        provider_args = build_provider_args()
+        provider_args = build_provider_args(notification_provider_options)
         module_args.update(provider_args)
 
     module_args.update(common_module_args)
@@ -173,13 +183,11 @@ def main():
 
         api.disconnect()
         module.exit_json(**result)
-    except Exception as e:
+    except Exception:
         api.disconnect()
         error = traceback.format_exc()
         module.fail_json(msg=error, **result)
 
 
 if __name__ == '__main__':
-    notification_provider_types = None
-    notification_provider_options = None
     main()
