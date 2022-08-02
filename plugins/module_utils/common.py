@@ -5,7 +5,7 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 
-def object_changed(object: dict, options: dict, ignore: dict = None):
+def object_changed(obj: dict, options: dict, ignore: dict = None):
     changed_keys = []
     for key, value in options.items():
         if ignore and key in ignore:
@@ -14,13 +14,14 @@ def object_changed(object: dict, options: dict, ignore: dict = None):
                 continue
             elif value == ignore_value:
                 continue
-        if options[key] != object.get(key):
-            changed_keys.append((key, object.get(key), options[key]))
+        if options[key] != obj.get(key):
+            changed_keys.append((key, obj.get(key), options[key]))
     return changed_keys
 
 
 def clear_params(params: dict):
-    return {k: v for k, v in params.items() if k not in ["api_url", "api_username", "api_password", "api_token", "state"]}
+    ignored_params = ["api_url", "api_username", "api_password", "api_token", "state"]
+    return {k: v for k, v in params.items() if k not in ignored_params}
 
 
 def clear_unset_params(params: dict):

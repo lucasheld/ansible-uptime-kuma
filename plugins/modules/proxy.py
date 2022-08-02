@@ -21,14 +21,20 @@ description: Manages proxies.
 
 options:
   id:
-    description: The id of the proxy.
+    description:
+      - The id of the proxy.
+      - Only required if no I(host), I(port) and I(protocol) specified.
     type: int
   host:
-    description: The host of the proxy.
+    description:
+      - The host of the proxy.
+      - Only required if no I(id) specified.
     type: str
     required: true
   port:
-    description: The port of the proxy.
+    description:
+      - The port of the proxy.
+      - Only required if no I(id) specified.
     type: int
     required: true
   protocol:
@@ -171,7 +177,7 @@ def main():
 
         api.disconnect()
         module.exit_json(**result)
-    except Exception as e:
+    except Exception:
         api.disconnect()
         error = traceback.format_exc()
         module.fail_json(msg=error, **result)

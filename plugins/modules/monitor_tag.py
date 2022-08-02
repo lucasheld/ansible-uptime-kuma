@@ -21,16 +21,24 @@ description: Manages monitor tags.
 
 options:
   monitor_id:
-    description: The id of the monitor to which the tag should be assigned.
+    description:
+      - The id of the monitor to which the tag should be assigned.
+      - Only required if no I(monitor_name) specified.
     type: int
   monitor_name:
-    description: The name of the monitor to which the tag should be assigned.
+    description:
+      - The name of the monitor to which the tag should be assigned.
+      - Only required if no I(monitor_id) specified.
     type: str
   tag_id:
-    description: The id of the tag that should be assigned.
+    description:
+      - The id of the tag that should be assigned.
+      - Only required if no I(tag_name) specified.
     type: int
   tag_name:
-    description: The name of the tag that should be assigned.
+    description:
+      - The name of the tag that should be assigned.
+      - Only required if no I(tag_id) specified.
     type: str
   value:
     description: The value that should be assigned.
@@ -148,7 +156,7 @@ def main():
 
         api.disconnect()
         module.exit_json(**result)
-    except Exception as e:
+    except Exception:
         api.disconnect()
         error = traceback.format_exc()
         module.fail_json(msg=error, **result)

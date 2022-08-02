@@ -91,7 +91,7 @@ def main():
 
         api.disconnect()
         module.exit_json(**result)
-    except Exception as e:
+    except Exception:
         api.disconnect()
         error = traceback.format_exc()
         module.fail_json(msg=error, **result)

@@ -16,8 +16,8 @@ extends_documentation_fragment:
 
 module: setup
 author: Lucas Held (@lucasheld)
-short_description: TODO
-description: TODO
+short_description: Setup the initial username and password.
+description: Setup the initial username and password.
 '''
 
 EXAMPLES = r'''
@@ -77,7 +77,7 @@ def main():
 
         api.disconnect()
         module.exit_json(**result)
-    except Exception as e:
+    except Exception:
         api.disconnect()
         error = traceback.format_exc()
         module.fail_json(msg=error, **result)

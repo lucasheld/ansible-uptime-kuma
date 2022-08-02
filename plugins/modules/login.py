@@ -16,8 +16,8 @@ extends_documentation_fragment:
 
 module: login
 author: Lucas Held (@lucasheld)
-short_description: TODO
-description: TODO
+short_description: Login to Uptime Kuma.
+description: Login to Uptime Kuma and returns a token that can be used for future requests.
 '''
 
 EXAMPLES = r'''
@@ -29,6 +29,10 @@ EXAMPLES = r'''
 '''
 
 RETURN = r'''
+token:
+  description: The login token.
+  type: str
+  returned: always
 '''
 
 import traceback
@@ -72,7 +76,7 @@ def main():
 
         api.disconnect()
         module.exit_json(**result)
-    except Exception as e:
+    except Exception:
         api.disconnect()
         error = traceback.format_exc()
         module.fail_json(msg=error, **result)

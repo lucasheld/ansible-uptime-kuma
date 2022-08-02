@@ -21,10 +21,14 @@ description: Manages notifications.
 
 options:
   id:
-    description: The id of the notification.
+    description:
+      - The id of the notification.
+      - Only required if no I(name) specified.
     type: int
   name:
-    description: The name of the notification.
+    description:
+      - The name of the notification.
+      - Only required if no I(id) specified.
     type: str
   default:
     description: True if the notification is the default.

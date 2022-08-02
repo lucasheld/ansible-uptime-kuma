@@ -16,15 +16,21 @@ options:
     type: str
     default: http://127.0.0.1:3001
   api_username:
-    description: The Uptime Kuma username.
+    description:
+      - The Uptime Kuma username.
+      - Only required if no I(api_token) specified.
     type: str
   api_password:
-    description: The Uptime Kuma password.
+    description:
+      - The Uptime Kuma password.
+      - Only required if no I(api_token) specified.
     type: str
   api_token:
-    description: The Uptime Kuma login token.
+    description:
+      - The Uptime Kuma login token.
+      - Only required if no I(api_username) and I(api_password) specified.
     type: str
 
 requirements:
-  - uptime_kuma_api
+  - uptime-kuma-api
 '''

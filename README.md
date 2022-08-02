@@ -2,10 +2,18 @@
 
 This collection contains modules that allow to configure Uptime Kuma with Ansible.
 
+Python version 3.6+ is required.
+
 ## Installation
 
+This collection requires the python module [uptime-kuma-api](https://github.com/lucasheld/uptime-kuma-api) to communicate with Uptime Kuma. It can be installed using pip:
+```shell
+pip install uptime-kuma-api
 ```
-ansible-galaxy collection install lucasheld.uptime_kuma
+
+Then install the ansible collection itself:
+```shell
+ansible-galaxy collection install git+https://github.com/lucasheld/ansible-uptime-kuma.git
 ```
 
 ## Modules

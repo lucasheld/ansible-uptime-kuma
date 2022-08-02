@@ -21,10 +21,14 @@ description: Manages monitors.
 
 options:
   id:
-    description: The id of the monitor.
+    description:
+      - The id of the monitor.
+      - Only required if no I(name) specified.
     type: int
   name:
-    description: The name of the monitor.
+    description:
+      - The name of the monitor.
+      - Only required if no I(id) specified.
     type: str
   type:
     description: The type of the monitor.
@@ -71,13 +75,19 @@ options:
     type: dict
     suboptions:
       id:
-        description: The id of the proxy.
+        description:
+          - The id of the proxy.
+          - Only required if no I(host) and I(port) specified.
         type: int
       host:
-        description: The host of the proxy.
+        description:
+          - The host of the proxy.
+          - Only required if no I(id) specified.
         type: str
       port:
-        description: The port of the proxy.
+        description:
+          - The port of the proxy.
+          - Only required if no I(id) specified.
         type: int
   http_method:
     description: The http method of the monitor.
@@ -355,7 +365,7 @@ def main():
 
         api.disconnect()
         module.exit_json(**result)
-    except Exception as e:
+    except Exception:
         api.disconnect()
         error = traceback.format_exc()
         module.fail_json(msg=error, **result)

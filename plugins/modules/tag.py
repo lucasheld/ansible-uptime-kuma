@@ -21,10 +21,14 @@ description: Manages tags.
 
 options:
   id:
-    description: The id of the tag.
+    description:
+      - The id of the tag.
+      - Only required if no I(name) specified.
     type: int
   name:
-    description: The name of the tag.
+    description:
+      - The name of the tag.
+      - Only required if no I(id) specified.
     type: str
   color:
     description: The color of the tag.
@@ -121,7 +125,7 @@ def main():
 
         api.disconnect()
         module.exit_json(**result)
-    except Exception as e:
+    except Exception:
         api.disconnect()
         error = traceback.format_exc()
         module.fail_json(msg=error, **result)
