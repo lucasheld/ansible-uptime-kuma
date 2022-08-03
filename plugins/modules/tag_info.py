@@ -41,8 +41,23 @@ RETURN = r'''
 tags:
   description: The tags as list
   returned: always
-  type: list
-  elements: dict
+  type: complex
+  contains:
+    id:
+      description: The id of the tag.
+      returned: always
+      type: int
+      sample: 1
+    name:
+      description: The name of the tag.
+      returned: always
+      type: str
+      sample: tag 1
+    color:
+      description: The color of the tag.
+      returned: always
+      type: str
+      sample: #ffffff
 '''
 
 import traceback

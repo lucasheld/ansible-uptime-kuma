@@ -44,7 +44,7 @@ options:
 
 EXAMPLES = r'''
 - name: Add tag
-  uptime_kuma_tag:
+  lucasheld.uptime_kuma.tag:
     api_url: http://192.168.1.10:3001
     api_username: admin
     api_password: secret
@@ -53,7 +53,7 @@ EXAMPLES = r'''
     state: present
 
 - name: Remove tag
-  uptime_kuma_tag:
+  lucasheld.uptime_kuma.tag:
     api_url: http://192.168.1.10:3001
     api_username: admin
     api_password: secret

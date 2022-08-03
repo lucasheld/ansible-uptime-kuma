@@ -55,7 +55,7 @@ options:
   default:
     description: True if the proxy is the default.
     type: bool
-  apply_existing:
+  applyExisting:
     description: True if the proxy is applied to existing monitors.
     type: bool
   state:
@@ -129,7 +129,7 @@ def run(api, params, result):
             api.add_proxy(**options)
             result["changed"] = True
         else:
-            changed_keys = object_changed(proxy, options, {"apply_existing": [False, None]})
+            changed_keys = object_changed(proxy, options, {"applyExisting": [False, None]})
             if changed_keys:
                 api.edit_proxy(proxy["id"], **options)
                 result["changed"] = True
@@ -150,7 +150,7 @@ def main():
         password=dict(type="str", no_log=True),
         active=dict(type="bool"),
         default=dict(type="bool"),
-        apply_existing=dict(type="bool"),
+        applyExisting=dict(type="bool"),
         state=dict(type="str", default="present", choices=["present", "absent"])
     )
     module_args.update(common_module_args)

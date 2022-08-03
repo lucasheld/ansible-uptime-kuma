@@ -38,8 +38,68 @@ RETURN = r'''
 status_pages:
   description: The status pages as list
   returned: always
-  type: list
-  elements: dict
+  type: complex
+  contains:
+    id:
+      description: The id of the status page.
+      returned: always
+      type: int
+      sample: 4
+    slug:
+      description: The slug of the status page.
+      returned: always
+      type: str
+      sample: slug1
+    title:
+      description: The title of the status page.
+      returned: always
+      type: str
+      sample: status page 1
+    description:
+      description: The description of the status page.
+      returned: always
+      type: str
+      sample: description 1
+    icon:
+      description: The icon of the status page.
+      returned: always
+      type: str
+      sample: /icon.svg
+    theme:
+      description: The theme of the status page.
+      returned: always
+      type: int
+      sample: light
+    published
+      description: True if the status page is published.
+      returned: always
+      type: bool
+      sample: True
+    showTags:
+      description: True if the show tags is enabled.
+      returned: always
+      type: bool
+      sample: False
+    domainNameList:
+      description: The domainNameList of the status page.
+      returned: always
+      type: list
+      sample: []
+    customCSS
+      description: The customCS of the status page.
+      returned: always
+      type: str
+      sample: None
+    footerText:
+      description: The footerText of the status page.
+      returned: always
+      type: str
+      sample: None
+    showPoweredBy:
+      description: True if the show powered by is enabled.
+      returned: always
+      type: bool
+      sample: False
 '''
 
 import traceback
@@ -78,9 +138,9 @@ def main():
     api = UptimeKumaApi(params["api_url"])
     api_token = params.get("api_token")
     if api_token:
-      api.login_by_token(api_token)
+        api.login_by_token(api_token)
     else:
-      api.login(params["api_username"], params["api_password"])
+        api.login(params["api_username"], params["api_password"])
 
     result = {
         "changed": False

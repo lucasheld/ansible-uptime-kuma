@@ -44,8 +44,63 @@ RETURN = r'''
 proxies:
   description: The proxies as list
   returned: always
-  type: list
-  elements: dict
+  type: complex
+  contains:
+    id:
+      description: The id of the proxy.
+      returned: always
+      type: int
+      sample: 4
+    userId:
+      description: The user id of the proxy.
+      returned: always
+      type: int
+      sample: 1
+    protocol:
+      description: The protocol of the proxy.
+      returned: always
+      type: str
+      sample: http
+    host:
+      description: The host of the proxy.
+      returned: always
+      type: str
+      sample: 127.0.0.1
+    port:
+      description: The port of the proxy.
+      returned: always
+      type: int
+      sample: 8080
+    auth:
+      description: True if authentication is enabled.
+      returned: always
+      type: bool
+      sample: False
+    username:
+      description: The authentication username of the proxy.
+      returned: always
+      type: str
+      sample: None
+    password:
+      description: The authentication password of the proxy.
+      returned: always
+      type: str
+      sample: None
+    active:
+      description: True if the proxy is active.
+      returned: always
+      type: bool
+      sample: True
+    default:
+      description: True if the proxy is the default.
+      returned: always
+      type: bool
+      sample: False
+    createdDate:
+      description: The creation date of the proxy.
+      returned: always
+      type: str
+      sample: 2022-08-03 12:43:21
 '''
 
 import traceback

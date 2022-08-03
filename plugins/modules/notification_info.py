@@ -58,7 +58,7 @@ notifications:
       returned: always
       type: bool
       sample: True
-    user_id:
+    userId:
       description: 
       returned: always
       sample: 1
@@ -72,505 +72,505 @@ notifications:
       returned: always
       type: str
       sample: telegram
-    alerta_api_endpoint:
+    alertaApiEndpoint:
       description: alerta provider option.
       returned: if type is alerta
       type: str
-    alerta_api_key:
+    alertaApiKey:
       description: alerta provider option.
       returned: if type is alerta
       type: str
-    alerta_environment:
+    alertaEnvironment:
       description: alerta provider option.
       returned: if type is alerta
       type: str
-    alerta_alert_state:
+    alertaAlertState:
       description: alerta provider option.
       returned: if type is alerta
       type: str
-    alerta_recover_state:
+    alertaRecoverState:
       description: alerta provider option.
       returned: if type is alerta
       type: str
-    aliyun_sms_phonenumber:
-      description: aliyun_sms provider option.
-      returned: if type is aliyun_sms
+    phonenumber:
+      description: AliyunSMS provider option.
+      returned: if type is AliyunSMS
       type: str
-    aliyun_sms_template_code:
-      description: aliyun_sms provider option.
-      returned: if type is aliyun_sms
+    templateCode:
+      description: AliyunSMS provider option.
+      returned: if type is AliyunSMS
       type: str
-    aliyun_sms_sign_name:
-      description: aliyun_sms provider option.
-      returned: if type is aliyun_sms
+    signName:
+      description: AliyunSMS provider option.
+      returned: if type is AliyunSMS
       type: str
-    aliyun_sms_access_key_id:
-      description: aliyun_sms provider option.
-      returned: if type is aliyun_sms
+    accessKeyId:
+      description: AliyunSMS provider option.
+      returned: if type is AliyunSMS
       type: str
-    aliyun_sms_secret_access_key:
-      description: aliyun_sms provider option.
-      returned: if type is aliyun_sms
+    secretAccessKey:
+      description: AliyunSMS provider option.
+      returned: if type is AliyunSMS
       type: str
-    apprise_url:
+    appriseURL:
       description: apprise provider option.
       returned: if type is apprise
       type: str
-    apprise_title:
+    title:
       description: apprise provider option.
       returned: if type is apprise
       type: str
-    bark_endpoint:
-      description: bark provider option.
-      returned: if type is bark
+    barkEndpoint:
+      description: Bark provider option.
+      returned: if type is Bark
       type: str
-    clicksendsms_login:
+    clicksendsmsLogin:
       description: clicksendsms provider option.
       returned: if type is clicksendsms
       type: str
-    clicksendsms_password:
+    clicksendsmsPassword:
       description: clicksendsms provider option.
       returned: if type is clicksendsms
       type: str
-    clicksendsms_to_number:
+    clicksendsmsToNumber:
       description: clicksendsms provider option.
       returned: if type is clicksendsms
       type: str
-    clicksendsms_sender_name:
+    clicksendsmsSenderName:
       description: clicksendsms provider option.
       returned: if type is clicksendsms
       type: str
-    ding_ding_web_hook_url:
-      description: ding_ding provider option.
-      returned: if type is ding_ding
+    webHookUrl:
+      description: DingDing provider option.
+      returned: if type is DingDing
       type: str
-    ding_ding_secret_key:
-      description: ding_ding provider option.
-      returned: if type is ding_ding
+    secretKey:
+      description: DingDing provider option.
+      returned: if type is DingDing
       type: str
-    discord_username:
+    discordUsername:
       description: discord provider option.
       returned: if type is discord
       type: str
-    discord_webhook_url:
+    discordWebhookUrl:
       description: discord provider option.
       returned: if type is discord
       type: str
-    discord_prefix_message:
+    discordPrefixMessage:
       description: discord provider option.
       returned: if type is discord
       type: str
-    feishu_web_hook_url:
-      description: feishu provider option.
-      returned: if type is feishu
+    feishuWebHookUrl:
+      description: Feishu provider option.
+      returned: if type is Feishu
       type: str
-    google_chat_chat_webhook_url:
-      description: google_chat provider option.
-      returned: if type is google_chat
+    googleChatWebhookURL:
+      description: GoogleChat provider option.
+      returned: if type is GoogleChat
       type: str
-    gorush_device_token:
+    gorushDeviceToken:
       description: gorush provider option.
       returned: if type is gorush
       type: str
-    gorush_platform:
+    gorushPlatform:
       description: gorush provider option.
       returned: if type is gorush
       type: str
-    gorush_title:
+    gorushTitle:
       description: gorush provider option.
       returned: if type is gorush
       type: str
-    gorush_priority:
+    gorushPriority:
       description: gorush provider option.
       returned: if type is gorush
       type: str
-    gorush_retry:
+    gorushRetry:
       description: gorush provider option.
       returned: if type is gorush
       type: str
-    gorush_topic:
+    gorushTopic:
       description: gorush provider option.
       returned: if type is gorush
       type: str
-    gorush_server_url:
+    gorushServerURL:
       description: gorush provider option.
       returned: if type is gorush
       type: str
-    gotify_serverurl:
+    gotifyserverurl:
       description: gotify provider option.
       returned: if type is gotify
       type: str
-    gotify_application_token:
+    gotifyapplicationToken:
       description: gotify provider option.
       returned: if type is gotify
       type: str
-    gotify_priority:
+    gotifyPriority:
       description: gotify provider option.
       returned: if type is gotify
       type: str
-    line_channel_access_token:
+    lineChannelAccessToken:
       description: line provider option.
       returned: if type is line
       type: str
-    line_user_id:
+    lineUserID:
       description: line provider option.
       returned: if type is line
       type: str
-    lunasea_device:
+    lunaseaDevice:
       description: lunasea provider option.
       returned: if type is lunasea
       type: str
-    matrix_internal_room_id:
+    internalRoomId:
       description: matrix provider option.
       returned: if type is matrix
       type: str
-    matrix_access_token:
+    accessToken:
       description: matrix provider option.
       returned: if type is matrix
       type: str
-    matrix_homeserver_url:
+    homeserverUrl:
       description: matrix provider option.
       returned: if type is matrix
       type: str
-    mattermost_username:
+    mattermostusername:
       description: mattermost provider option.
       returned: if type is mattermost
       type: str
-    mattermost_webhook_url:
+    mattermostWebhookUrl:
       description: mattermost provider option.
       returned: if type is mattermost
       type: str
-    mattermost_channel:
+    mattermostchannel:
       description: mattermost provider option.
       returned: if type is mattermost
       type: str
-    mattermost_iconemo:
+    mattermosticonemo:
       description: mattermost provider option.
       returned: if type is mattermost
       type: str
-    mattermost_iconurl:
+    mattermosticonurl:
       description: mattermost provider option.
       returned: if type is mattermost
       type: str
-    ntfy_serverurl:
+    ntfyserverurl:
       description: ntfy provider option.
       returned: if type is ntfy
       type: str
-    ntfy_topic:
+    ntfytopic:
       description: ntfy provider option.
       returned: if type is ntfy
       type: str
-    ntfy_priority:
+    ntfyPriority:
       description: ntfy provider option.
       returned: if type is ntfy
       type: str
-    octopush_version:
+    octopushVersion:
       description: octopush provider option.
       returned: if type is octopush
       type: str
-    octopush_apikey:
+    octopushAPIKey:
       description: octopush provider option.
       returned: if type is octopush
       type: str
-    octopush_login:
+    octopushLogin:
       description: octopush provider option.
       returned: if type is octopush
       type: str
-    octopush_phone_number:
+    octopushPhoneNumber:
       description: octopush provider option.
       returned: if type is octopush
       type: str
-    octopush_smstype:
+    octopushSMSType:
       description: octopush provider option.
       returned: if type is octopush
       type: str
-    octopush_sender_name:
+    octopushSenderName:
       description: octopush provider option.
       returned: if type is octopush
       type: str
-    octopush_dmlogin:
+    octopushDMLogin:
       description: octopush provider option.
       returned: if type is octopush
       type: str
-    octopush_dmapikey:
+    octopushDMAPIKey:
       description: octopush provider option.
       returned: if type is octopush
       type: str
-    octopush_dmphone_number:
+    octopushDMPhoneNumber:
       description: octopush provider option.
       returned: if type is octopush
       type: str
-    octopush_dmsender_name:
+    octopushDMSenderName:
       description: octopush provider option.
       returned: if type is octopush
       type: str
-    octopush_dmsmstype:
+    octopushDMSMSType:
       description: octopush provider option.
       returned: if type is octopush
       type: str
-    one_bot_http_addr:
-      description: one_bot provider option.
-      returned: if type is one_bot
+    httpAddr:
+      description: OneBot provider option.
+      returned: if type is OneBot
       type: str
-    one_bot_access_token:
-      description: one_bot provider option.
-      returned: if type is one_bot
+    accessToken:
+      description: OneBot provider option.
+      returned: if type is OneBot
       type: str
-    one_bot_msg_type:
-      description: one_bot provider option.
-      returned: if type is one_bot
+    msgType:
+      description: OneBot provider option.
+      returned: if type is OneBot
       type: str
-    one_bot_reciever_id:
-      description: one_bot provider option.
-      returned: if type is one_bot
+    recieverId:
+      description: OneBot provider option.
+      returned: if type is OneBot
       type: str
-    pager_duty_duty_auto_resolve:
-      description: pager_duty provider option.
-      returned: if type is pager_duty
+    pagerdutyAutoResolve:
+      description: PagerDuty provider option.
+      returned: if type is PagerDuty
       type: str
-    pager_duty_duty_integration_url:
-      description: pager_duty provider option.
-      returned: if type is pager_duty
+    pagerdutyIntegrationUrl:
+      description: PagerDuty provider option.
+      returned: if type is PagerDuty
       type: str
-    pager_duty_duty_priority:
-      description: pager_duty provider option.
-      returned: if type is pager_duty
+    pagerdutyPriority:
+      description: PagerDuty provider option.
+      returned: if type is PagerDuty
       type: str
-    pager_duty_duty_integration_key:
-      description: pager_duty provider option.
-      returned: if type is pager_duty
+    pagerdutyIntegrationKey:
+      description: PagerDuty provider option.
+      returned: if type is PagerDuty
       type: str
-    promosms_login:
+    promosmsLogin:
       description: promosms provider option.
       returned: if type is promosms
       type: str
-    promosms_password:
+    promosmsPassword:
       description: promosms provider option.
       returned: if type is promosms
       type: str
-    promosms_phone_number:
+    promosmsPhoneNumber:
       description: promosms provider option.
       returned: if type is promosms
       type: str
-    promosms_smstype:
+    promosmsSMSType:
       description: promosms provider option.
       returned: if type is promosms
       type: str
-    promosms_sender_name:
+    promosmsSenderName:
       description: promosms provider option.
       returned: if type is promosms
       type: str
-    pushbullet_access_token:
+    pushbulletAccessToken:
       description: pushbullet provider option.
       returned: if type is pushbullet
       type: str
-    push_deer_deer_key:
-      description: push_deer provider option.
-      returned: if type is push_deer
+    pushdeerKey:
+      description: PushDeer provider option.
+      returned: if type is PushDeer
       type: str
-    pushover_userkey:
+    pushoveruserkey:
       description: pushover provider option.
       returned: if type is pushover
       type: str
-    pushover_apptoken:
+    pushoverapptoken:
       description: pushover provider option.
       returned: if type is pushover
       type: str
-    pushover_sounds:
+    pushoversounds:
       description: pushover provider option.
       returned: if type is pushover
       type: str
-    pushover_priority:
+    pushoverpriority:
       description: pushover provider option.
       returned: if type is pushover
       type: str
-    pushover_title:
+    pushovertitle:
       description: pushover provider option.
       returned: if type is pushover
       type: str
-    pushover_device:
+    pushoverdevice:
       description: pushover provider option.
       returned: if type is pushover
       type: str
-    pushy_apikey:
+    pushyAPIKey:
       description: pushy provider option.
       returned: if type is pushy
       type: str
-    pushy_token:
+    pushyToken:
       description: pushy provider option.
       returned: if type is pushy
       type: str
-    rocket_chat_channel:
-      description: rocket_chat provider option.
-      returned: if type is rocket_chat
+    rocketchannel:
+      description: rocket.chat provider option.
+      returned: if type is rocket.chat
       type: str
-    rocket_chat_username:
-      description: rocket_chat provider option.
-      returned: if type is rocket_chat
+    rocketusername:
+      description: rocket.chat provider option.
+      returned: if type is rocket.chat
       type: str
-    rocket_chat_iconemo:
-      description: rocket_chat provider option.
-      returned: if type is rocket_chat
+    rocketiconemo:
+      description: rocket.chat provider option.
+      returned: if type is rocket.chat
       type: str
-    rocket_chat_webhook_url:
-      description: rocket_chat provider option.
-      returned: if type is rocket_chat
+    rocketwebhookURL:
+      description: rocket.chat provider option.
+      returned: if type is rocket.chat
       type: str
-    rocket_chat_button:
-      description: rocket_chat provider option.
-      returned: if type is rocket_chat
+    rocketbutton:
+      description: rocket.chat provider option.
+      returned: if type is rocket.chat
       type: str
-    serwersms_username:
+    serwersmsUsername:
       description: serwersms provider option.
       returned: if type is serwersms
       type: str
-    serwersms_password:
+    serwersmsPassword:
       description: serwersms provider option.
       returned: if type is serwersms
       type: str
-    serwersms_phone_number:
+    serwersmsPhoneNumber:
       description: serwersms provider option.
       returned: if type is serwersms
       type: str
-    serwersms_sender_name:
+    serwersmsSenderName:
       description: serwersms provider option.
       returned: if type is serwersms
       type: str
-    signal_number:
+    signalNumber:
       description: signal provider option.
       returned: if type is signal
       type: str
-    signal_recipients:
+    signalRecipients:
       description: signal provider option.
       returned: if type is signal
       type: str
-    signal_url:
+    signalURL:
       description: signal provider option.
       returned: if type is signal
       type: str
-    slack_button:
+    slackbutton:
       description: slack provider option.
       returned: if type is slack
       type: str
-    slack_channel:
+    slackchannel:
       description: slack provider option.
       returned: if type is slack
       type: str
-    slack_username:
+    slackusername:
       description: slack provider option.
       returned: if type is slack
       type: str
-    slack_iconemo:
+    slackiconemo:
       description: slack provider option.
       returned: if type is slack
       type: str
-    slack_webhook_url:
+    slackwebhookURL:
       description: slack provider option.
       returned: if type is slack
       type: str
-    slack_button:
+    slackbutton:
       description: slack provider option.
       returned: if type is slack
       type: str
-    smtp_host:
+    smtpHost:
       description: smtp provider option.
       returned: if type is smtp
       type: str
-    smtp_port:
+    smtpPort:
       description: smtp provider option.
       returned: if type is smtp
       type: str
-    smtp_secure:
+    smtpSecure:
       description: smtp provider option.
       returned: if type is smtp
       type: str
-    smtp_ignore_tlserror:
+    smtpIgnoreTLSError:
       description: smtp provider option.
       returned: if type is smtp
       type: str
-    smtp_dkim_domain:
+    smtpDkimDomain:
       description: smtp provider option.
       returned: if type is smtp
       type: str
-    smtp_dkim_key_selector:
+    smtpDkimKeySelector:
       description: smtp provider option.
       returned: if type is smtp
       type: str
-    smtp_dkim_private_key:
+    smtpDkimPrivateKey:
       description: smtp provider option.
       returned: if type is smtp
       type: str
-    smtp_dkim_hash_algo:
+    smtpDkimHashAlgo:
       description: smtp provider option.
       returned: if type is smtp
       type: str
-    smtp_dkimheader_field_names:
+    smtpDkimheaderFieldNames:
       description: smtp provider option.
       returned: if type is smtp
       type: str
-    smtp_dkimskip_fields:
+    smtpDkimskipFields:
       description: smtp provider option.
       returned: if type is smtp
       type: str
-    smtp_username:
+    smtpUsername:
       description: smtp provider option.
       returned: if type is smtp
       type: str
-    smtp_password:
+    smtpPassword:
       description: smtp provider option.
       returned: if type is smtp
       type: str
-    smtp_custom_subject:
+    customSubject:
       description: smtp provider option.
       returned: if type is smtp
       type: str
-    smtp_from:
+    smtpFrom:
       description: smtp provider option.
       returned: if type is smtp
       type: str
-    smtp_cc:
+    smtpCC:
       description: smtp provider option.
       returned: if type is smtp
       type: str
-    smtp_bcc:
+    smtpBCC:
       description: smtp provider option.
       returned: if type is smtp
       type: str
-    smtp_to:
+    smtpTo:
       description: smtp provider option.
       returned: if type is smtp
       type: str
-    stackfield_webhook_url:
+    stackfieldwebhookURL:
       description: stackfield provider option.
       returned: if type is stackfield
       type: str
-    teams_webhook_url:
+    webhookUrl:
       description: teams provider option.
       returned: if type is teams
       type: str
-    push_by_techulus_apikey:
-      description: push_by_techulus provider option.
-      returned: if type is push_by_techulus
+    pushAPIKey:
+      description: PushByTechulus provider option.
+      returned: if type is PushByTechulus
       type: str
-    telegram_bot_token:
+    telegramBotToken:
       description: telegram provider option.
       returned: if type is telegram
       type: str
-    telegram_chat_id:
+    telegramChatID:
       description: telegram provider option.
       returned: if type is telegram
       type: str
-    webhook_content_type:
+    webhookContentType:
       description: webhook provider option.
       returned: if type is webhook
       type: str
-    webhook_url:
+    webhookURL:
       description: webhook provider option.
       returned: if type is webhook
       type: str
-    we_com_com_bot_key:
-      description: we_com provider option.
-      returned: if type is we_com
+    weComBotKey:
+      description: WeCom provider option.
+      returned: if type is WeCom
       type: str
 '''
 
@@ -596,10 +596,6 @@ def run(api, params, result):
         notifications = [notification]
     else:
         notifications = api.get_notifications()
-
-    for notification in notifications:
-        # type_ -> type
-        notification["type"] = notification.pop("type_")
 
     result["notifications"] = notifications
 

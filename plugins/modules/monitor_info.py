@@ -58,7 +58,7 @@ monitors:
       returned: always
       type: str
       sample: 'https://google.com'
-    http_method:
+    method:
       description: The http method of the monitor.
       returned: always
       type: str
@@ -73,7 +73,7 @@ monitors:
       returned: always
       type: int
       sample: 53
-    retries:
+    maxretries:
       description: The retries of the monitor.
       returned: always
       type: int
@@ -93,12 +93,12 @@ monitors:
       returned: always
       type: str
       sample: 'http'
-    heartbeat_interval:
+    interval:
       description: The heartbeat interval of the monitor.
       returned: always
       type: int
       sample: 60
-    heartbeat_retry_interval:
+    retryInterval:
       description: The heartbeat retry interval of the monitor.
       returned: always
       type: int
@@ -108,27 +108,27 @@ monitors:
       returned: always
       type: str
       sample: None
-    certificate_expiry_notification:
+    expiryNotification:
       description: True if certificate expiry notification is enabled.
       returned: always
       type: bool
       sample: False
-    ignore_tls_error:
+    ignoreTls:
       description: True if ignore tls error is enabled.
       returned: always
       type: bool
       sample: False
-    upside_down_mode:
+    upsideDown:
       description: True if upside down mode is enabled.
       returned: always
       type: bool
       sample: False
-    max_redirects:
+    maxredirects:
       description: The max redirects of the monitor.
       returned: always
       type: int
       sample: 10
-    accepted_status_codes:
+    accepted_statuscodes:
       description: The accepted status codes of the monitor.
       returned: always
       type: list
@@ -148,12 +148,12 @@ monitors:
       returned: always
       type: str
       sample: None
-    proxy_id:
+    proxyId:
       description: The proxy id of the monitor.
       returned: always
       type: int
       sample: 1
-    notification_ids:
+    notificationIDList:
       description: The notification ids of the monitor.
       returned: always
       type: list
@@ -163,57 +163,57 @@ monitors:
       returned: always
       type: list
       sample: []
-    mqtt_username:
+    mqttUsername:
       description: The mqtt username of the monitor.
       returned: always
       type: str
       sample: None
-    mqtt_password:
+    mqttPassword:
       description: The mqtt password of the monitor.
       returned: always
       type: str
       sample: None
-    mqtt_topic:
+    mqttTopic:
       description: The mqtt topic of the monitor.
       returned: always
       type: str
       sample: None
-    mqtt_success_message:
+    mqttSuccessMessage:
       description: The mqtt success message of the monitor.
       returned: always
       type: str
       sample: None
-    sqlserver_connection_string:
+    databaseConnectionString:
       description: The sqlserver connection string of the monitor.
       returned: always
       type: str
       sample: 'Server=<hostname>,<port>;Database=<your database>;User Id=<your user id>;Password=<your password>;Encrypt=<true/false>;TrustServerCertificate=<Yes/No>;Connection Timeout=<int>'
-    database_query:
+    databaseQuery:
       description: The database query of the monitor.
       returned: always
       type: str
       sample: None
-    auth_method:
+    authMethod:
       description: The auth method of the monitor.
       returned: always
       type: str
       sample: ''
-    auth_workstation:
+    authWorkstation:
       description: The auth workstation of the monitor.
       returned: always
       type: str
       sample: None
-    auth_domain:
+    authDomain:
       description: The auth domain of the monitor.
       returned: always
       type: str
       sample: None
-    http_headers:
+    headers:
       description: The http headers of the monitor.
       returned: always
       type: str
       sample: None
-    http_body:
+    body:
       description: The http body of the monitor.
       returned: always
       type: str
@@ -259,16 +259,13 @@ def run(api, params, result):
         monitors = api.get_monitors()
 
     for monitor in monitors:
-        # type_ -> type
-        monitor["type"] = monitor.pop("type_")
-
-        # notification_ids dict to list[int]
+        # notificationIDList dict to list[int]
         notification_ids = []
-        for notification_id, notification_enabled in monitor["notification_ids"].items():
+        for notification_id, notification_enabled in monitor["notificationIDList"].items():
             if notification_enabled:
                 notification_id = int(notification_id)
                 notification_ids.append(notification_id)
-        monitor["notification_ids"] = notification_ids
+        monitor["notificationIDList"] = notification_ids
 
     result["monitors"] = monitors
 

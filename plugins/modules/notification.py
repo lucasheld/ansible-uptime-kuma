@@ -51,8 +51,8 @@ EXAMPLES = r'''
     name: Notification 1
     type: telegram
     default: false
-    telegram_bot_token: 1111
-    telegram_chat_id: 2222
+    telegramBotToken: 1111
+    telegramChatID: 2222
     state: present
 
 - name: Edit notification
@@ -63,8 +63,8 @@ EXAMPLES = r'''
     name: Notification 1
     type: telegram
     default: false
-    telegram_bot_token: 6666
-    telegram_chat_id: 7777
+    telegramBotToken: 6666
+    telegramChatID: 7777
     state: present
 
 - name: Remove notification
@@ -86,16 +86,16 @@ from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common impor
     clear_unset_params
 
 try:
-    from uptime_kuma_api import UptimeKumaApi, params_map_notification_providers, params_map_notification_provider_options, NotificationType
+    from uptime_kuma_api import UptimeKumaApi, notification_provider_options
 
     HAS_UPTIME_KUMA_API = True
 except ImportError:
     HAS_UPTIME_KUMA_API = False
 
 
-def build_provider_args(notification_provider_options):
+def build_provider_args(provider_options):
     provider_args = {}
-    for notification_provider_param in notification_provider_options:
+    for notification_provider_param in provider_options:
         arg_data = dict(type="str")
         if "password" in notification_provider_param.lower():
             arg_data["no_log"] = True
@@ -104,21 +104,21 @@ def build_provider_args(notification_provider_options):
 
 
 def build_providers():
-    return list(params_map_notification_providers.values())
+    providers = []
+    for provider_enum in notification_provider_options:
+        provider = provider_enum.__dict__["_value_"]
+        providers.append(provider)
+    return providers
 
 
 def build_provider_options():
     options = []
-    for provider_option in params_map_notification_provider_options.values():
-        for provider_option_py in provider_option.values():
-            options.append(provider_option_py)
+    for provider_options in notification_provider_options.values():
+        options.extend(provider_options)
     return options
 
 
 def run(api, params, result):
-    # type -> type_
-    params["type_"] = params.pop("type")
-
     state = params["state"]
     options = clear_params(params)
     options = clear_unset_params(options)
@@ -152,11 +152,11 @@ def main():
     )
 
     if HAS_UPTIME_KUMA_API:
-        notification_provider_types = build_providers()
-        notification_provider_options = build_provider_options()
+        provider_types = build_providers()
+        provider_options = build_provider_options()
 
-        module_args.update(type=dict(type="str", choices=notification_provider_types))
-        provider_args = build_provider_args(notification_provider_options)
+        module_args.update(type=dict(type="str", choices=provider_types))
+        provider_args = build_provider_args(provider_options)
         module_args.update(provider_args)
 
     module_args.update(common_module_args)

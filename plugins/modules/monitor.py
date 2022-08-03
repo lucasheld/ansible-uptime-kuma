@@ -34,84 +34,88 @@ options:
     description: The type of the monitor.
     type: str
     choices: ["http", "port", "ping", "keyword", "dns", "push", "steam", "mqtt", "sqlserver"]
-  heartbeat_interval:
+  interval:
     description: The heartbeat interval of the monitor.
     type: int
-  heartbeat_retry_interval:
+  retryInterval:
     description: The heartbeat retry interval of the monitor.
     type: int
-  retries:
-    description: The retries of the monitor.
+  maxretries:
+    description: The max retries of the monitor.
     type: int
-  upside_down_mode:
+  upsideDown:
     description: True if upside down mode is enabled.
     type: bool
-  notification_ids:
-    description: The notification ids of the monitor.
+  notificationIDList:
+    description:
+      - The notification ids of the monitor.
+      - Only required if I(notification_names) not specified.
     type: list
     elements: int
   notification_names:
-    description: The notification names of the monitor.
+    description:
+      - The notification names of the monitor.
+      - Only required if I(notificationIDList) not specified.
     type: list
     elements: str
   url:
     description: The url of the monitor.
     type: str
-  certificate_expiry_notification:
+  expiryNotification:
     description: True if certificate expiry notification is enabled.
     type: bool
-  ignore_tls_error:
+  ignoreTls:
     description: True if ignore tls error is enabled.
     type: bool
-  max_redirects:
-    description: The max redirects of the monitor.
+  maxredirects:
+    description: The redirects of the monitor.
     type: int
-  accepted_status_codes:
+  accepted_statuscodes:
     description: The accepted status codes of the monitor.
     type: list
     elements: str
+  proxyId:
+    description:
+      - The proxy id of the monitor.
+      - Only required if no I(proxy) specified.
+    type: int
   proxy:
     description: The proxy of the monitor.
     type: dict
     suboptions:
-      id:
-        description:
-          - The id of the proxy.
-          - Only required if no I(host) and I(port) specified.
-        type: int
       host:
         description:
           - The host of the proxy.
-          - Only required if no I(id) specified.
+          - Only required if no I(proxyId) specified.
         type: str
       port:
         description:
           - The port of the proxy.
-          - Only required if no I(id) specified.
+          - Only required if no I(proxyId) specified.
         type: int
-  http_method:
+  method:
     description: The http method of the monitor.
     type: str
-  http_body:
+  body:
     description: The http body of the monitor.
     type: str
-  http_headers:
+  headers:
     description: The http headers of the monitor.
     type: str
-  auth_method:
+  authMethod:
     description: The auth method of the monitor.
     type: str
     choices: ["", "basic", "ntlm"]
-  auth_user:
+  basic_auth_user:
     description: The auth user of the monitor.
     type: str
-  auth_pass:
+  basic_auth_pass:
     description: The auth pass of the monitor.
     type: str
-  auth_domain:
+  authDomain:
     description: The auth domain of the monitor.
     type: str
-  auth_workstation:
+  authWorkstation:
     description: The auth workstation of the monitor.
     type: str
   keyword:
@@ -129,22 +133,22 @@ options:
   dns_resolve_type:
     description: The dns resolve type of the monitor.
     type: str
-  mqtt_username:
+  mqttUsername:
     description: The mqtt username of the monitor.
     type: str
-  mqtt_password:
+  mqttPassword:
     description: The mqtt password of the monitor.
     type: str
-  mqtt_topic:
+  mqttTopic:
     description: The mqtt topic of the monitor.
     type: str
-  mqtt_success_message:
+  mqttSuccessMessage:
     description: The mqtt success message of the monitor.
     type: str
-  sqlserver_connection_string:
+  databaseConnectionString:
     description: The sqlserver connection string of the monitor.
     type: str
-  sqlserver_query:
+  databaseQuery:
     description: The sqlserver query of the monitor.
     type: str
   state:
@@ -222,30 +226,22 @@ except ImportError:
 
 
 def run(api, params, result):
-    if not params["accepted_status_codes"]:
-        params["accepted_status_codes"] = ["200-299"]
+    if not params["accepted_statuscodes"]:
+        params["accepted_statuscodes"] = ["200-299"]
 
-    # type -> type_
-    params["type_"] = params.pop("type")
-
-    # notification_names -> notification_ids
+    # notification_names -> notificationIDList
     if params["notification_names"]:
         notification_ids = []
         for notification_name in params["notification_names"]:
             notification = get_notification_by_name(api, notification_name)
             notification_ids.append(notification["id"])
-        params["notification_ids"] = notification_ids
+        params["notificationIDList"] = notification_ids
     del params["notification_names"]
 
-    # proxy -> proxy_id
+    # proxy -> proxyId
     if params["proxy"]:
-        if params["proxy"]["id"]:
-            params["proxy_id"] = params["proxy"]["id"]
-        else:
-            proxy = get_proxy_by_host_port(api, params["proxy"]["host"], params["proxy"]["port"])
-            params["proxy_id"] = proxy["id"]
-    else:
-        params["proxy_id"] = None
+        proxy = get_proxy_by_host_port(api, params["proxy_id"]["host"], params["proxy_id"]["port"])
+        params["proxyId"] = proxy["id"]
     del params["proxy"]
 
     state = params["state"]
@@ -285,34 +281,33 @@ def main():
         id=dict(type="int"),
         name=dict(type="str"),
         type=dict(type="str", choices=["http", "port", "ping", "keyword", "dns", "push", "steam", "mqtt", "sqlserver"]),
-        heartbeat_interval=dict(type="int"),
-        heartbeat_retry_interval=dict(type="int"),
-        retries=dict(type="int"),
-        upside_down_mode=dict(type="bool"),
+        interval=dict(type="int"),
+        retryInterval=dict(type="int"),
+        maxretries=dict(type="int"),
+        upsideDown=dict(type="bool"),
         # tags=dict(type="list", elements="dict", options=dict()),
-        notification_ids=dict(type="list", elements="int"),
+        notificationIDList=dict(type="list", elements="int"),
         notification_names=dict(type="list", elements="str"),
 
         # HTTP, KEYWORD
         url=dict(type="str"),
-        certificate_expiry_notification=dict(type="bool"),
-        ignore_tls_error=dict(type="bool"),
-        max_redirects=dict(type="int"),
-        accepted_status_codes=dict(type="list", elements="str"),
-        # proxy_id=dict(type="int"),
+        expiryNotification=dict(type="bool"),
+        ignoreTls=dict(type="bool"),
+        maxredirects=dict(type="int"),
+        accepted_statuscodes=dict(type="list", elements="str"),
+        proxyId=dict(type="int"),
         proxy=dict(type="dict", options=dict(
-            id=dict(type="int"),
             host=dict(type="str"),
             port=dict(type="int")
         )),
-        http_method=dict(type="str"),
-        http_body=dict(type="str"),
-        http_headers=dict(type="str"),
-        auth_method=dict(type="str", choices=["", "basic", "ntlm"]),
-        auth_user=dict(type="str"),
-        auth_pass=dict(type="str", no_log=True),
-        auth_domain=dict(type="str"),
-        auth_workstation=dict(type="str"),
+        method=dict(type="str"),
+        body=dict(type="str"),
+        headers=dict(type="str"),
+        authMethod=dict(type="str", choices=["", "basic", "ntlm"]),
+        basic_auth_user=dict(type="str"),
+        basic_auth_pass=dict(type="str", no_log=True),
+        authDomain=dict(type="str"),
+        authWorkstation=dict(type="str"),
 
         # KEYWORD
         keyword=dict(type="str"),
@@ -328,16 +323,14 @@ def main():
         dns_resolve_type=dict(type="str"),
 
         # MQTT
-        mqtt_username=dict(type="str"),
-        mqtt_password=dict(type="str", no_log=True),
-        mqtt_topic=dict(type="str"),
-        mqtt_success_message=dict(type="str"),
+        mqttUsername=dict(type="str"),
+        mqttPassword=dict(type="str", no_log=True),
+        mqttTopic=dict(type="str"),
+        mqttSuccessMessage=dict(type="str"),
 
         # SQLSERVER
-        sqlserver_connection_string=dict(
-            type="str",
-        ),
-        sqlserver_query=dict(type="str"),
+        databaseConnectionString=dict(type="str"),
+        databaseQuery=dict(type="str"),
 
         state=dict(type="str", default="present", choices=["present", "absent", "paused", "resumed"])
     )

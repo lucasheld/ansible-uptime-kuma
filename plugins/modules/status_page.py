@@ -37,24 +37,24 @@ options:
   published:
     description: True if the status page is published.
     type: bool
-  show_tags:
+  showTags:
     description: True if the tags are shown.
     type: bool
-  domain_name_list:
-    description: The domain_name_list of the status page.
+  domainNameList:
+    description: The domain name list of the status page.
     type: list
     elements: "str"
-  custom_css:
-    description: The custom_css of the status page.
+  customCSS:
+    description: The custom CSS of the status page.
     type: str
-  footer_text:
-    description: The footer_text of the status page.
+  footerText:
+    description: The footer text of the status page.
     type: str
-  show_powered_by:
+  showPoweredBy:
     description: True if the powered by is shown.
     type: bool
-  img_data_url:
-    description: The img_data_url of the status page.
+  icon:
+    description: The icon of the status page.
     type: str
   monitors:
     description: The monitors of the status page.
@@ -138,7 +138,8 @@ def run(api, params, result):
 
     options = clear_params(params)
     options = clear_unset_params(options)
-    del options["incident"]
+    if "incident" in options:
+        del options["incident"]
 
     try:
         status_page = api.get_status_page(slug)
@@ -153,7 +154,7 @@ def run(api, params, result):
             status_page_exists = True
             result["changed"] = True
         else:
-            changed_keys = object_changed(status_page, options, {"custom_css": "body {\n  \n}\n"})
+            changed_keys = object_changed(status_page, options, {"customCSS": "body {\n  \n}\n"})
             if changed_keys:
                 api.save_status_page(**options)
                 result["changed"] = True
@@ -178,12 +179,12 @@ def main():
         description=dict(type="str"),
         theme=dict(type="str", choices=["light", "dark"]),
         published=dict(type="bool"),
-        show_tags=dict(type="bool"),
-        domain_name_list=dict(type="list", elements="str"),
-        custom_css=dict(type="str"),
-        footer_text=dict(type="str"),
-        show_powered_by=dict(type="bool"),
-        img_data_url=dict(type="str"),
+        showTags=dict(type="bool"),
+        domainNameList=dict(type="list", elements="str"),
+        customCSS=dict(type="str"),
+        footerText=dict(type="str"),
+        showPoweredBy=dict(type="bool"),
+        icon=dict(type="str"),
         monitors=dict(type="list", elements="str"),
         incident=dict(type="dict", options=dict(
             title=dict(type="str", required=True),
