@@ -1,10 +1,10 @@
 namespace: lucasheld
 name: uptime_kuma
-version: 1.0.0
+version: 0.1.0
 readme: README.md
 authors:
   - Lucas Held <lucasheld@hotmail.de>
-description: This collection contains modules that allow to configure Uptime Kuma with ansible.
+description: This collection contains modules that allow to configure Uptime Kuma with Ansible.
 license:
   - GPL-3.0-or-later
 license_file: LICENSE
