@@ -70,7 +70,7 @@ status_pages:
       returned: always
       type: int
       sample: light
-    published
+    published:
       description: True if the status page is published.
       returned: always
       type: bool
@@ -85,7 +85,7 @@ status_pages:
       returned: always
       type: list
       sample: []
-    customCSS
+    customCSS:
       description: The customCS of the status page.
       returned: always
       type: str
