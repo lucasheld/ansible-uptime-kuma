@@ -167,7 +167,7 @@ EXAMPLES = r'''
   lucasheld.uptime_kuma.monitor:
     api_url: http://192.168.1.10:3001
     api_username: admin
-    api_password: secret
+    api_password: secret123
     type: keyword
     name: Peer 1
     url: http://192.168.20.135
@@ -178,7 +178,7 @@ EXAMPLES = r'''
   lucasheld.uptime_kuma.monitor:
     api_url: http://192.168.1.10:3001
     api_username: admin
-    api_password: secret
+    api_password: secret123
     type: http
     name: Peer 1
     url: http://192.168.20.135
@@ -188,7 +188,7 @@ EXAMPLES = r'''
   lucasheld.uptime_kuma.monitor:
     api_url: http://192.168.1.10:3001
     api_username: admin
-    api_password: secret
+    api_password: secret123
     name: Peer 1
     state: absent
 
@@ -196,7 +196,7 @@ EXAMPLES = r'''
   lucasheld.uptime_kuma.monitor:
     api_url: http://192.168.1.10:3001
     api_username: admin
-    api_password: secret
+    api_password: secret123
     name: Peer 1
     state: paused
 
@@ -204,7 +204,7 @@ EXAMPLES = r'''
   lucasheld.uptime_kuma.monitor:
     api_url: http://192.168.1.10:3001
     api_username: admin
-    api_password: secret
+    api_password: secret123
     name: Peer 1
     state: resumed
 '''

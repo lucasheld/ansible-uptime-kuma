@@ -47,7 +47,7 @@ EXAMPLES = r'''
   lucasheld.uptime_kuma.notification:
     api_url: http://192.168.1.10:3001
     api_username: admin
-    api_password: secret
+    api_password: secret123
     name: Notification 1
     type: telegram
     default: false
@@ -59,7 +59,7 @@ EXAMPLES = r'''
   lucasheld.uptime_kuma.notification:
     api_url: http://192.168.1.10:3001
     api_username: admin
-    api_password: secret
+    api_password: secret123
     name: Notification 1
     type: telegram
     default: false
@@ -71,7 +71,7 @@ EXAMPLES = r'''
   lucasheld.uptime_kuma.notification:
     api_url: http://192.168.1.10:3001
     api_username: admin
-    api_password: secret
+    api_password: secret123
     name: Notification 1
     state: absent
 '''

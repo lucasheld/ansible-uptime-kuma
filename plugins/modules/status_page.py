@@ -90,7 +90,7 @@ EXAMPLES = r'''
   lucasheld.uptime_kuma.status_page:
     api_url: http://192.168.1.10:3001
     api_username: admin
-    api_password: secret
+    api_password: secret123
     slug: testslug
     title: testtitle
     state: present
@@ -99,7 +99,7 @@ EXAMPLES = r'''
   lucasheld.uptime_kuma.status_page:
     api_url: http://192.168.1.10:3001
     api_username: admin
-    api_password: secret
+    api_password: secret123
     slug: testslug
     title: newtitle
     incident:
@@ -112,7 +112,7 @@ EXAMPLES = r'''
   lucasheld.uptime_kuma.status_page:
     api_url: http://192.168.1.10:3001
     api_username: admin
-    api_password: secret
+    api_password: secret123
     slug: testslug
     state: absent
 '''

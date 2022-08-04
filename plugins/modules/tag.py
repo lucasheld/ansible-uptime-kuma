@@ -47,7 +47,7 @@ EXAMPLES = r'''
   lucasheld.uptime_kuma.tag:
     api_url: http://192.168.1.10:3001
     api_username: admin
-    api_password: secret
+    api_password: secret123
     name: Tag 1
     color: "#ff0000"
     state: present
@@ -56,7 +56,7 @@ EXAMPLES = r'''
   lucasheld.uptime_kuma.tag:
     api_url: http://192.168.1.10:3001
     api_username: admin
-    api_password: secret
+    api_password: secret123
     name: Tag 1
     state: absent
 '''

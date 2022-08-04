@@ -36,7 +36,7 @@ EXAMPLES = r'''
   lucasheld.uptime_kuma.proxy_info:
     api_url: http://192.168.1.10:3001
     api_username: admin
-    api_password: secret
+    api_password: secret123
   register: result
 '''
 

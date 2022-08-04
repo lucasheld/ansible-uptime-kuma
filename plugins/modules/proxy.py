@@ -72,7 +72,7 @@ EXAMPLES = r'''
   lucasheld.uptime_kuma.proxy:
     api_url: http://192.168.1.10:3001
     api_username: admin
-    api_password: secret
+    api_password: secret123
     protocol: http
     host: 127.0.0.1
     port: 8080
@@ -82,7 +82,7 @@ EXAMPLES = r'''
   lucasheld.uptime_kuma.proxy:
     api_url: http://192.168.1.10:3001
     api_username: admin
-    api_password: secret
+    api_password: secret123
     host: 127.0.0.1
     port: 8080
     active: false
@@ -92,7 +92,7 @@ EXAMPLES = r'''
   lucasheld.uptime_kuma.proxy:
     api_url: http://192.168.1.10:3001
     api_username: admin
-    api_password: secret
+    api_password: secret123
     host: 127.0.0.1
     port: 8080
     state: absent
