@@ -32,3 +32,53 @@ The following modules are available:
 - [status_page_info](https://github.com/lucasheld/ansible-uptime-kuma/wiki/status_page_info)
 - [tag](https://github.com/lucasheld/ansible-uptime-kuma/wiki/tag)
 - [tag_info](https://github.com/lucasheld/ansible-uptime-kuma/wiki/tag_info)
+
+
+## Getting started
+Directly after the installation of Uptime Kuma, the initial username and password must be set:
+```yaml
+- name: Specify the initial username and password
+  lucasheld.uptime_kuma.setup:
+    api_url: http://127.0.0.1:3001
+    api_username: admin
+    api_password: secret123
+```
+
+For future requests you can either use these credentials directly or a login token that must be generated once.
+Frequent credential logins result in an earlier rate limit than token logins. In this example we create a new monitor.
+
+Option 1: Create a monitor by using the login credentials directly:
+```yaml
+- name: Login with credentials and create a monitor
+  lucasheld.uptime_kuma.monitor:
+    api_url: http://127.0.0.1:3001
+    api_username: admin
+    api_password: secret123
+    name: Google
+    type: http
+    url: https://google.com
+    state: present
+```
+
+Option 2: Generate a login token and create a monitor by using this token:
+```yaml
+- name: Login with credentials once and register the result
+  lucasheld.uptime_kuma.login:
+    api_url: http://127.0.0.1:3001
+    api_username: admin
+    api_password: secret123
+  register: result
+
+- name: Extract the login token from the result and set it as fact
+  set_fact:
+    api_token: "{{ result.token }}"
+
+- name: Login by token and create a monitor
+  lucasheld.uptime_kuma.monitor:
+    api_url: http://127.0.0.1:3001
+    api_token: "{{ api_token }}"
+    name: Google
+    type: http
+    url: https://google.com
+    state: present
+```
