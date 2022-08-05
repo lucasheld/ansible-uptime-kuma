@@ -44,10 +44,10 @@ Directly after the installation of Uptime Kuma, the initial username and passwor
     api_password: secret123
 ```
 
-For future requests you can either use these credentials directly or a login token that must be generated once.
-Frequent credential logins result in an earlier rate limit than token logins. In this example we create a new monitor.
+For future requests you can either use these credentials directly or a token that must be generated once.
+The token usage is recommended because frequent logins lead to a rate limit. In this example we create a new monitor.
 
-Option 1: Create a monitor by using the login credentials directly:
+Option 1 (not recommended): Create a monitor by using the credentials directly:
 ```yaml
 - name: Login with credentials and create a monitor
   lucasheld.uptime_kuma.monitor:
@@ -60,7 +60,7 @@ Option 1: Create a monitor by using the login credentials directly:
     state: present
 ```
 
-Option 2: Generate a login token and create a monitor by using this token:
+Option 2 (recommended): Generate a token and create a monitor by using this token:
 ```yaml
 - name: Login with credentials once and register the result
   lucasheld.uptime_kuma.login:
@@ -69,7 +69,7 @@ Option 2: Generate a login token and create a monitor by using this token:
     api_password: secret123
   register: result
 
-- name: Extract the login token from the result and set it as fact
+- name: Extract the token from the result and set it as fact
   set_fact:
     api_token: "{{ result.token }}"
 
