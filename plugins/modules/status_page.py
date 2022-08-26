@@ -110,16 +110,16 @@ options:
 EXAMPLES = r'''
 - name: Add status page
   lucasheld.uptime_kuma.status_page:
-    api_url: http://192.168.1.10:3001
+    api_url: http://127.0.0.1:3001
     api_username: admin
     api_password: secret123
     slug: testslug
     title: testtitle
     state: present
 
-- name: Edit status page
+- name: Add status page with incident
   lucasheld.uptime_kuma.status_page:
-    api_url: http://192.168.1.10:3001
+    api_url: http://127.0.0.1:3001
     api_username: admin
     api_password: secret123
     slug: testslug
@@ -130,9 +130,22 @@ EXAMPLES = r'''
       style: info
     state: present
 
+- name: Add status page with monitor
+  lucasheld.uptime_kuma.status_page:
+    api_url: http://127.0.0.1:3001
+    api_username: admin
+    api_password: secret123
+    slug: testslug
+    title: testtitle
+    publicGroupList:
+      - name: Services
+        weight: 1
+        monitorList:
+          - name: Monitor 1
+
 - name: Remove status page
   lucasheld.uptime_kuma.status_page:
-    api_url: http://192.168.1.10:3001
+    api_url: http://127.0.0.1:3001
     api_username: admin
     api_password: secret123
     slug: testslug

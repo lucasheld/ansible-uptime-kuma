@@ -45,7 +45,7 @@ options:
 EXAMPLES = r'''
 - name: Add notification
   lucasheld.uptime_kuma.notification:
-    api_url: http://192.168.1.10:3001
+    api_url: http://127.0.0.1:3001
     api_username: admin
     api_password: secret123
     name: Notification 1
@@ -57,7 +57,7 @@ EXAMPLES = r'''
 
 - name: Edit notification
   lucasheld.uptime_kuma.notification:
-    api_url: http://192.168.1.10:3001
+    api_url: http://127.0.0.1:3001
     api_username: admin
     api_password: secret123
     name: Notification 1
@@ -69,7 +69,7 @@ EXAMPLES = r'''
 
 - name: Remove notification
   lucasheld.uptime_kuma.notification:
-    api_url: http://192.168.1.10:3001
+    api_url: http://127.0.0.1:3001
     api_username: admin
     api_password: secret123
     name: Notification 1

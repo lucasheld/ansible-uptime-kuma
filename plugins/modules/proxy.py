@@ -70,7 +70,7 @@ options:
 EXAMPLES = r'''
 - name: Add proxy
   lucasheld.uptime_kuma.proxy:
-    api_url: http://192.168.1.10:3001
+    api_url: http://127.0.0.1:3001
     api_username: admin
     api_password: secret123
     protocol: http
@@ -80,7 +80,7 @@ EXAMPLES = r'''
 
 - name: Edit proxy
   lucasheld.uptime_kuma.proxy:
-    api_url: http://192.168.1.10:3001
+    api_url: http://127.0.0.1:3001
     api_username: admin
     api_password: secret123
     host: 127.0.0.1
@@ -90,7 +90,7 @@ EXAMPLES = r'''
 
 - name: Remove proxy
   lucasheld.uptime_kuma.proxy:
-    api_url: http://192.168.1.10:3001
+    api_url: http://127.0.0.1:3001
     api_username: admin
     api_password: secret123
     host: 127.0.0.1

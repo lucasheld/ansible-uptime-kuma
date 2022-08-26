@@ -165,47 +165,47 @@ options:
 EXAMPLES = r'''
 - name: Add a monitor
   lucasheld.uptime_kuma.monitor:
-    api_url: http://192.168.1.10:3001
+    api_url: http://127.0.0.1:3001
     api_username: admin
     api_password: secret123
     type: keyword
-    name: Peer 1
+    name: Monitor 1
     url: http://192.168.20.135
     keyword: healthy
     state: present
 
 - name: Edit a monitor
   lucasheld.uptime_kuma.monitor:
-    api_url: http://192.168.1.10:3001
+    api_url: http://127.0.0.1:3001
     api_username: admin
     api_password: secret123
     type: http
-    name: Peer 1
+    name: Monitor 1
     url: http://192.168.20.135
     state: present
 
 - name: Remove a monitor
   lucasheld.uptime_kuma.monitor:
-    api_url: http://192.168.1.10:3001
+    api_url: http://127.0.0.1:3001
     api_username: admin
     api_password: secret123
-    name: Peer 1
+    name: Monitor 1
     state: absent
 
 - name: Pause a monitor
   lucasheld.uptime_kuma.monitor:
-    api_url: http://192.168.1.10:3001
+    api_url: http://127.0.0.1:3001
     api_username: admin
     api_password: secret123
-    name: Peer 1
+    name: Monitor 1
     state: paused
 
 - name: Resume a monitor
   lucasheld.uptime_kuma.monitor:
-    api_url: http://192.168.1.10:3001
+    api_url: http://127.0.0.1:3001
     api_username: admin
     api_password: secret123
-    name: Peer 1
+    name: Monitor 1
     state: resumed
 '''
 

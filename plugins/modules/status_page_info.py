@@ -28,7 +28,7 @@ options:
 EXAMPLES = r'''
 - name: get all status_pages
   lucasheld.uptime_kuma.status_page_info:
-    api_url: http://192.168.1.10:3001
+    api_url: http://127.0.0.1:3001
     api_username: admin
     api_password: secret123
   register: result

@@ -56,20 +56,20 @@ options:
 EXAMPLES = r'''
 - name: Add a monitor tag
   lucasheld.uptime_kuma.monitor_tag:
-    api_url: http://192.168.1.10:3001
+    api_url: http://127.0.0.1:3001
     api_username: admin
     api_password: secret123
-    monitor_name: Peer 1
+    monitor_name: Monitor 1
     tag_name: Tag 1
     value: Tag value
     state: present
 
 - name: Remove a monitor tag
   lucasheld.uptime_kuma.monitor_tag:
-    api_url: http://192.168.1.10:3001
+    api_url: http://127.0.0.1:3001
     api_username: admin
     api_password: secret123
-    monitor_name: Peer 1
+    monitor_name: Monitor 1
     tag_name: Tag 1
     value: Tag Value
     state: absent

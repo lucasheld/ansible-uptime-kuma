@@ -31,7 +31,7 @@ options:
 EXAMPLES = r'''
 - name: get all monitors
   lucasheld.uptime_kuma.monitor_info:
-    api_url: http://192.168.1.10:3001
+    api_url: http://127.0.0.1:3001
     api_username: admin
     api_password: secret123
   register: result
