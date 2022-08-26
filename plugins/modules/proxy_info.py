@@ -21,13 +21,21 @@ description: Retrieves facts about a proxy.
 
 options:
   id:
-    description: The id of the proxy to inspect.
+    description:
+      - The id of the proxy to inspect.
+      - Only required if no I(host) and I(port) specified.
     type: int
   host:
-    description: The host of the proxy to inspect.
+    description:
+      - The host of the proxy to inspect.
+      - Only required if no I(id) specified.
+      - Only valid in combination with I(port).
     type: str
   port:
-    description: The port of the proxy to inspect.
+    description:
+      - The port of the proxy to inspect.
+      - Only required if no I(id) specified.
+      - Only valid in combination with I(host).
     type: int
 '''
 

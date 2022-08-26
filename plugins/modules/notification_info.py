@@ -21,10 +21,14 @@ description: Retrieves facts about a notification.
 
 options:
   id:
-    description: The id of the notification to inspect.
+    description:
+      - The id of the notification to inspect.
+      - Only required if no I(name) specified.
     type: int
   name:
-    description: The name of the notification to inspect.
+    description:
+      - The name of the notification to inspect.
+      - Only required if no I(id) specified.
     type: str
 '''
 

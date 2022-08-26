@@ -21,10 +21,14 @@ description: Retrieves facts about a monitor.
 
 options:
   id:
-    description: The id of the monitor to inspect.
+    description:
+      - The id of the monitor to inspect.
+      - Only required if no I(name) specified.
     type: int
   name:
-    description: The name of the monitor to inspect.
+    description:
+      - The name of the monitor to inspect.
+      - Only required if no I(id) specified.
     type: str
 '''
 
