@@ -56,10 +56,32 @@ options:
   icon:
     description: The icon of the status page.
     type: str
-  monitors:
-    description: The monitors of the status page.
+  publicGroupList:
+    description: The public group list of the status page.
     type: list
-    elements: "str"
+    suboptions:
+      name:
+        description: The name of the group.
+        type: str
+        required: true
+      weight:
+        description: The weight of the group.
+        type: int
+      monitorList:
+        description: The monitor list of the group.
+        type: list
+        required: true
+        suboptions:
+          id:
+            description:
+              - The id of the monitor.
+              - Only required if no I(name) specified.
+            type: int
+          name:
+            description:
+              - The name of the monitor.
+              - Only required if no I(id) specified.
+            type: str
   incident:
     description: The incident of the status page.
     type: dict
@@ -123,7 +145,8 @@ RETURN = r'''
 import traceback
 
 from ansible.module_utils.basic import AnsibleModule, missing_required_lib
-from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common import object_changed, clear_params, common_module_args, clear_unset_params
+from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common import object_changed, clear_params, \
+    common_module_args, clear_unset_params, get_monitor_by_name
 
 try:
     from uptime_kuma_api import UptimeKumaApi
@@ -141,30 +164,41 @@ def run(api, params, result):
     if "incident" in options:
         del options["incident"]
 
+    for group in options.get("publicGroupList", []):
+        for monitor in group.get("monitorList", []):
+            if monitor["id"]:
+                monitor.pop("name")
+            else:
+                monitor_name = monitor.pop("name")
+                monitor["id"] = get_monitor_by_name(api, monitor_name)["id"]
+
     try:
         status_page = api.get_status_page(slug)
     except Exception:
         status_page = None
 
     if state == "present":
-        status_page_exists = True if status_page else False
+        result["options"] = options
         if not status_page:
             api.add_status_page(slug, params["title"])
             api.save_status_page(**options)
-            status_page_exists = True
+            status_page = api.get_status_page(slug)
             result["changed"] = True
         else:
             changed_keys = object_changed(status_page, options, {"customCSS": "body {\n  \n}\n"})
             if changed_keys:
                 api.save_status_page(**options)
                 result["changed"] = True
-        if status_page_exists:
+        if status_page:
+            status_page_incident = status_page.get("incident")
             if params["incident"]:
-                api.post_incident(slug, **params["incident"])
+                if not status_page_incident:
+                    api.post_incident(slug, **params["incident"])
+                    result["changed"] = True
             else:
-                api.unpin_incident(slug)
-            # There is no way to check if an incident is already pinned or not. So we have to assume that something has been changed.
-            result["changed"] = True
+                if status_page_incident:
+                    api.unpin_incident(slug)
+                    result["changed"] = True
     elif state == "absent":
         if status_page:
             api.delete_status_page(slug)
@@ -185,7 +219,14 @@ def main():
         footerText=dict(type="str"),
         showPoweredBy=dict(type="bool"),
         icon=dict(type="str"),
-        monitors=dict(type="list", elements="str"),
+        publicGroupList=dict(type="list", elements="dict", options=dict(
+            name=dict(type="str", required=True),
+            weight=dict(type="int", required=False),
+            monitorList=dict(type="list", elements="dict", options=dict(
+                id=dict(type="int", required=False),
+                name=dict(type="str", required=False)
+            ))
+        )),
         incident=dict(type="dict", options=dict(
             title=dict(type="str", required=True),
             content=dict(type="str", required=True),

@@ -100,6 +100,16 @@ status_pages:
       returned: always
       type: bool
       sample: False
+    incident:
+      description: The incident of the status page.
+      returned: always
+      type: dict
+      sample: {'id': 2, 'style': 'danger', 'title': 'sample title', 'content': 'sample content', 'pin': 1, 'createdDate': '2022-08-26 12:07:00', 'lastUpdatedDate': None}
+    publicGroupList:
+      description: The public group list of the status page.
+      returned: always
+      type: list
+      sample: [{'id': 5, 'name': 'Services', 'weight': 1, 'monitorList': [{'id': 18, 'name': 'sample monitor'}]}]
 '''
 
 import traceback
