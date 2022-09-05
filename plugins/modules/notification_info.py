@@ -67,7 +67,7 @@ notifications:
       returned: always
       sample: 1
     isDefault:
-      description: 
+      description: True if the notification is the default.
       returned: always
       type: bool
       sample: False
