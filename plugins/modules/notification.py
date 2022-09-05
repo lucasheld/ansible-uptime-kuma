@@ -33,6 +33,9 @@ options:
   isDefault:
     description: True if the notification is the default.
     type: bool
+  applyExisting:
+    description: True if the notification is applied to all existing monitors.
+    type: bool
   state:
     description:
       - Set to C(present) to create/update a notification.
@@ -51,6 +54,7 @@ EXAMPLES = r'''
     name: Notification 1
     type: telegram
     isDefault: false
+    applyExisting: false
     telegramBotToken: 1111
     telegramChatID: 2222
     state: present
@@ -63,6 +67,7 @@ EXAMPLES = r'''
     name: Notification 1
     type: telegram
     isDefault: false
+    applyExisting: false
     telegramBotToken: 6666
     telegramChatID: 7777
     state: present
@@ -148,6 +153,7 @@ def main():
         id=dict(type="int"),
         name=dict(type="str"),
         isDefault=dict(type="bool", aliases=["default"]),
+        applyExisting=dict(type="bool"),
         state=dict(type="str", default="present", choices=["present", "absent"])
     )
 
