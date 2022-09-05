@@ -30,7 +30,7 @@ options:
       - The name of the notification.
       - Only required if no I(id) specified.
     type: str
-  default:
+  isDefault:
     description: True if the notification is the default.
     type: bool
   state:
@@ -50,7 +50,7 @@ EXAMPLES = r'''
     api_password: secret123
     name: Notification 1
     type: telegram
-    default: false
+    isDefault: false
     telegramBotToken: 1111
     telegramChatID: 2222
     state: present
@@ -62,7 +62,7 @@ EXAMPLES = r'''
     api_password: secret123
     name: Notification 1
     type: telegram
-    default: false
+    isDefault: false
     telegramBotToken: 6666
     telegramChatID: 7777
     state: present
@@ -147,7 +147,7 @@ def main():
     module_args = dict(
         id=dict(type="int"),
         name=dict(type="str"),
-        default=dict(type="bool"),
+        isDefault=dict(type="bool", aliases=["default"]),
         state=dict(type="str", default="present", choices=["present", "absent"])
     )
 
