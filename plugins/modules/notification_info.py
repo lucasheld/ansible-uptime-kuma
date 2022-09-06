@@ -66,11 +66,15 @@ notifications:
       description: 
       returned: always
       sample: 1
-    default:
-      description: 
+    isDefault:
+      description: True if the notification is the default.
       returned: always
       type: bool
       sample: False
+    applyExisting:
+      description: True if the notification is applied to all existing monitors.
+      returned: always
+      type: bool
     type:
       description: 
       returned: always
