@@ -128,10 +128,6 @@ notifications:
       description: apprise provider option.
       returned: if type is apprise
       type: str
-    barkEndpoint:
-      description: Bark provider option.
-      returned: if type is Bark
-      type: str
     clicksendsmsLogin:
       description: clicksendsms provider option.
       returned: if type is clicksendsms
@@ -579,6 +575,34 @@ notifications:
     weComBotKey:
       description: WeCom provider option.
       returned: if type is WeCom
+      type: str
+    alertNowWebhookURL:
+      description: AlertNow provider option.
+      returned: if type is AlertNow
+      type: str
+    barkEndpoint:
+      description: Bark provider option.
+      returned: if type is Bark
+      type: str
+    barkGroup:
+      description: Bark provider option.
+      returned: if type is Bark
+      type: str
+    barkSound:
+      description: Bark provider option.
+      returned: if type is Bark
+      type: str
+    homeAssistantUrl:
+      description: HomeAssistant provider option.
+      returned: if type is HomeAssistant
+      type: str
+    longLivedAccessToken:
+      description: HomeAssistant provider option.
+      returned: if type is HomeAssistant
+      type: str
+    lineNotifyAccessToken:
+      description: LineNotify provider option.
+      returned: if type is LineNotify
       type: str
 '''
 

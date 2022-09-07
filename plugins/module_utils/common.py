@@ -56,6 +56,13 @@ def get_tag_by_name(api, name):
             return tag
 
 
+def get_docker_host_by_name(api, name):
+    docker_hosts = api.get_docker_hosts()
+    for docker_host in docker_hosts:
+        if docker_host["name"] == name:
+            return docker_host
+
+
 common_module_args = dict(
     api_url=dict(type="str", default="http://127.0.0.1:3001"),
     api_username=dict(type="str"),

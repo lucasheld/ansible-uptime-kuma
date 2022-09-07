@@ -33,12 +33,15 @@ options:
   type:
     description: The type of the monitor.
     type: str
-    choices: ["http", "port", "ping", "keyword", "dns", "push", "steam", "mqtt", "sqlserver"]
+    choices: ["http", "port", "ping", "keyword", "dns", "docker", "push", "steam", "mqtt", "sqlserver", "postgres", "radius"]
   interval:
     description: The heartbeat interval of the monitor.
     type: int
   retryInterval:
     description: The heartbeat retry interval of the monitor.
+    type: int
+  resendInterval:
+    description: The heartbeat resend interval of the monitor.
     type: int
   maxretries:
     description: The max retries of the monitor.
@@ -151,6 +154,34 @@ options:
   databaseQuery:
     description: The sqlserver query of the monitor.
     type: str
+  docker_container:
+    description: The docker container of the monitor.
+    type: str
+  docker_host:
+    description:
+      - The docker host id of the monitor.
+      - Only required if no I(docker_host_name) specified.
+    type: int
+  docker_host_name:
+    description:
+      - The docker host name of the monitor.
+      - Only required if no I(docker_host) specified.
+    type: str
+  radiusUsername:
+    description: The radius username of the monitor.
+    type: str
+  radiusPassword:
+    description: The radius password of the monitor.
+    type: str
+  radiusSecret:
+    description: The radius secret of the monitor.
+    type: str
+  radiusCalledStationId:
+    description: The radius called station id of the monitor.
+    type: str
+  radiusCallingStationId:
+    description: The radius calling station id of the monitor.
+    type: str
   state:
     description:
       - Set to C(present) to create/update a monitor.
@@ -216,10 +247,11 @@ import traceback
 
 from ansible.module_utils.basic import AnsibleModule, missing_required_lib
 from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common import object_changed, clear_params, \
-    common_module_args, get_proxy_by_host_port, get_notification_by_name, get_monitor_by_name, clear_unset_params
+    common_module_args, get_proxy_by_host_port, get_notification_by_name, get_monitor_by_name, clear_unset_params, \
+    get_docker_host_by_name
 
 try:
-    from uptime_kuma_api import UptimeKumaApi
+    from uptime_kuma_api import UptimeKumaApi, MonitorType
     HAS_UPTIME_KUMA_API = True
 except ImportError:
     HAS_UPTIME_KUMA_API = False
@@ -228,6 +260,12 @@ except ImportError:
 def run(api, params, result):
     if not params["accepted_statuscodes"]:
         params["accepted_statuscodes"] = ["200-299"]
+
+    if not params["databaseConnectionString"]:
+        if params["type"] == MonitorType.SQLSERVER:
+            params["databaseConnectionString"] = "Server=<hostname>,<port>;Database=<your database>;User Id=<your user id>;Password=<your password>;Encrypt=<true/false>;TrustServerCertificate=<Yes/No>;Connection Timeout=<int>"
+        elif params["type"] == MonitorType.POSTGRES:
+            params["databaseConnectionString"] = "postgres://username:password@host:port/database"
 
     # notification_names -> notificationIDList
     if params["notification_names"]:
@@ -243,6 +281,12 @@ def run(api, params, result):
         proxy = get_proxy_by_host_port(api, params["proxy_id"]["host"], params["proxy_id"]["port"])
         params["proxyId"] = proxy["id"]
     del params["proxy"]
+
+    # docker_host_name -> docker_host
+    if params["docker_host_name"]:
+        docker_host = get_docker_host_by_name(api, params["docker_host_name"])
+        params["docker_host"] = docker_host["id"]
+    del params["docker_host_name"]
 
     state = params["state"]
     options = clear_params(params)
@@ -280,9 +324,10 @@ def main():
     module_args = dict(
         id=dict(type="int"),
         name=dict(type="str"),
-        type=dict(type="str", choices=["http", "port", "ping", "keyword", "dns", "push", "steam", "mqtt", "sqlserver"]),
+        type=dict(type="str", choices=["http", "port", "ping", "keyword", "dns", "docker", "push", "steam", "mqtt", "sqlserver", "postgres", "radius"]),
         interval=dict(type="int"),
         retryInterval=dict(type="int"),
+        resendInterval=dict(type="int"),
         maxretries=dict(type="int"),
         upsideDown=dict(type="bool"),
         # tags=dict(type="list", elements="dict", options=dict()),
@@ -328,9 +373,21 @@ def main():
         mqttTopic=dict(type="str"),
         mqttSuccessMessage=dict(type="str"),
 
-        # SQLSERVER
+        # SQLSERVER, POSTGRES
         databaseConnectionString=dict(type="str"),
         databaseQuery=dict(type="str"),
+
+        # DOCKER
+        docker_container=dict(type="str"),
+        docker_host=dict(type="int"),
+        docker_host_name=dict(type="str"),
+
+        # RADIUS
+        radiusUsername=dict(type="str"),
+        radiusPassword=dict(type="str"),
+        radiusSecret=dict(type="str"),
+        radiusCalledStationId=dict(type="str"),
+        radiusCallingStationId=dict(type="str"),
 
         state=dict(type="str", default="present", choices=["present", "absent", "paused", "resumed"])
     )
