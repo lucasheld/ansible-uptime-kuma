@@ -15,9 +15,25 @@ def object_changed(obj: dict, options: dict, ignore: dict = None):
             elif value == ignore_value:
                 continue
         if options[key] != obj.get(key):
+            # fix detection of notification changes
+            if key == 'notificationIDList':
+                if not check_notifications_changed(key, obj, options):
+                    continue
             changed_keys.append((key, obj.get(key), options[key]))
     return changed_keys
 
+def check_notifications_changed(key, object, options):
+    notifications_changed = False
+    if key == 'notificationIDList':
+        for k in options[key]:
+            if str(k) not in object.get(key):
+                notifications_changed = True
+                break
+        for k in object.get(key):
+            if int(k) not in options[key]:
+                notifications_changed = True
+                break
+    return notifications_changed
 
 def clear_params(params: dict):
     ignored_params = ["api_url", "api_username", "api_password", "api_token", "state"]
