@@ -1,5 +1,9 @@
 ## Changelog
 
+### Release 0.2.1
+
+- adjust to monitor notificationIDList return value
+
 ### Release 0.2.0
 
 - support for uptime kuma 1.18.0
