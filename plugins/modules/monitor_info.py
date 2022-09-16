@@ -262,15 +262,6 @@ def run(api, params, result):
     else:
         monitors = api.get_monitors()
 
-    for monitor in monitors:
-        # notificationIDList dict to list[int]
-        notification_ids = []
-        for notification_id, notification_enabled in monitor["notificationIDList"].items():
-            if notification_enabled:
-                notification_id = int(notification_id)
-                notification_ids.append(notification_id)
-        monitor["notificationIDList"] = notification_ids
-
     result["monitors"] = monitors
 
 
