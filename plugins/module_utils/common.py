@@ -73,6 +73,12 @@ def get_tag_by_name(api, name):
             return tag
 
 
+def get_monitor_tag(monitor, tag, value):
+    for monitor_tag in monitor["tags"]:
+        if monitor_tag["name"] == tag["name"] and monitor_tag["color"] == tag["color"] and monitor_tag["value"] == value:
+            return monitor_tag
+
+
 def get_docker_host_by_name(api, name):
     docker_hosts = api.get_docker_hosts()
     for docker_host in docker_hosts:

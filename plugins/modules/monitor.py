@@ -330,7 +330,6 @@ def main():
         resendInterval=dict(type="int"),
         maxretries=dict(type="int"),
         upsideDown=dict(type="bool"),
-        # tags=dict(type="list", elements="dict", options=dict()),
         notificationIDList=dict(type="list", elements="int"),
         notification_names=dict(type="list", elements="str"),
 
@@ -357,10 +356,10 @@ def main():
         # KEYWORD
         keyword=dict(type="str"),
 
-        # DNS, PING, STEAM, MQTT
+        # PORT, PING, DNS, STEAM, MQTT
         hostname=dict(type="str"),
 
-        # DNS, STEAM, MQTT
+        # PORT, DNS, STEAM, MQTT
         port=dict(type="int"),
 
         # DNS

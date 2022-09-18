@@ -81,19 +81,13 @@ RETURN = r'''
 import traceback
 
 from ansible.module_utils.basic import AnsibleModule, missing_required_lib
-from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common import common_module_args, get_monitor_by_name, get_tag_by_name
+from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common import common_module_args, get_monitor_by_name, get_tag_by_name, get_monitor_tag
 
 try:
     from uptime_kuma_api import UptimeKumaApi
     HAS_UPTIME_KUMA_API = True
 except ImportError:
     HAS_UPTIME_KUMA_API = False
-
-
-def get_monitor_tag(monitor, tag, value):
-    for monitor_tag in monitor["tags"]:
-        if monitor_tag["name"] == tag["name"] and monitor_tag["color"] == tag["color"] and monitor_tag["value"] == value:
-            return monitor_tag
 
 
 def run(api, params, result):

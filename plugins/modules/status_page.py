@@ -191,7 +191,6 @@ def run(api, params, result):
         status_page = None
 
     if state == "present":
-        result["options"] = options
         if not status_page:
             api.add_status_page(slug, params["title"])
             api.save_status_page(**options)

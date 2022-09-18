@@ -18,17 +18,17 @@ options:
   api_username:
     description:
       - The Uptime Kuma username.
-      - Only required if no I(api_token) specified.
+      - Only required if no I(api_token) specified and authentication is enabled.
     type: str
   api_password:
     description:
       - The Uptime Kuma password.
-      - Only required if no I(api_token) specified.
+      - Only required if no I(api_token) specified and authentication is enabled.
     type: str
   api_token:
     description:
       - The Uptime Kuma login token.
-      - Only required if no I(api_username) and I(api_password) specified.
+      - Only required if no I(api_username) and I(api_password) specified and authentication is enabled.
     type: str
 
 requirements:
