@@ -5,17 +5,34 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 
-def object_changed(obj: dict, options: dict, ignore: dict = None):
+def object_changed(superset, subset, ignore=None):
     changed_keys = []
-    for key, value in options.items():
+    for key, value in subset.items():
+        value2 = superset.get(key)
         if ignore and key in ignore:
             ignore_value = ignore[key]
-            if type(ignore_value) == list and value in ignore_value:
+            if type(ignore_value) == list and value2 in ignore_value:
                 continue
-            elif value == ignore_value:
+            elif value2 == ignore_value:
                 continue
-        if options[key] != obj.get(key):
-            changed_keys.append((key, obj.get(key), options[key]))
+            elif ignore_value is None:
+                continue
+        if type(value) == list:
+            for i in range(len(value)):
+                if not value2:
+                    changed_keys.append((key, superset.get(key), subset[key]))
+                elif type(value[i]) == list or type(value[i]) == dict:
+                    if object_changed(value2[i], value[i]):
+                        changed_keys.append((key, superset.get(key), subset[key]))
+                else:
+                    if value[i] != value2[i]:
+                        changed_keys.append((key, superset.get(key), subset[key]))
+        elif type(value) == dict:
+            if object_changed(value2, value):
+                changed_keys.append((key, superset.get(key), subset[key]))
+        else:
+            if value != value2:
+                changed_keys.append((key, superset.get(key), subset[key]))
     return changed_keys
 
 
