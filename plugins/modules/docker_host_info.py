@@ -113,10 +113,15 @@ def main():
 
     api = UptimeKumaApi(params["api_url"])
     api_token = params.get("api_token")
+    api_username = params.get("api_username")
+    api_password = params.get("api_password")
     if api_token:
-      api.login_by_token(api_token)
+        api.login_by_token(api_token)
+    elif api_username and api_password:
+        api.login(api_username, api_password)
     else:
-      api.login(params["api_username"], params["api_password"])
+        # autoLogin for enabled disableAuth
+        api.login()
 
     result = {
         "changed": False
