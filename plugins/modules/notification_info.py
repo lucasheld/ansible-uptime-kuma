@@ -256,62 +256,6 @@ notifications:
       description: mattermost provider option.
       returned: if type is mattermost
       type: str
-    ntfyserverurl:
-      description: ntfy provider option.
-      returned: if type is ntfy
-      type: str
-    ntfytopic:
-      description: ntfy provider option.
-      returned: if type is ntfy
-      type: str
-    ntfyPriority:
-      description: ntfy provider option.
-      returned: if type is ntfy
-      type: str
-    octopushVersion:
-      description: octopush provider option.
-      returned: if type is octopush
-      type: str
-    octopushAPIKey:
-      description: octopush provider option.
-      returned: if type is octopush
-      type: str
-    octopushLogin:
-      description: octopush provider option.
-      returned: if type is octopush
-      type: str
-    octopushPhoneNumber:
-      description: octopush provider option.
-      returned: if type is octopush
-      type: str
-    octopushSMSType:
-      description: octopush provider option.
-      returned: if type is octopush
-      type: str
-    octopushSenderName:
-      description: octopush provider option.
-      returned: if type is octopush
-      type: str
-    octopushDMLogin:
-      description: octopush provider option.
-      returned: if type is octopush
-      type: str
-    octopushDMAPIKey:
-      description: octopush provider option.
-      returned: if type is octopush
-      type: str
-    octopushDMPhoneNumber:
-      description: octopush provider option.
-      returned: if type is octopush
-      type: str
-    octopushDMSenderName:
-      description: octopush provider option.
-      returned: if type is octopush
-      type: str
-    octopushDMSMSType:
-      description: octopush provider option.
-      returned: if type is octopush
-      type: str
     httpAddr:
       description: OneBot provider option.
       returned: if type is OneBot
@@ -548,10 +492,6 @@ notifications:
       description: stackfield provider option.
       returned: if type is stackfield
       type: str
-    webhookUrl:
-      description: teams provider option.
-      returned: if type is teams
-      type: str
     pushAPIKey:
       description: PushByTechulus provider option.
       returned: if type is PushByTechulus
@@ -580,6 +520,18 @@ notifications:
       description: AlertNow provider option.
       returned: if type is AlertNow
       type: str
+    homeAssistantUrl:
+      description: HomeAssistant provider option.
+      returned: if type is HomeAssistant
+      type: str
+    longLivedAccessToken:
+      description: HomeAssistant provider option.
+      returned: if type is HomeAssistant
+      type: str
+    lineNotifyAccessToken:
+      description: LineNotify provider option.
+      returned: if type is LineNotify
+      type: str
     barkEndpoint:
       description: Bark provider option.
       returned: if type is Bark
@@ -592,17 +544,101 @@ notifications:
       description: Bark provider option.
       returned: if type is Bark
       type: str
-    homeAssistantUrl:
-      description: HomeAssistant provider option.
-      returned: if type is HomeAssistant
+    goAlertBaseURL:
+      description: GoAlert provider option.
+      returned: if type is GoAlert
       type: str
-    longLivedAccessToken:
-      description: HomeAssistant provider option.
-      returned: if type is HomeAssistant
+    goAlertToken:
+      description: GoAlert provider option.
+      returned: if type is GoAlert
       type: str
-    lineNotifyAccessToken:
-      description: LineNotify provider option.
-      returned: if type is LineNotify
+    ntfyusername:
+      description: ntfy provider option.
+      returned: if type is ntfy
+      type: str
+    ntfypassword:
+      description: ntfy provider option.
+      returned: if type is ntfy
+      type: str
+    ntfytopic:
+      description: ntfy provider option.
+      returned: if type is ntfy
+      type: str
+    ntfyPriority:
+      description: ntfy provider option.
+      returned: if type is ntfy
+      type: str
+    ntfyserverurl:
+      description: ntfy provider option.
+      returned: if type is ntfy
+      type: str
+    octopushVersion:
+      description: octopush provider option.
+      returned: if type is octopush
+      type: str
+    octopushAPIKey:
+      description: octopush provider option.
+      returned: if type is octopush
+      type: str
+    octopushLogin:
+      description: octopush provider option.
+      returned: if type is octopush
+      type: str
+    octopushPhoneNumber:
+      description: octopush provider option.
+      returned: if type is octopush
+      type: str
+    octopushSMSType:
+      description: octopush provider option.
+      returned: if type is octopush
+      type: str
+    octopushSenderName:
+      description: octopush provider option.
+      returned: if type is octopush
+      type: str
+    octopushDMLogin:
+      description: octopush provider option.
+      returned: if type is octopush
+      type: str
+    octopushDMAPIKey:
+      description: octopush provider option.
+      returned: if type is octopush
+      type: str
+    octopushDMPhoneNumber:
+      description: octopush provider option.
+      returned: if type is octopush
+      type: str
+    octopushDMSenderName:
+      description: octopush provider option.
+      returned: if type is octopush
+      type: str
+    octopushDMSMSType:
+      description: octopush provider option.
+      returned: if type is octopush
+      type: str
+    serverChanSendKey:
+      description: ServerChan provider option.
+      returned: if type is ServerChan
+      type: str
+    smsmanagerApiKey:
+      description: SMSManager provider option.
+      returned: if type is SMSManager
+      type: str
+    numbers:
+      description: SMSManager provider option.
+      returned: if type is SMSManager
+      type: str
+    messageType:
+      description: SMSManager provider option.
+      returned: if type is SMSManager
+      type: str
+    squadcastWebhookURL:
+      description: squadcast provider option.
+      returned: if type is squadcast
+      type: str
+    webhookUrl:
+      description: teams provider option.
+      returned: if type is teams
       type: str
 '''
 
