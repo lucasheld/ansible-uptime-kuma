@@ -552,26 +552,6 @@ notifications:
       description: GoAlert provider option.
       returned: if type is GoAlert
       type: str
-    ntfyusername:
-      description: ntfy provider option.
-      returned: if type is ntfy
-      type: str
-    ntfypassword:
-      description: ntfy provider option.
-      returned: if type is ntfy
-      type: str
-    ntfytopic:
-      description: ntfy provider option.
-      returned: if type is ntfy
-      type: str
-    ntfyPriority:
-      description: ntfy provider option.
-      returned: if type is ntfy
-      type: str
-    ntfyserverurl:
-      description: ntfy provider option.
-      returned: if type is ntfy
-      type: str
     octopushVersion:
       description: octopush provider option.
       returned: if type is octopush
@@ -639,6 +619,34 @@ notifications:
     webhookUrl:
       description: teams provider option.
       returned: if type is teams
+      type: str
+    freemobileUser:
+      description: FreeMobile provider option.
+      returned: if type is FreeMobile
+      type: str
+    freemobilePass:
+      description: FreeMobile provider option.
+      returned: if type is FreeMobile
+      type: str
+    ntfyusername:
+      description: ntfy provider option.
+      returned: if type is ntfy
+      type: str
+    ntfypassword:
+      description: ntfy provider option.
+      returned: if type is ntfy
+      type: str
+    ntfytopic:
+      description: ntfy provider option.
+      returned: if type is ntfy
+      type: str
+    ntfyPriority:
+      description: ntfy provider option.
+      returned: if type is ntfy
+      type: str
+    ntfyserverurl:
+      description: ntfy provider option.
+      returned: if type is ntfy
       type: str
 '''
 
