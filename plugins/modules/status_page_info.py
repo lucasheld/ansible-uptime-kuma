@@ -16,8 +16,8 @@ extends_documentation_fragment:
 
 module: status_page_info
 author: Lucas Held (@lucasheld)
-short_description: Retrieves facts about a status page.
-description: Retrieves facts about a status page.
+short_description: Retrieves facts about status pages.
+description: Retrieves facts about status pages.
 
 options:
   slug:

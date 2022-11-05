@@ -30,7 +30,7 @@ do
   done
 
   echo "Running tests..."
-  ansible-test units --target-python default --num-workers 1
+  ansible-test units -v --target-python default --num-workers 1
 
   echo "Stopping uptime kuma..."
   docker stop uptimekuma > /dev/null

@@ -14,61 +14,29 @@ DOCUMENTATION = r'''
 extends_documentation_fragment:
   - lucasheld.uptime_kuma.uptime_kuma
 
-module: tag_info
+module: settings
 author: Lucas Held (@lucasheld)
-short_description: Retrieves facts about tags.
-description: Retrieves facts about tags.
-
-options:
-  id:
-    description:
-      - The id of the tag to inspect.
-      - Only required if no I(name) specified.
-    type: int
-  name:
-    description:
-      - The name of the tag to inspect.
-      - Only required if no I(id) specified.
-    type: str
+short_description: Manages settings.
+description: Manages settings.
 '''
 
 EXAMPLES = r'''
-- name: get all tags
-  lucasheld.uptime_kuma.tag_info:
+- name: Enable beta version update check
+  lucasheld.uptime_kuma.settings:
     api_url: http://127.0.0.1:3001
     api_username: admin
     api_password: secret123
-  register: result
+    checkBeta: true
 '''
 
 RETURN = r'''
-tags:
-  description: The tags as list
-  returned: always
-  type: complex
-  contains:
-    id:
-      description: The id of the tag.
-      returned: always
-      type: int
-      sample: 1
-    name:
-      description: The name of the tag.
-      returned: always
-      type: str
-      sample: tag 1
-    color:
-      description: The color of the tag.
-      returned: always
-      type: str
-      sample: #ffffff
 '''
 
 import traceback
 
-from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common import common_module_args, get_tag_by_name
-from ansible.module_utils.basic import missing_required_lib
+from ansible.module_utils.basic import AnsibleModule, missing_required_lib
+from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common import common_module_args, object_changed, \
+    clear_params, clear_unset_params
 
 try:
     from uptime_kuma_api import UptimeKumaApi
@@ -78,24 +46,40 @@ except ImportError:
 
 
 def run(api, params, result):
-    if params["id"]:
-        tag = api.get_tag(params["id"])
-        result["tags"] = [tag]
-    elif params["name"]:
-        tag = get_tag_by_name(api, params["name"])
-        result["tags"] = [tag]
-    else:
-        result["tags"] = api.get_tags()
+    options = clear_params(params)
+    options = clear_unset_params(options)
+
+    settings = api.get_settings()
+
+    changed_keys = object_changed(settings, options)
+    if changed_keys:
+        api.set_settings(**options)
+        result["changed"] = True
 
 
 def main():
     module_args = dict(
-        id=dict(type="int"),
-        name=dict(type="str"),
+        password=dict(type="str", no_log=True),
+        # about
+        checkUpdate=dict(type="bool"),
+        checkBeta=dict(type="bool"),
+        # monitor history
+        keepDataPeriodDays=dict(type="int"),
+        # general
+        entryPage=dict(type="str"),
+        searchEngineIndex=dict(type="bool"),
+        primaryBaseURL=dict(type="str"),
+        steamAPIKey=dict(type="str"),
+        # notifications
+        tlsExpiryNotifyDays=dict(type="list", elements="int"),
+        # security
+        disableAuth=dict(type="bool"),
+        # reverse proxy
+        trustProxy=dict(type="bool"),
     )
     module_args.update(common_module_args)
 
-    module = AnsibleModule(module_args, supports_check_mode=True)
+    module = AnsibleModule(module_args)
     params = module.params
 
     if not HAS_UPTIME_KUMA_API:

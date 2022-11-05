@@ -37,6 +37,8 @@ The following modules are available:
 - [tag_info](https://github.com/lucasheld/ansible-uptime-kuma/wiki/tag_info)
 - [docker_host](https://github.com/lucasheld/ansible-uptime-kuma/wiki/docker_host)
 - [docker_host_info](https://github.com/lucasheld/ansible-uptime-kuma/wiki/docker_host_info)
+- [settings](https://github.com/lucasheld/ansible-uptime-kuma/wiki/settings)
+- [settings_info](https://github.com/lucasheld/ansible-uptime-kuma/wiki/settings_info)
 
 
 ## Getting started

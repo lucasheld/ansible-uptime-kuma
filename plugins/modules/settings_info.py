@@ -14,27 +14,15 @@ DOCUMENTATION = r'''
 extends_documentation_fragment:
   - lucasheld.uptime_kuma.uptime_kuma
 
-module: docker_host_info
+module: settings_info
 author: Lucas Held (@lucasheld)
-short_description: Retrieves facts about docker hosts.
-description: Retrieves facts about docker hosts.
-
-options:
-  id:
-    description:
-      - The id of the docker host to inspect.
-      - Only required if no I(name) specified.
-    type: int
-  name:
-    description:
-      - The name of the docker host to inspect.
-      - Only required if no I(id) specified.
-    type: str
+short_description: Retrieves facts about settings.
+description: Retrieves facts about settings.
 '''
 
 EXAMPLES = r'''
-- name: get all docker hosts
-  lucasheld.uptime_kuma.docker_host_info:
+- name: get settings
+  lucasheld.uptime_kuma.settings_info:
     api_url: http://127.0.0.1:3001
     api_username: admin
     api_password: secret123
@@ -42,42 +30,67 @@ EXAMPLES = r'''
 '''
 
 RETURN = r'''
-docker_hosts:
-  description: The docker hosts as list
+settings:
+  description: The settings as list
   returned: always
   type: complex
   contains:
-    id:
-      description: The id of the docker host.
+    checkUpdate:
+      description: Value of the checkUpdate setting.
+      returned: always
+      type: bool
+      sample: true
+    checkBeta:
+      description: Value of the checkBeta setting.
+      returned: always
+      type: bool
+      sample: false
+    keepDataPeriodDays:
+      description: Value of the keepDataPeriodDays setting.
       returned: always
       type: int
-      sample: 1
-    userID:
-      description: The user id of the docker host.
-      returned: always
-      type: int
-      sample: 1
-    dockerType:
-      description: The docker type of the docker host.
+      sample: 180
+    entryPage:
+      description: Value of the entryPage setting.
       returned: always
       type: str
-      sample: socket
-    dockerDaemon:
-      description: The docker daemon of the docker host.
+      sample: dashboard
+    searchEngineIndex:
+      description: Value of the searchEngineIndex setting.
+      returned: always
+      type: bool
+      sample: false
+    primaryBaseURL:
+      description: Value of the primaryBaseURL setting.
       returned: always
       type: str
-      sample: /var/run/docker.sock
-    name:
-      description: The name of the docker host.
+      sample: 
+    steamAPIKey:
+      description: Value of the steamAPIKey setting.
       returned: always
       type: str
-      sample: docker host 1
+      sample: 
+    tlsExpiryNotifyDays:
+      description: Value of the tlsExpiryNotifyDays setting.
+      returned: always
+      type: list
+      sample: [7, 14, 21]
+    disableAuth:
+      description: Value of the disableAuth setting.
+      returned: always
+      type: bool
+      sample: false
+    trustProxy:
+      description: Value of the trustProxy setting.
+      returned: always
+      type: bool
+      sample: false
 '''
 
 import traceback
 
 from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common import common_module_args, get_docker_host_by_name
+from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common import common_module_args
 from ansible.module_utils.basic import missing_required_lib
 
 try:
@@ -88,21 +101,11 @@ except ImportError:
 
 
 def run(api, params, result):
-    if params["id"]:
-        docker_host = api.get_docker_host(params["id"])
-        result["docker_hosts"] = [docker_host]
-    elif params["name"]:
-        docker_host = get_docker_host_by_name(api, params["name"])
-        result["docker_hosts"] = [docker_host]
-    else:
-        result["docker_hosts"] = api.get_docker_hosts()
+    result["settings"] = api.get_settings()
 
 
 def main():
-    module_args = dict(
-        id=dict(type="int"),
-        name=dict(type="str"),
-    )
+    module_args = {}
     module_args.update(common_module_args)
 
     module = AnsibleModule(module_args, supports_check_mode=True)

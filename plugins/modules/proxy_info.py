@@ -16,8 +16,8 @@ extends_documentation_fragment:
 
 module: proxy_info
 author: Lucas Held (@lucasheld)
-short_description: Retrieves facts about a proxy.
-description: Retrieves facts about a proxy.
+short_description: Retrieves facts about proxies.
+description: Retrieves facts about proxies.
 
 options:
   id:

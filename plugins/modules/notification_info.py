@@ -16,8 +16,8 @@ extends_documentation_fragment:
 
 module: notification_info
 author: Lucas Held (@lucasheld)
-short_description: Retrieves facts about a notification.
-description: Retrieves facts about a notification.
+short_description: Retrieves facts about notifications.
+description: Retrieves facts about notifications.
 
 options:
   id:

@@ -16,8 +16,8 @@ extends_documentation_fragment:
 
 module: monitor_info
 author: Lucas Held (@lucasheld)
-short_description: Retrieves facts about a monitor.
-description: Retrieves facts about a monitor.
+short_description: Retrieves facts about monitors.
+description: Retrieves facts about monitors.
 
 options:
   id:
