@@ -12,9 +12,9 @@ cd "$collection_path"
 
 if [ $version ]
 then
-  versions="$version"
+  versions=("$version")
 else
-  versions="1.18.2 1.17.1"
+  versions=(1.18.3 1.17.1)
 fi
 
 for version in $versions
