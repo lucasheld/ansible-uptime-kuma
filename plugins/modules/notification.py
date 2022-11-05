@@ -98,13 +98,15 @@ except ImportError:
     HAS_UPTIME_KUMA_API = False
 
 
-def build_provider_args(provider_options):
+def build_provider_args():
     provider_args = {}
-    for notification_provider_param in provider_options:
-        arg_data = dict(type="str")
-        if "password" in notification_provider_param.lower():
-            arg_data["no_log"] = True
-        provider_args[notification_provider_param] = arg_data
+    for provider_options in notification_provider_options.values():
+        if type(provider_options) == list:  # backward compatible
+            provider_options = {option: dict(type="str") for option in provider_options}
+        for option, args in provider_options.items():
+            if "password" in option.lower():
+                args["no_log"] = True
+            provider_args[option] = args
     return provider_args
 
 
@@ -159,10 +161,9 @@ def main():
 
     if HAS_UPTIME_KUMA_API:
         provider_types = build_providers()
-        provider_options = build_provider_options()
-
         module_args.update(type=dict(type="str", choices=provider_types))
-        provider_args = build_provider_args(provider_options)
+
+        provider_args = build_provider_args()
         module_args.update(provider_args)
 
     module_args.update(common_module_args)
