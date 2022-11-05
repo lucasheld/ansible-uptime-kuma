@@ -1,5 +1,10 @@
 ## Changelog
 
+### Release 0.5.1
+
+#### Bugfix
+- use notification provider options types
+
 ### Release 0.5.0
 
 #### Feature
@@ -17,9 +22,6 @@
 
 #### Bugfix
 - idempotence for status page with publicGroupList
-
-#### Test
-- add unit tests for existing modules
 
 ### Release 0.2.1
 
