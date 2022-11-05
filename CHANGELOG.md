@@ -1,5 +1,10 @@
 ## Changelog
 
+### Release 0.6.0
+
+#### Feature
+- add settings and settings_info module
+
 ### Release 0.5.1
 
 #### Bugfix
