@@ -1,5 +1,10 @@
 ## Changelog
 
+### Release 0.6.1
+
+#### Bugfix
+- comparison of two lists with different length
+
 ### Release 0.6.0
 
 #### Feature
