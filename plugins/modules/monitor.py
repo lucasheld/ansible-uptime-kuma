@@ -33,7 +33,7 @@ options:
   type:
     description: The type of the monitor.
     type: str
-    choices: ["http", "port", "ping", "keyword", "dns", "docker", "push", "steam", "mqtt", "sqlserver", "postgres", "radius"]
+    choices: ["http", "port", "ping", "keyword", "grpc-keyword", "dns", "docker", "push", "steam", "mqtt", "sqlserver", "postgres", "mysql", "radius"]
   interval:
     description: The heartbeat interval of the monitor.
     type: int
@@ -123,6 +123,27 @@ options:
     type: str
   keyword:
     description: The keyword of the monitor.
+    type: str
+  grpcUrl:
+    description: The grpc url of the monitor.
+    type: str
+  grpcEnableTls:
+    description: True to enable grpc tls.
+    type: bool
+  grpcServiceName:
+    description: The grpc service name of the monitor.
+    type: str
+  grpcMethod:
+    description: The grpc method of the monitor.
+    type: str
+  grpcProtobuf:
+    description: The grpc protobuf of the monitor.
+    type: str
+  grpcBody:
+    description: The grpc body of the monitor.
+    type: str
+  grpcMetadata:
+    description: The grpc metadata of the monitor.
     type: str
   hostname:
     description: The hostname of the monitor.
@@ -267,6 +288,12 @@ def run(api, params, result):
         elif params["type"] == MonitorType.POSTGRES:
             params["databaseConnectionString"] = "postgres://username:password@host:port/database"
 
+    if not params["port"]:
+        if type == MonitorType.DNS:
+            params["port"] = 53
+        elif type == MonitorType.RADIUS:
+            params["port"] = 1812
+
     # notification_names -> notificationIDList
     if params["notification_names"]:
         notification_ids = []
@@ -356,10 +383,19 @@ def main():
         # KEYWORD
         keyword=dict(type="str"),
 
+        # GRPC_KEYWORD
+        grpcUrl=dict(type="str"),
+        grpcEnableTls=dict(type="bool"),
+        grpcServiceName=dict(type="str"),
+        grpcMethod=dict(type="str"),
+        grpcProtobuf=dict(type="str"),
+        grpcBody=dict(type="str"),
+        grpcMetadata=dict(type="str"),
+
         # PORT, PING, DNS, STEAM, MQTT
         hostname=dict(type="str"),
 
-        # PORT, DNS, STEAM, MQTT
+        # PORT, DNS, STEAM, MQTT, RADIUS
         port=dict(type="int"),
 
         # DNS

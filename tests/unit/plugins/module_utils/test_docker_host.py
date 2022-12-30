@@ -43,14 +43,15 @@ class TestDockerHost(ModuleTestCase):
         self.assertFalse(result["changed"])
 
         # edit docker host by id
+        docker_host_id = docker_host["id"]
         self.params.update({
-            "id": docker_host["id"],
+            "id": docker_host_id,
             "dockerType": DockerType.TCP,
             "dockerDaemon": "tcp://localhost:2375",
         })
         result = self.run_module(module, self.params)
         self.assertTrue(result["changed"])
-        docker_host = get_docker_host_by_name(self.api, self.params["name"])
+        docker_host = self.api.get_docker_host(docker_host_id)
         self.assertEqual(docker_host["dockerType"], self.params["dockerType"])
         self.assertEqual(docker_host["dockerDaemon"], self.params["dockerDaemon"])
 

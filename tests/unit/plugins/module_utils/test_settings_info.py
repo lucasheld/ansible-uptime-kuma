@@ -16,4 +16,4 @@ class TestSettingsInfo(ModuleTestCase):
         result = self.run_module(module, self.params)
 
         self.assertFalse(result["changed"])
-        self.assertEqual(len(result["settings"]), 10)
+        self.assertTrue(result["settings"]["checkUpdate"])

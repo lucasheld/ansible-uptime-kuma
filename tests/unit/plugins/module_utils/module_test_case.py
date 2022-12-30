@@ -2,7 +2,7 @@ import os
 import copy
 import unittest
 import tempfile
-from uptime_kuma_api import UptimeKumaApi, Event, MonitorType, DockerType, UptimeKumaException
+from uptime_kuma_api import UptimeKumaApi, Event, MonitorType, DockerType, UptimeKumaException, MaintenanceStrategy
 from packaging.version import parse as parse_version
 
 
@@ -87,16 +87,14 @@ class ModuleTestCase(unittest.TestCase):
             name=name,
             url="http://127.0.0.1"
         )
-        monitor_id = r["monitorID"]
-        return monitor_id
+        return r["monitorID"]
 
     def add_tag(self, name="tag 1"):
         r = self.api.add_tag(
             name=name,
             color="#ffffff"
         )
-        tag_id = r["id"]
-        return tag_id
+        return r["id"]
 
     def add_notification(self, name="notification 1"):
         r = self.api.add_notification(
@@ -104,13 +102,12 @@ class ModuleTestCase(unittest.TestCase):
             type="PushByTechulus",
             pushAPIKey="123456789"
         )
-        notification_id = r["id"]
-        return notification_id
+        return r["id"]
 
-    def add_status_page(self, slug="slug1"):
+    def add_status_page(self, slug="slug1", title="status page title"):
         self.api.add_status_page(
             slug=slug,
-            title="status page title"
+            title=title
         )
 
     def add_proxy(self, host="127.0.0.1", port=8080):
@@ -120,13 +117,18 @@ class ModuleTestCase(unittest.TestCase):
             port=port,
             active=True
         )
-        proxy_id = r["id"]
-        return proxy_id
+        return r["id"]
 
     def add_docker_host(self, name="docker host 1"):
         r = self.api.add_docker_host(
             name=name,
             dockerType=DockerType.SOCKET
         )
-        docker_host_id = r["id"]
-        return docker_host_id
+        return r["id"]
+
+    def add_maintenance(self, title="maintenance 1"):
+        r = self.api.add_maintenance(
+            title=title,
+            strategy=MaintenanceStrategy.MANUAL
+        )
+        return r["maintenanceID"]

@@ -86,6 +86,13 @@ def get_docker_host_by_name(api, name):
             return docker_host
 
 
+def get_maintenance_by_title(api, title):
+    maintenances = api.get_maintenances()
+    for maintenance in maintenances:
+        if maintenance["title"] == title:
+            return maintenance
+
+
 common_module_args = dict(
     api_url=dict(type="str", default="http://127.0.0.1:3001"),
     api_username=dict(type="str"),

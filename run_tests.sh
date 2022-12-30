@@ -2,6 +2,7 @@
 
 collection_path="$HOME/.ansible/collections/ansible_collections/lucasheld/uptime_kuma"
 version="$1"
+files="${@:2}"
 
 if [ ! -d "$collection_path" ]
 then
@@ -10,14 +11,21 @@ fi
 cp -r ./{plugins,tests} "$collection_path"
 cd "$collection_path"
 
-if [ $version ]
+if [ $version ] && [ "$version" != "all" ]
 then
   versions=("$version")
 else
-  versions=(1.18.3 1.17.1)
+  versions=(1.19.2 1.18.5 1.17.1)
 fi
 
-for version in $versions
+targets=""
+for file in ${files[*]}
+do
+  filepath="tests/unit/plugins/module_utils/${file}"
+  targets+="$filepath "
+done
+
+for version in ${versions[*]}
 do
   docker rm -f uptimekuma > /dev/null 2>&1
 
@@ -30,7 +38,7 @@ do
   done
 
   echo "Running tests..."
-  ansible-test units -v --target-python default --num-workers 1
+  ansible-test units -v --target-python default --num-workers 1 $targets
 
   echo "Stopping uptime kuma..."
   docker stop uptimekuma > /dev/null

@@ -18,6 +18,52 @@ module: settings
 author: Lucas Held (@lucasheld)
 short_description: Manages settings.
 description: Manages settings.
+
+options:
+  password:
+    description:
+      - The Uptime Kuma password.
+      - Only required if I(disableAuth) is true.
+    type: str
+  checkUpdate:
+    description: True if update check should be enabled.
+    type: bool
+  checkBeta:
+    description: True if update check for beta versions should be enabled.
+    type: bool
+  keepDataPeriodDays:
+    description: Keep monitor history data for this number of days.
+    type: int
+  serverTimezone:
+    description: The server timezone.
+    type: str
+  entryPage:
+    description: The entry page.
+    type: str
+  searchEngineIndex:
+    description: True if Uptime Kuma should be indexed by search engines.
+    type: bool
+  primaryBaseURL:
+    description: The primary base URL.
+    type: str
+  steamAPIKey:
+    description: The Steam API key for monitoring a Steam game server.
+    type: str
+  dnsCache:
+    description: True if dns cache should be enabled.
+    type: bool
+  tlsExpiryNotifyDays:
+    description: HTTPS monitors trigger notification when the TLS certificate expires in the specified days.
+    type: list
+    elements: int
+  disableAuth:
+    description: True if authentication should be disabled.
+    type: bool
+  trustProxy:
+    description:
+      - True to trust 'X-Forwarded-*' headers.
+      - If you want to get the correct client IP and your Uptime Kuma is behind such as Nginx or Apache, you should enable this.
+    type: bool
 '''
 
 EXAMPLES = r'''
@@ -66,10 +112,12 @@ def main():
         # monitor history
         keepDataPeriodDays=dict(type="int"),
         # general
+        serverTimezone=dict(type="str"),
         entryPage=dict(type="str"),
         searchEngineIndex=dict(type="bool"),
         primaryBaseURL=dict(type="str"),
         steamAPIKey=dict(type="str"),
+        dnsCache=dict(type="bool"),
         # notifications
         tlsExpiryNotifyDays=dict(type="list", elements="int"),
         # security

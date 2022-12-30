@@ -508,6 +508,10 @@ notifications:
       description: webhook provider option.
       returned: if type is webhook
       type: str
+    webhookAdditionalHeaders:
+      description: webhook provider option.
+      returned: if type is webhook
+      type: str
     webhookURL:
       description: webhook provider option.
       returned: if type is webhook
@@ -644,9 +648,37 @@ notifications:
       description: ntfy provider option.
       returned: if type is ntfy
       type: str
+    ntfyIcon:
+      description: ntfy provider option.
+      returned: if type is ntfy
+      type: str
     ntfyserverurl:
       description: ntfy provider option.
       returned: if type is ntfy
+      type: str
+    smseagleEncoding:
+      description: SMSEagle provider option.
+      returned: if type is SMSEagle
+      type: bool
+    smseaglePriority:
+      description: SMSEagle provider option.
+      returned: if type is SMSEagle
+      type: int
+    smseagleRecipientType:
+      description: SMSEagle provider option.
+      returned: if type is SMSEagle
+      type: str
+    smseagleToken:
+      description: SMSEagle provider option.
+      returned: if type is SMSEagle
+      type: str
+    smseagleRecipient:
+      description: SMSEagle provider option.
+      returned: if type is SMSEagle
+      type: str
+    smseagleUrl:
+      description: SMSEagle provider option.
+      returned: if type is SMSEagle
       type: str
 '''
 

@@ -1,5 +1,7 @@
-from .module_test_case import ModuleTestCase
+from packaging.version import parse as parse_version
+
 import plugins.modules.status_page as module
+from .module_test_case import ModuleTestCase
 
 
 class TestStatusPage(ModuleTestCase):
@@ -76,6 +78,8 @@ class TestStatusPage(ModuleTestCase):
             for j in i.get("monitorList", []):
                 j.pop("sendUrl", None)
                 j["name"] = None
+                if parse_version(self.api.version) >= parse_version("1.19"):
+                    j.pop("maintenance")
         self.assertEqual(public_group_list, self.params["publicGroupList"])
 
         result = self.run_module(module, self.params)

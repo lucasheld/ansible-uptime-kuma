@@ -117,6 +117,41 @@ monitors:
       returned: always
       type: bool
       sample: False
+    grpcBody:
+      description: The grpc body of the monitor.
+      returned: always
+      type: str
+      sample: None
+    grpcEnableTls:
+      description: True if grpc enable tls is enabled.
+      returned: always
+      type: bool
+      sample: False
+    grpcMetadata:
+      description: The grpc metadata of the monitor.
+      returned: always
+      type: str
+      sample: None
+    grpcMethod:
+      description: The grpc method of the monitor.
+      returned: always
+      type: str
+      sample: None
+    grpcProtobuf:
+      description: The grpc protobuf of the monitor.
+      returned: always
+      type: str
+      sample: None
+    grpcServiceName:
+      description: The grpc service name of the monitor.
+      returned: always
+      type: str
+      sample: None
+    grpcUrl:
+      description: The grpc url of the monitor.
+      returned: always
+      type: str
+      sample: None
     ignoreTls:
       description: True if ignore tls error is enabled.
       returned: always
@@ -167,6 +202,11 @@ monitors:
       returned: always
       type: list
       sample: []
+    maintenance:
+      description: True if the monitor is under maintenance.
+      returned: always
+      type: bool
+      sample: False
     mqttUsername:
       description: The mqtt username of the monitor.
       returned: always

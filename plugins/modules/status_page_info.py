@@ -105,11 +105,16 @@ status_pages:
       returned: always
       type: dict
       sample: {'id': 2, 'style': 'danger', 'title': 'sample title', 'content': 'sample content', 'pin': 1, 'createdDate': '2022-08-26 12:07:00', 'lastUpdatedDate': None}
+    maintenanceList:
+      description: The maintenance list of the status page.
+      returned: always
+      type: list
+      sample: []
     publicGroupList:
       description: The public group list of the status page.
       returned: always
       type: list
-      sample: [{'id': 5, 'name': 'Services', 'weight': 1, 'monitorList': [{'id': 18, 'name': 'sample monitor'}]}]
+      sample: [{'id': 5, 'name': 'Services', 'weight': 1, 'monitorList': [{'id': 18, 'maintenance': False, 'name': 'sample monitor'}]}]
 '''
 
 import traceback

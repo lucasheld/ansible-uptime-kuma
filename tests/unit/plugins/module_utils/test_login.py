@@ -9,9 +9,7 @@ class TestLogin(ModuleTestCase):
             "api_url": "http://127.0.0.1:3001",
             "api_username": None,
             "api_password": None,
-            "api_token": None,
-            "id": None,
-            "name": None
+            "api_token": None
         }
 
     def test_login(self):

@@ -60,6 +60,11 @@ settings:
       returned: always
       type: bool
       sample: false
+    serverTimezone:
+      description: Value of the serverTimezone setting.
+      returned: always
+      type: str
+      sample: Europe/Berlin
     primaryBaseURL:
       description: Value of the primaryBaseURL setting.
       returned: always
@@ -80,6 +85,11 @@ settings:
       returned: always
       type: bool
       sample: false
+    dnsCache:
+      description: Value of the dnsCache setting.
+      returned: always
+      type: bool
+      sample: true
     trustProxy:
       description: Value of the trustProxy setting.
       returned: always

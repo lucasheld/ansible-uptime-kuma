@@ -4,7 +4,7 @@ This collection contains modules that allow to configure [Uptime Kuma](https://g
 
 Python version 3.6+ is required.
 
-Supported Uptime Kuma versions: 1.17.0 - 1.18.5
+Supported Uptime Kuma versions: 1.17.0 - 1.19.2
 
 
 ## Installation
@@ -39,6 +39,8 @@ The following modules are available:
 - [docker_host_info](https://github.com/lucasheld/ansible-uptime-kuma/wiki/docker_host_info)
 - [settings](https://github.com/lucasheld/ansible-uptime-kuma/wiki/settings)
 - [settings_info](https://github.com/lucasheld/ansible-uptime-kuma/wiki/settings_info)
+- [maintenance](https://github.com/lucasheld/ansible-uptime-kuma/wiki/maintenance)
+- [maintenance_info](https://github.com/lucasheld/ansible-uptime-kuma/wiki/maintenance_info)
 
 
 ## Getting started

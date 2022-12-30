@@ -40,6 +40,7 @@ options:
   protocol:
     description: The protocol of the proxy.
     type: str
+    choices: ["https", "http", "socks", "socks5", "socks5h", "socks4"]
   auth:
     description: True if the authentication is enabled.
     type: bool
@@ -144,7 +145,7 @@ def main():
         id=dict(type="int"),
         host=dict(type="str", required=True),
         port=dict(type="int", required=True),
-        protocol=dict(type="str"),
+        protocol=dict(type="str", choices=["https", "http", "socks", "socks5", "socks5h", "socks4"]),
         auth=dict(type="bool"),
         username=dict(type="str"),
         password=dict(type="str", no_log=True),

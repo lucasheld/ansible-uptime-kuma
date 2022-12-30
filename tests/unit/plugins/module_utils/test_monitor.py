@@ -40,6 +40,13 @@ class TestMonitor(ModuleTestCase):
             "authDomain": None,
             "authWorkstation": None,
             "keyword": None,
+            "grpcUrl": None,
+            "grpcEnableTls": None,
+            "grpcServiceName": None,
+            "grpcMethod": None,
+            "grpcProtobuf": None,
+            "grpcBody": None,
+            "grpcMetadata": None,
             "hostname": None,
             "port": None,
             "dns_resolve_server": None,
@@ -96,13 +103,15 @@ class TestMonitor(ModuleTestCase):
         self.assertFalse(result["changed"])
 
         # edit monitor by id
+        monitor_id = monitor["id"]
         self.params.update({
+            "id": monitor_id,
             "type": MonitorType.PING,
             "hostname": "127.0.0.10"
         })
         result = self.run_module(module, self.params)
         self.assertTrue(result["changed"])
-        monitor = get_monitor_by_name(self.api, self.params["name"])
+        monitor = self.api.get_monitor(monitor_id)
         self.assertEqual(monitor["type"], self.params["type"])
         self.assertEqual(monitor["hostname"], self.params["hostname"])
 
