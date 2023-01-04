@@ -11,8 +11,8 @@ def build_providers():
 
 for provider in build_providers():
     options = notification_provider_options[provider]
-    for option in options:
+    for option, args in options.items():
         print(f'{option}:')
         print(f'  description: {provider} provider option.')
         print(f'  returned: if type is {provider}')
-        print(f'  type: str')
+        print(f'  type: {args["type"]}')

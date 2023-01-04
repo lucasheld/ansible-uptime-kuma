@@ -211,7 +211,7 @@ notifications:
     gotifyPriority:
       description: gotify provider option.
       returned: if type is gotify
-      type: str
+      type: int
     lineChannelAccessToken:
       description: line provider option.
       returned: if type is line
@@ -416,10 +416,6 @@ notifications:
       description: slack provider option.
       returned: if type is slack
       type: str
-    slackbutton:
-      description: slack provider option.
-      returned: if type is slack
-      type: str
     smtpHost:
       description: smtp provider option.
       returned: if type is smtp
@@ -427,7 +423,7 @@ notifications:
     smtpPort:
       description: smtp provider option.
       returned: if type is smtp
-      type: str
+      type: int
     smtpSecure:
       description: smtp provider option.
       returned: if type is smtp
@@ -647,7 +643,7 @@ notifications:
     ntfyPriority:
       description: ntfy provider option.
       returned: if type is ntfy
-      type: str
+      type: int
     ntfyIcon:
       description: ntfy provider option.
       returned: if type is ntfy
@@ -679,6 +675,18 @@ notifications:
     smseagleUrl:
       description: SMSEagle provider option.
       returned: if type is SMSEagle
+      type: str
+    webhookUrl:
+      description: ZohoCliq provider option.
+      returned: if type is ZohoCliq
+      type: str
+    kookGuildID:
+      description: Kook provider option.
+      returned: if type is Kook
+      type: str
+    kookBotToken:
+      description: Kook provider option.
+      returned: if type is Kook
       type: str
 '''
 

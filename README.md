@@ -4,7 +4,7 @@ This collection contains modules that allow to configure [Uptime Kuma](https://g
 
 Python version 3.6+ is required.
 
-Supported Uptime Kuma versions: 1.17.0 - 1.19.2
+Supported Uptime Kuma versions: 1.17.0 - 1.19.3
 
 
 ## Installation

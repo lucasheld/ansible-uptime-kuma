@@ -15,7 +15,7 @@ if [ $version ] && [ "$version" != "all" ]
 then
   versions=("$version")
 else
-  versions=(1.19.2 1.18.5 1.17.1)
+  versions=(1.19.3 1.18.5 1.17.1)
 fi
 
 targets=""
