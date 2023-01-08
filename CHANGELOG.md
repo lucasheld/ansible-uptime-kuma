@@ -1,5 +1,10 @@
 ## Changelog
 
+### Release 0.8.1
+
+#### Bugfix
+- monitor tag value is not required
+
 ### Release 0.8.0
 
 #### Feature
