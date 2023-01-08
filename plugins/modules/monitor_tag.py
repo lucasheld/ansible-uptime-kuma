@@ -43,7 +43,6 @@ options:
   value:
     description: The value that should be assigned.
     type: str
-    required: true
   state:
     description:
       - Set to C(present) to create a monitor tag.
@@ -92,6 +91,9 @@ except ImportError:
 
 def run(api, params, result):
     value = params["value"]
+    if not value:
+        value = ""
+
     state = params["state"]
 
     monitor_id = params["monitor_id"]
@@ -123,7 +125,7 @@ def main():
         tag_id=dict(type="int"),
         monitor_name=dict(type="str"),
         tag_name=dict(type="str"),
-        value=dict(type="str", required=True),
+        value=dict(type="str"),
         state=dict(type="str", default="present", choices=["present", "absent"])
     )
     module_args.update(common_module_args)
