@@ -18,6 +18,12 @@ module: login
 author: Lucas Held (@lucasheld)
 short_description: Login to Uptime Kuma.
 description: Login to Uptime Kuma and returns a token that can be used for future requests.
+
+options:
+  api_2fa:
+    description:
+      - The Uptime Kuma 2FA token.
+      - Only required if no I(api_token) specified and authentication with 2FA is enabled.
 '''
 
 EXAMPLES = r'''
@@ -26,6 +32,13 @@ EXAMPLES = r'''
     api_url: http://127.0.0.1:3001
     api_username: admin
     api_password: secret123
+
+- name: login with 2fa
+  lucasheld.uptime_kuma.login:
+    api_url: http://127.0.0.1:3001
+    api_username: admin
+    api_password: secret123
+    api_2fa: 123456
 '''
 
 RETURN = r'''
@@ -50,14 +63,16 @@ except ImportError:
 def run(api, params, result):
     api_username = params["api_username"]
     api_password = params["api_password"]
+    api_2fa = params["api_2fa"]
 
-    r = api.login(api_username, api_password)
+    r = api.login(api_username, api_password, api_2fa)
     result["token"] = r["token"]
 
 
 def main():
     module_args = {}
     module_args.update(common_module_args)
+    module_args.update({"api_2fa": dict(type="str", no_log=True)})
 
     module = AnsibleModule(module_args)
     params = module.params
