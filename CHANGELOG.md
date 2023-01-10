@@ -1,5 +1,10 @@
 ## Changelog
 
+### Release 0.8.2
+
+#### Bugfix
+- fix ImportError in maintenance module
+
 ### Release 0.8.1
 
 #### Bugfix
