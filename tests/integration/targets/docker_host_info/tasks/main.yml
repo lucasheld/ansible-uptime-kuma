@@ -1,0 +1,5 @@
+- name: get all docker hosts
+  lucasheld.uptime_kuma.docker_host_info:
+    api_url: http://127.0.0.1:3001
+    api_username: admin
+    api_password: secret123

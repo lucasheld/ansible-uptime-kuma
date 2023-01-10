@@ -1,0 +1,8 @@
+- name: Add docker host
+  lucasheld.uptime_kuma.docker_host:
+    api_url: http://127.0.0.1:3001
+    api_username: admin
+    api_password: secret123
+    name: Docker host 1
+    dockerType: socket
+    dockerDaemon: /var/run/docker.sock

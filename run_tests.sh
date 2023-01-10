@@ -1,8 +1,19 @@
 #!/bin/sh
 
+# usage:
+#
+# run all tests:
+# ./run_tests.sh
+#
+# run all tests against specific uptime kuma version:
+# ./run_tests.sh 1.19.4
+#
+# run all tests against specific uptime kuma version and specific modules:
+# ./run_tests.sh 1.19.4 maintenance maintenance_info
+
 collection_path="$HOME/.ansible/collections/ansible_collections/lucasheld/uptime_kuma"
 version="$1"
-files="${@:2}"
+modules="${@:2}"
 
 if [ ! -d "$collection_path" ]
 then
@@ -15,14 +26,17 @@ if [ $version ] && [ "$version" != "all" ]
 then
   versions=("$version")
 else
-  versions=(1.19.3 1.18.5 1.17.1)
+  versions=(1.19.4 1.18.5 1.17.1)
 fi
 
-targets=""
-for file in ${files[*]}
+unit_targets=""
+integration_targets=""
+for module in ${modules[*]}
 do
-  filepath="tests/unit/plugins/module_utils/${file}"
-  targets+="$filepath "
+  unit_filepath="tests/unit/plugins/module_utils/test_${module}.py"
+  unit_targets+="${unit_filepath} "
+
+  integration_targets+="${module} "
 done
 
 for version in ${versions[*]}
@@ -37,11 +51,15 @@ do
     sleep 0.5
   done
 
-  echo "Running tests..."
-  ansible-test units -v --target-python default --num-workers 1 $targets
+  echo "Running unit tests..."
+  ansible-test units -v --target-python default --num-workers 1 $unit_targets
+
+  echo ""
+  echo "Running integration tests..."
+  ansible-test integration -v $integration_targets
 
   echo "Stopping uptime kuma..."
   docker stop uptimekuma > /dev/null
 
-  echo ''
+  echo ""
 done

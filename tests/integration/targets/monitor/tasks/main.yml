@@ -1,0 +1,10 @@
+- name: Add a monitor
+  lucasheld.uptime_kuma.monitor:
+    api_url: http://127.0.0.1:3001
+    api_username: admin
+    api_password: secret123
+    type: keyword
+    name: Monitor 1
+    url: http://127.0.0.1
+    keyword: healthy
+    state: present

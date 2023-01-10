@@ -1,0 +1,8 @@
+- name: Add status page
+  lucasheld.uptime_kuma.status_page:
+    api_url: http://127.0.0.1:3001
+    api_username: admin
+    api_password: secret123
+    slug: testslug
+    title: testtitle
+    state: present

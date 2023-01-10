@@ -1,0 +1,8 @@
+- name: Add a maintenance
+  lucasheld.uptime_kuma.maintenance:
+    api_url: http://127.0.0.1:3001
+    api_username: admin
+    api_password: secret123
+    title: maintenance 1
+    strategy: single
+    state: present

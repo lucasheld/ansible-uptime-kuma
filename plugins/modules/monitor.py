@@ -222,7 +222,7 @@ EXAMPLES = r'''
     api_password: secret123
     type: keyword
     name: Monitor 1
-    url: http://192.168.20.135
+    url: http://127.0.0.1
     keyword: healthy
     state: present
 
@@ -233,7 +233,7 @@ EXAMPLES = r'''
     api_password: secret123
     type: http
     name: Monitor 1
-    url: http://192.168.20.135
+    url: http://127.0.0.1
     state: present
 
 - name: Remove a monitor
