@@ -153,7 +153,7 @@ from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common impor
     get_docker_host_by_name, get_monitor_by_name
 
 try:
-    from uptime_kuma_api import UptimeKumaApi, MaintenanceType
+    from uptime_kuma_api import UptimeKumaApi
     HAS_UPTIME_KUMA_API = True
 except ImportError:
     HAS_UPTIME_KUMA_API = False
@@ -169,7 +169,7 @@ def get_status_page_by(api, key, value):
 def run(api, params, result):
     if not params["dateRange"]:
         params["dateRange"] = [
-            datetime.date.today().strftime("%Y-%m-%d 00:00")
+            datetime.date.today().strftime("%Y-%m-%d 00:00:00")
         ]
 
     if not params["timeRange"]:
@@ -216,8 +216,8 @@ def run(api, params, result):
                 api.edit_maintenance(maintenance["id"], **options)
                 result["changed"] = True
         if maintenance:
-            monitors = params["monitors"]
-            status_pages = params["status_pages"]
+            monitors = params["monitors"] or []
+            status_pages = params["status_pages"] or []
 
             # add id or name to monitor
             for monitor in monitors:
