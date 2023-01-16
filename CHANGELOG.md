@@ -1,5 +1,10 @@
 ## Changelog
 
+### Release 0.9.0
+
+#### Feature
+- support login with 2fa enabled
+
 ### Release 0.8.2
 
 #### Bugfix
