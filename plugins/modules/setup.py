@@ -57,7 +57,7 @@ def run(api, params, result):
 
 
 def main():
-    module_args = {}
+    module_args = dict()
     module_args.update(common_module_args)
 
     module = AnsibleModule(module_args)

@@ -23,7 +23,8 @@ options:
   api_2fa:
     description:
       - The Uptime Kuma 2FA token.
-      - Only required if no I(api_token) specified and authentication with 2FA is enabled.
+      - Only required if authentication with 2FA is enabled.
+    type: str
 '''
 
 EXAMPLES = r'''
@@ -70,9 +71,11 @@ def run(api, params, result):
 
 
 def main():
-    module_args = {}
+    module_args = dict(
+        api_2fa=dict(type="str", no_log=True)
+    )
     module_args.update(common_module_args)
-    module_args.update({"api_2fa": dict(type="str", no_log=True)})
+    module_args.pop("api_token")
 
     module = AnsibleModule(module_args)
     params = module.params
