@@ -308,6 +308,10 @@ notifications:
       description: promosms provider option.
       returned: if type is promosms
       type: str
+    promosmsAllowLongSMS:
+      description: promosms provider option.
+      returned: if type is promosms
+      type: bool
     pushbulletAccessToken:
       description: pushbullet provider option.
       returned: if type is pushbullet
@@ -687,6 +691,18 @@ notifications:
     kookBotToken:
       description: Kook provider option.
       returned: if type is Kook
+      type: str
+    splunkAutoResolve:
+      description: Splunk provider option.
+      returned: if type is Splunk
+      type: str
+    splunkSeverity:
+      description: Splunk provider option.
+      returned: if type is Splunk
+      type: str
+    splunkRestURL:
+      description: Splunk provider option.
+      returned: if type is Splunk
       type: str
 '''
 

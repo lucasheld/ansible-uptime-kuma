@@ -78,14 +78,11 @@ class TestStatusPage(ModuleTestCase):
             for j in i.get("monitorList", []):
                 j.pop("sendUrl", None)
                 j["name"] = None
-                if parse_version(self.api.version) >= parse_version("1.19"):
+                if parse_version("1.19") <= parse_version(self.api.version) < parse_version("1.19.5"):
                     j.pop("maintenance")
         self.assertEqual(public_group_list, self.params["publicGroupList"])
 
         result = self.run_module(module, self.params)
-        with open("/tmp/xxx", "w") as f:
-            import json
-            f.write(json.dumps(result))
         self.assertFalse(result["changed"])
 
         # edit status page
