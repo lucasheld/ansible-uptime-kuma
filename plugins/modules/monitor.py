@@ -287,6 +287,8 @@ def run(api, params, result):
             params["databaseConnectionString"] = "Server=<hostname>,<port>;Database=<your database>;User Id=<your user id>;Password=<your password>;Encrypt=<true/false>;TrustServerCertificate=<Yes/No>;Connection Timeout=<int>"
         elif params["type"] == MonitorType.POSTGRES:
             params["databaseConnectionString"] = "postgres://username:password@host:port/database"
+        elif params["type"] == MonitorType.MYSQL:
+            params["databaseConnectionString"] = "mysql://username:password@host:port/database"
 
     if not params["port"]:
         if type == MonitorType.DNS:
@@ -351,7 +353,7 @@ def main():
     module_args = dict(
         id=dict(type="int"),
         name=dict(type="str"),
-        type=dict(type="str", choices=["http", "port", "ping", "keyword", "dns", "docker", "push", "steam", "mqtt", "sqlserver", "postgres", "radius"]),
+        type=dict(type="str", choices=["http", "port", "ping", "keyword", "dns", "docker", "push", "steam", "mqtt", "sqlserver", "postgres", "mysql", "radius"]),
         interval=dict(type="int"),
         retryInterval=dict(type="int"),
         resendInterval=dict(type="int"),
@@ -408,7 +410,7 @@ def main():
         mqttTopic=dict(type="str"),
         mqttSuccessMessage=dict(type="str"),
 
-        # SQLSERVER, POSTGRES
+        # SQLSERVER, POSTGRES, MYSQL
         databaseConnectionString=dict(type="str"),
         databaseQuery=dict(type="str"),
 
