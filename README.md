@@ -4,7 +4,7 @@ This collection contains modules that allow to configure [Uptime Kuma](https://g
 
 Python version 3.6+ is required.
 
-Supported Uptime Kuma versions: 1.17.0 - 1.19.6
+Supported Uptime Kuma versions: 1.17.0 - 1.20.0
 
 
 ## Installation
@@ -41,6 +41,7 @@ The following modules are available:
 - [settings_info](https://github.com/lucasheld/ansible-uptime-kuma/wiki/settings_info)
 - [maintenance](https://github.com/lucasheld/ansible-uptime-kuma/wiki/maintenance)
 - [maintenance_info](https://github.com/lucasheld/ansible-uptime-kuma/wiki/maintenance_info)
+- [game_list_info](https://github.com/lucasheld/ansible-uptime-kuma/wiki/game_list_info)
 
 
 ## Getting started
