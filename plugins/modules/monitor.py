@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-# Copyright: (c) 2022, Lucas Held <lucasheld@hotmail.de>
+# Copyright: (c) 2023, Lucas Held <lucasheld@hotmail.de>
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
@@ -33,7 +33,7 @@ options:
   type:
     description: The type of the monitor.
     type: str
-    choices: ["http", "port", "ping", "keyword", "grpc-keyword", "dns", "docker", "push", "steam", "mqtt", "sqlserver", "postgres", "mysql", "radius"]
+    choices: ["http", "port", "ping", "keyword", "grpc-keyword", "dns", "docker", "push", "steam", "gamedig", "mqtt", "sqlserver", "postgres", "mysql", "mongodb", "radius", "redis"]
   interval:
     description: The heartbeat interval of the monitor.
     type: int
@@ -148,6 +148,9 @@ options:
   hostname:
     description: The hostname of the monitor.
     type: str
+  packetSize:
+    description: The packet size of the monitor.
+    type: int
   port:
     description: The port of the monitor.
     type: int
@@ -202,6 +205,9 @@ options:
     type: str
   radiusCallingStationId:
     description: The radius calling station id of the monitor.
+    type: str
+  game:
+    description: The game of the monitor.
     type: str
   state:
     description:
@@ -289,6 +295,10 @@ def run(api, params, result):
             params["databaseConnectionString"] = "postgres://username:password@host:port/database"
         elif params["type"] == MonitorType.MYSQL:
             params["databaseConnectionString"] = "mysql://username:password@host:port/database"
+        elif params["type"] == MonitorType.MONGODB:
+            params["databaseConnectionString"] = "mongodb://username:password@host:port/database"
+        elif params["type"] == MonitorType.REDIS:
+            params["databaseConnectionString"] = "redis://user:password@host:port"
 
     if not params["port"]:
         if type == MonitorType.DNS:
@@ -353,7 +363,7 @@ def main():
     module_args = dict(
         id=dict(type="int"),
         name=dict(type="str"),
-        type=dict(type="str", choices=["http", "port", "ping", "keyword", "dns", "docker", "push", "steam", "mqtt", "sqlserver", "postgres", "mysql", "radius"]),
+        type=dict(type="str", choices=["http", "port", "ping", "keyword", "grpc-keyword", "dns", "docker", "push", "steam", "gamedig", "mqtt", "sqlserver", "postgres", "mysql", "mongodb", "radius", "redis"]),
         interval=dict(type="int"),
         retryInterval=dict(type="int"),
         resendInterval=dict(type="int"),
@@ -397,6 +407,9 @@ def main():
         # PORT, PING, DNS, STEAM, MQTT
         hostname=dict(type="str"),
 
+        # PING
+        packetSize=dict(type="int"),
+
         # PORT, DNS, STEAM, MQTT, RADIUS
         port=dict(type="int"),
 
@@ -410,8 +423,10 @@ def main():
         mqttTopic=dict(type="str"),
         mqttSuccessMessage=dict(type="str"),
 
-        # SQLSERVER, POSTGRES, MYSQL
+        # SQLSERVER, POSTGRES, MYSQL, MONGODB, REDIS
         databaseConnectionString=dict(type="str"),
+
+        # SQLSERVER, POSTGRES, MYSQL
         databaseQuery=dict(type="str"),
 
         # DOCKER
@@ -425,6 +440,9 @@ def main():
         radiusSecret=dict(type="str"),
         radiusCalledStationId=dict(type="str"),
         radiusCallingStationId=dict(type="str"),
+
+        # GAMEDIG
+        game=dict(type="str"),
 
         state=dict(type="str", default="present", choices=["present", "absent", "paused", "resumed"])
     )

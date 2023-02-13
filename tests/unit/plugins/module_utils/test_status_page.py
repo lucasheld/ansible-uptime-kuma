@@ -19,6 +19,7 @@ class TestStatusPage(ModuleTestCase):
             "published": None,
             "showTags": None,
             "domainNameList": None,
+            "googleAnalyticsId": None,
             "customCSS": None,
             "footerText": None,
             "showPoweredBy": None,
@@ -41,6 +42,7 @@ class TestStatusPage(ModuleTestCase):
             "published": True,
             "showTags": False,
             "domainNameList": [],
+            "googleAnalyticsId": None,
             "customCSS": "",
             "footerText": None,
             "showPoweredBy": False,
@@ -68,6 +70,8 @@ class TestStatusPage(ModuleTestCase):
         self.assertEqual(status_page["published"], self.params["published"])
         self.assertEqual(status_page["showTags"], self.params["showTags"])
         self.assertEqual(status_page["domainNameList"], self.params["domainNameList"])
+        if parse_version(self.api.version) >= parse_version("1.20"):
+            self.assertEqual(status_page["googleAnalyticsId"], self.params["googleAnalyticsId"])
         self.assertEqual(status_page["customCSS"], self.params["customCSS"])
         self.assertEqual(status_page["footerText"], self.params["footerText"])
         self.assertEqual(status_page["showPoweredBy"], self.params["showPoweredBy"])

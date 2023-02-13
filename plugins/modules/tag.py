@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-# Copyright: (c) 2022, Lucas Held <lucasheld@hotmail.de>
+# Copyright: (c) 2023, Lucas Held <lucasheld@hotmail.de>
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
@@ -52,6 +52,15 @@ EXAMPLES = r'''
     color: "#ff0000"
     state: present
 
+- name: Edit tag
+  lucasheld.uptime_kuma.tag:
+    api_url: http://127.0.0.1:3001
+    api_username: admin
+    api_password: secret123
+    name: Tag 1
+    color: "#ffffff"
+    state: present
+
 - name: Remove tag
   lucasheld.uptime_kuma.tag:
     api_url: http://127.0.0.1:3001
@@ -67,7 +76,8 @@ RETURN = r'''
 import traceback
 
 from ansible.module_utils.basic import AnsibleModule, missing_required_lib
-from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common import common_module_args, get_tag_by_name
+from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common import common_module_args, get_tag_by_name, \
+    clear_params, object_changed, clear_unset_params
 
 try:
     from uptime_kuma_api import UptimeKumaApi
@@ -78,6 +88,8 @@ except ImportError:
 
 def run(api, params, result):
     state = params["state"]
+    options = clear_params(params)
+    options = clear_unset_params(options)
 
     if params["id"]:
         tag = api.get_tag(params["id"])
@@ -86,8 +98,13 @@ def run(api, params, result):
 
     if state == "present":
         if not tag:
-            api.add_tag(params["name"], params["color"])
+            api.add_tag(**options)
             result["changed"] = True
+        else:
+            changed_keys = object_changed(tag, options)
+            if changed_keys:
+                api.edit_tag(tag["id"], **options)
+                result["changed"] = True
     elif state == "absent":
         if tag:
             api.delete_tag(tag["id"])

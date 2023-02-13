@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-# Copyright: (c) 2022, Lucas Held <lucasheld@hotmail.de>
+# Copyright: (c) 2023, Lucas Held <lucasheld@hotmail.de>
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
@@ -277,6 +277,61 @@ monitors:
       returned: always
       type: str
       sample: None
+    radiusCalledStationId:
+      description: The radiusCalledStationId of the monitor.
+      returned: always
+      type: str
+      sample: None
+    radiusCallingStationId:
+      description: The radiusCallingStationId of the monitor.
+      returned: always
+      type: str
+      sample: None
+    radiusUsername:
+      description: The radiusUsername of the monitor.
+      returned: always
+      type: str
+      sample: None
+    radiusPassword:
+      description: The radiusPassword of the monitor.
+      returned: always
+      type: str
+      sample: None
+    radiusSecret:
+      description: The radiusSecret of the monitor.
+      returned: always
+      type: str
+      sample: None
+    resendInterval:
+      description: The resendInterval of the monitor.
+      returned: always
+      type: int
+      sample: 0
+    packetSize:
+      description: The packetSize of the monitor.
+      returned: always
+      type: int
+      sample: 56
+    includeSensitiveData:
+      description: The includeSensitiveData of the monitor.
+      returned: always
+      type: bool
+      sample: True
+    game:
+      description: The game of the monitor.
+      returned: always
+      type: str
+      sample: '7d2d'
+    docker_host:
+      description: The docker_host of the monitor.
+      returned: always
+      type: int
+      sample: None
+    docker_container:
+      description: The docker_container of the monitor.
+      returned: always
+      type: str
+      sample: ""
 '''
 
 import traceback

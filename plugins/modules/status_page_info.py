@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-# Copyright: (c) 2022, Lucas Held <lucasheld@hotmail.de>
+# Copyright: (c) 2023, Lucas Held <lucasheld@hotmail.de>
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
@@ -81,17 +81,22 @@ status_pages:
       type: bool
       sample: False
     domainNameList:
-      description: The domainNameList of the status page.
+      description: The domain name list of the status page.
       returned: always
       type: list
       sample: []
+    googleAnalyticsId:
+      description: The Google Analytics ID of the status page.
+      returned: always
+      type: str
+      sample: None
     customCSS:
-      description: The customCS of the status page.
+      description: The custom CSS of the status page.
       returned: always
       type: str
       sample: None
     footerText:
-      description: The footerText of the status page.
+      description: The footer text of the status page.
       returned: always
       type: str
       sample: None

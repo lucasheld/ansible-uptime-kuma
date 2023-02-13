@@ -48,6 +48,7 @@ class TestMonitor(ModuleTestCase):
             "grpcBody": None,
             "grpcMetadata": None,
             "hostname": None,
+            "packetSize": None,
             "port": None,
             "dns_resolve_server": None,
             "dns_resolve_type": None,
@@ -65,6 +66,7 @@ class TestMonitor(ModuleTestCase):
             "radiusSecret": None,
             "radiusCalledStationId": None,
             "radiusCallingStationId": None,
+            "game": None,
             "state": "present"
         }
 

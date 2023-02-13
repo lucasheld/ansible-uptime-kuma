@@ -2,7 +2,7 @@ import os
 import copy
 import unittest
 import tempfile
-from uptime_kuma_api import UptimeKumaApi, Event, MonitorType, DockerType, UptimeKumaException, MaintenanceStrategy
+from uptime_kuma_api import UptimeKumaApi, MonitorType, DockerType, UptimeKumaException, MaintenanceStrategy
 from packaging.version import parse as parse_version
 
 

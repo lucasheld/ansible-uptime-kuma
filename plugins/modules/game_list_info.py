@@ -14,15 +14,15 @@ DOCUMENTATION = r'''
 extends_documentation_fragment:
   - lucasheld.uptime_kuma.uptime_kuma
 
-module: settings_info
+module: game_list_info
 author: Lucas Held (@lucasheld)
-short_description: Retrieves facts about settings.
-description: Retrieves facts about settings.
+short_description: Retrieves facts about the games that are supported by the GameDig monitor type.
+description: Retrieves facts about the games that are supported by the GameDig monitor type.
 '''
 
 EXAMPLES = r'''
-- name: get settings
-  lucasheld.uptime_kuma.settings_info:
+- name: get game list
+  lucasheld.uptime_kuma.game_list_info:
     api_url: http://127.0.0.1:3001
     api_username: admin
     api_password: secret123
@@ -30,71 +30,32 @@ EXAMPLES = r'''
 '''
 
 RETURN = r'''
-settings:
-  description: The settings as list
+game_list:
+  description: The game list
   returned: always
   type: complex
   contains:
-    checkUpdate:
-      description: Value of the checkUpdate setting.
+    extra:
+      description: The extra value of the game.
       returned: always
-      type: bool
-      sample: true
-    checkBeta:
-      description: Value of the checkBeta setting.
-      returned: always
-      type: bool
-      sample: false
-    keepDataPeriodDays:
-      description: Value of the keepDataPeriodDays setting.
-      returned: always
-      type: int
-      sample: 180
-    entryPage:
-      description: Value of the entryPage setting.
-      returned: always
-      type: str
-      sample: dashboard
-    searchEngineIndex:
-      description: Value of the searchEngineIndex setting.
-      returned: always
-      type: bool
-      sample: false
-    serverTimezone:
-      description: Value of the serverTimezone setting.
-      returned: always
-      type: str
-      sample: Europe/Berlin
-    primaryBaseURL:
-      description: Value of the primaryBaseURL setting.
-      returned: always
-      type: str
-      sample: 
-    steamAPIKey:
-      description: Value of the steamAPIKey setting.
-      returned: always
-      type: str
-      sample: 
-    tlsExpiryNotifyDays:
-      description: Value of the tlsExpiryNotifyDays setting.
+      type: dict
+      sample: {}
+    keys:
+      description: The keys of the game.
       returned: always
       type: list
-      sample: [7, 14, 21]
-    disableAuth:
-      description: Value of the disableAuth setting.
+      elements: str
+      sample: ["7d2d"]
+    options:
+      description: The options of the game.
       returned: always
-      type: bool
-      sample: false
-    dnsCache:
-      description: Value of the dnsCache setting.
+      type: dict
+      sample: {"port": 26900, "port_query_offset": 1, "protocol": "valve"}
+    pretty:
+      description: The title of the game.
       returned: always
-      type: bool
-      sample: true
-    trustProxy:
-      description: Value of the trustProxy setting.
-      returned: always
-      type: bool
-      sample: false
+      type: str
+      sample: "7 Days to Die (2013)"
 '''
 
 import traceback
@@ -111,7 +72,7 @@ except ImportError:
 
 
 def run(api, params, result):
-    result["settings"] = api.get_settings()
+    result["game_list"] = api.get_game_list()
 
 
 def main():

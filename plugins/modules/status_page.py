@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-# Copyright: (c) 2022, Lucas Held <lucasheld@hotmail.de>
+# Copyright: (c) 2023, Lucas Held <lucasheld@hotmail.de>
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
@@ -44,6 +44,9 @@ options:
     description: The domain name list of the status page.
     type: list
     elements: "str"
+  googleAnalyticsId:
+    description: The Google Analytics ID of the status page.
+    type: str
   customCSS:
     description: The custom CSS of the status page.
     type: str
@@ -227,6 +230,7 @@ def main():
         published=dict(type="bool"),
         showTags=dict(type="bool"),
         domainNameList=dict(type="list", elements="str"),
+        googleAnalyticsId=dict(type="str"),
         customCSS=dict(type="str"),
         footerText=dict(type="str"),
         showPoweredBy=dict(type="bool"),
