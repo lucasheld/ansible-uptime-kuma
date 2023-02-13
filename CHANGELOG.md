@@ -1,5 +1,13 @@
 ## Changelog
 
+### Release 0.11.0
+
+#### Feature
+- add support for uptime kuma 1.20.0
+
+#### Bugfix
+- fix creation of mysql monitor
+
 ### Release 0.10.0
 
 #### Feature
