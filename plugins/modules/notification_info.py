@@ -220,6 +220,14 @@ notifications:
       description: line provider option.
       returned: if type is line
       type: str
+    lunaseaTarget:
+      description: lunasea provider option.
+      returned: if type is lunasea
+      type: str
+    lunaseaUserID:
+      description: lunasea provider option.
+      returned: if type is lunasea
+      type: str
     lunaseaDevice:
       description: lunasea provider option.
       returned: if type is lunasea
@@ -287,6 +295,18 @@ notifications:
     pagerdutyIntegrationKey:
       description: PagerDuty provider option.
       returned: if type is PagerDuty
+      type: str
+    pagertreeAutoResolve:
+      description: PagerTree provider option.
+      returned: if type is PagerTree
+      type: str
+    pagertreeIntegrationUrl:
+      description: PagerTree provider option.
+      returned: if type is PagerTree
+      type: str
+    pagertreeUrgency:
+      description: PagerTree provider option.
+      returned: if type is PagerTree
       type: str
     promosmsLogin:
       description: promosms provider option.
@@ -496,11 +516,23 @@ notifications:
       description: PushByTechulus provider option.
       returned: if type is PushByTechulus
       type: str
-    telegramBotToken:
+    telegramChatID:
       description: telegram provider option.
       returned: if type is telegram
       type: str
-    telegramChatID:
+    telegramSendSilently:
+      description: telegram provider option.
+      returned: if type is telegram
+      type: bool
+    telegramProtectContent:
+      description: telegram provider option.
+      returned: if type is telegram
+      type: bool
+    telegramMessageThreadID:
+      description: telegram provider option.
+      returned: if type is telegram
+      type: str
+    telegramBotToken:
       description: telegram provider option.
       returned: if type is telegram
       type: str

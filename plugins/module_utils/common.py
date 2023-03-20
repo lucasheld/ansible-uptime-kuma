@@ -93,6 +93,13 @@ def get_maintenance_by_title(api, title):
             return maintenance
 
 
+def get_api_key_by_name(api, name):
+    api_keys = api.get_api_keys()
+    for api_key in api_keys:
+        if api_key["name"] == name:
+            return api_key
+
+
 common_module_args = dict(
     api_url=dict(type="str", default="http://127.0.0.1:3001"),
     api_username=dict(type="str"),

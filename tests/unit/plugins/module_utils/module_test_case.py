@@ -132,3 +132,11 @@ class ModuleTestCase(unittest.TestCase):
             strategy=MaintenanceStrategy.MANUAL
         )
         return r["maintenanceID"]
+
+    def add_api_key(self, name="api key 1"):
+        r = self.api.add_api_key(
+            name=name,
+            expires="2023-03-30 12:20:00",
+            active=True
+        )
+        return r["keyID"]

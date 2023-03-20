@@ -30,6 +30,9 @@ options:
       - The name of the monitor.
       - Only required if no I(id) specified.
     type: str
+  description:
+    description: The description of the monitor.
+    type: str
   type:
     description: The type of the monitor.
     type: str
@@ -61,6 +64,9 @@ options:
       - Only required if I(notificationIDList) not specified.
     type: list
     elements: str
+  httpBodyEncoding:
+    description: The body encoding of the monitor.
+    type: str
   url:
     description: The url of the monitor.
     type: str
@@ -108,7 +114,16 @@ options:
   authMethod:
     description: The auth method of the monitor.
     type: str
-    choices: ["", "basic", "ntlm"]
+    choices: ["", "basic", "ntlm", "mtls"]
+  tlsCert:
+    description: The tls cert of the monitor.
+    type: str
+  tlsKey:
+    description: The tls key of the monitor.
+    type: str
+  tlsCa:
+    description: The tls ca of the monitor.
+    type: str
   basic_auth_user:
     description: The auth user of the monitor.
     type: str
@@ -364,6 +379,7 @@ def main():
         id=dict(type="int"),
         name=dict(type="str"),
         type=dict(type="str", choices=["http", "port", "ping", "keyword", "grpc-keyword", "dns", "docker", "push", "steam", "gamedig", "mqtt", "sqlserver", "postgres", "mysql", "mongodb", "radius", "redis"]),
+        description=dict(type="str"),
         interval=dict(type="int"),
         retryInterval=dict(type="int"),
         resendInterval=dict(type="int"),
@@ -371,6 +387,7 @@ def main():
         upsideDown=dict(type="bool"),
         notificationIDList=dict(type="list", elements="int"),
         notification_names=dict(type="list", elements="str"),
+        httpBodyEncoding=dict(type="str"),
 
         # HTTP, KEYWORD
         url=dict(type="str"),
@@ -387,6 +404,9 @@ def main():
         body=dict(type="str"),
         headers=dict(type="str"),
         authMethod=dict(type="str", choices=["", "basic", "ntlm"]),
+        tlsCert=dict(type="str"),
+        tlsKey=dict(type="str"),
+        tlsCa=dict(type="str"),
         basic_auth_user=dict(type="str"),
         basic_auth_pass=dict(type="str", no_log=True),
         authDomain=dict(type="str"),
