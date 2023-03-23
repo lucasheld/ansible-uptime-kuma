@@ -23,6 +23,14 @@ ansible-galaxy collection install git+https://github.com/lucasheld/ansible-uptim
 
 The following modules are available:
 
+- [api_key](https://github.com/lucasheld/ansible-uptime-kuma/wiki/api_key)
+- [api_key_info](https://github.com/lucasheld/ansible-uptime-kuma/wiki/api_key_info)
+- [docker_host](https://github.com/lucasheld/ansible-uptime-kuma/wiki/docker_host)
+- [docker_host_info](https://github.com/lucasheld/ansible-uptime-kuma/wiki/docker_host_info)
+- [game_list_info](https://github.com/lucasheld/ansible-uptime-kuma/wiki/game_list_info)
+- [login](https://github.com/lucasheld/ansible-uptime-kuma/wiki/login)
+- [maintenance](https://github.com/lucasheld/ansible-uptime-kuma/wiki/maintenance)
+- [maintenance_info](https://github.com/lucasheld/ansible-uptime-kuma/wiki/maintenance_info)
 - [monitor](https://github.com/lucasheld/ansible-uptime-kuma/wiki/monitor)
 - [monitor_info](https://github.com/lucasheld/ansible-uptime-kuma/wiki/monitor_info)
 - [monitor_tag](https://github.com/lucasheld/ansible-uptime-kuma/wiki/monitor_tag)
@@ -30,18 +38,13 @@ The following modules are available:
 - [notification_info](https://github.com/lucasheld/ansible-uptime-kuma/wiki/notification_info)
 - [proxy](https://github.com/lucasheld/ansible-uptime-kuma/wiki/proxy)
 - [proxy_info](https://github.com/lucasheld/ansible-uptime-kuma/wiki/proxy_info)
+- [settings](https://github.com/lucasheld/ansible-uptime-kuma/wiki/settings)
+- [settings_info](https://github.com/lucasheld/ansible-uptime-kuma/wiki/settings_info)
 - [setup](https://github.com/lucasheld/ansible-uptime-kuma/wiki/setup)
 - [status_page](https://github.com/lucasheld/ansible-uptime-kuma/wiki/status_page)
 - [status_page_info](https://github.com/lucasheld/ansible-uptime-kuma/wiki/status_page_info)
 - [tag](https://github.com/lucasheld/ansible-uptime-kuma/wiki/tag)
 - [tag_info](https://github.com/lucasheld/ansible-uptime-kuma/wiki/tag_info)
-- [docker_host](https://github.com/lucasheld/ansible-uptime-kuma/wiki/docker_host)
-- [docker_host_info](https://github.com/lucasheld/ansible-uptime-kuma/wiki/docker_host_info)
-- [settings](https://github.com/lucasheld/ansible-uptime-kuma/wiki/settings)
-- [settings_info](https://github.com/lucasheld/ansible-uptime-kuma/wiki/settings_info)
-- [maintenance](https://github.com/lucasheld/ansible-uptime-kuma/wiki/maintenance)
-- [maintenance_info](https://github.com/lucasheld/ansible-uptime-kuma/wiki/maintenance_info)
-- [game_list_info](https://github.com/lucasheld/ansible-uptime-kuma/wiki/game_list_info)
 
 
 ## Getting started
