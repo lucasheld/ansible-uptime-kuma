@@ -736,6 +736,34 @@ notifications:
       description: Splunk provider option.
       returned: if type is Splunk
       type: str
+    opsgeniePriority:
+      description: Opsgenie provider option.
+      returned: if type is Opsgenie
+      type: int
+    opsgenieRegion:
+      description: Opsgenie provider option.
+      returned: if type is Opsgenie
+      type: str
+    opsgenieApiKey:
+      description: Opsgenie provider option.
+      returned: if type is Opsgenie
+      type: str
+    twilioAccountSID:
+      description: twilio provider option.
+      returned: if type is twilio
+      type: str
+    twilioAuthToken:
+      description: twilio provider option.
+      returned: if type is twilio
+      type: str
+    twilioToNumber:
+      description: twilio provider option.
+      returned: if type is twilio
+      type: str
+    twilioFromNumber:
+      description: twilio provider option.
+      returned: if type is twilio
+      type: str
 '''
 
 import traceback
