@@ -1,5 +1,13 @@
 ## Changelog
 
+### Release 0.13.0
+
+#### Feature
+- add support for uptime kuma 1.21.1
+
+#### Bugfix
+- add missing mtls authMethod
+
 ### Release 0.12.0
 
 #### Feature
