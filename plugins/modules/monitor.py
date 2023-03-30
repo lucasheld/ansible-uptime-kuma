@@ -403,7 +403,7 @@ def main():
         method=dict(type="str"),
         body=dict(type="str"),
         headers=dict(type="str"),
-        authMethod=dict(type="str", choices=["", "basic", "ntlm"]),
+        authMethod=dict(type="str", choices=["", "basic", "ntlm", "mtls"]),
         tlsCert=dict(type="str"),
         tlsKey=dict(type="str"),
         tlsCa=dict(type="str"),
