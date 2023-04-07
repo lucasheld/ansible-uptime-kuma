@@ -37,7 +37,7 @@ def object_changed(superset, subset, ignore=None):
 
 
 def clear_params(params: dict):
-    ignored_params = ["api_url", "api_username", "api_password", "api_token", "state"]
+    ignored_params = ["api_url", "api_wait_timeout", "api_headers", "api_username", "api_password", "api_token", "state"]
     return {k: v for k, v in params.items() if k not in ignored_params}
 
 
@@ -102,6 +102,8 @@ def get_api_key_by_name(api, name):
 
 common_module_args = dict(
     api_url=dict(type="str", default="http://127.0.0.1:3001"),
+    api_wait_timeout=dict(type="float", default=1),
+    api_headers=dict(type="dict"),
     api_username=dict(type="str"),
     api_password=dict(type="str", no_log=True),
     api_token=dict(type="str", no_log=True)

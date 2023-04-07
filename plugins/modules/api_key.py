@@ -146,7 +146,7 @@ def main():
     if not HAS_UPTIME_KUMA_API:
         module.fail_json(msg=missing_required_lib("uptime_kuma_api"))
 
-    api = UptimeKumaApi(params["api_url"])
+    api = UptimeKumaApi(params["api_url"], wait_timeout=params["api_wait_timeout"], headers=params["api_headers"])
     api_token = params.get("api_token")
     api_username = params.get("api_username")
     api_password = params.get("api_password")

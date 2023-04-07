@@ -15,6 +15,13 @@ options:
     description: The Uptime Kuma URL.
     type: str
     default: http://127.0.0.1:3001
+  api_wait_timeout:
+    description: How many seconds the client should wait for the connection (default: 1).
+    type: float
+    default: 1
+  api_headers:
+    description: Headers that are passed to the socketio connection.
+    type: dict
   api_username:
     description:
       - The Uptime Kuma username.

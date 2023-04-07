@@ -66,7 +66,7 @@ def main():
     if not HAS_UPTIME_KUMA_API:
         module.fail_json(msg=missing_required_lib("uptime_kuma_api"))
 
-    api = UptimeKumaApi(params["api_url"])
+    api = UptimeKumaApi(params["api_url"], wait_timeout=params["api_wait_timeout"], headers=params["api_headers"])
 
     result = {
         "changed": False
