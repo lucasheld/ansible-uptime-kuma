@@ -1,5 +1,11 @@
 ## Changelog
 
+### Release 0.14.0
+
+#### Feature
+- add support for uptime kuma 1.21.2
+- add support for args `wait_timeout` and `headers`
+
 ### Release 0.13.0
 
 #### Feature
