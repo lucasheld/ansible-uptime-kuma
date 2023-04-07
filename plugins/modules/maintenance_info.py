@@ -86,7 +86,7 @@ maintenances:
       description: The time range of the maintenance.
       returned: always
       type: list
-      sample: [{"hours": 2,"minutes": 0,"seconds": 0},{"hours": 3,"minutes": 0,"seconds": 0}]
+      sample: [{"hours": 0,"minutes": 0},{"hours": 0,"minutes": 0}]
     weekdays:
       description: The time range of the maintenance.
       returned: always
@@ -101,7 +101,32 @@ maintenances:
       description: The timeslot list of the maintenance.
       returned: always
       type: list
-      sample: [{"id": 1,"startDate": "2022-12-27 14:39:00","endDate": "2022-12-30 14:39:00","startDateServerTimezone": "2022-12-27 15:39","endDateServerTimezone": "2022-12-30 15:39","serverTimezoneOffset": "+01:00"}]
+      sample: [{"startDate":"2022-12-27 22:36:00","endDate":"2022-12-29 22:36:00"}]
+    cron:
+      description: The cron schedule of the maintenance.
+      returned: always
+      type: str
+      sample: None
+    duration:
+      description: The duration (in seconds) of the maintenance.
+      returned: always
+      type: int
+      sample: None
+    durationMinutes:
+      description: The duration (in minutes) of the maintenance.
+      returned: always
+      type: int
+      sample: 0
+    timezone:
+      description: The timezone of the maintenance.
+      returned: always
+      type: str
+      sample: "Europe/Berlin"
+    timezoneOffset:
+      description: The timezone offset of the maintenance.
+      returned: always
+      type: str
+      sample: "+02:00"
     status:
       description: The status of the maintenance.
       returned: always

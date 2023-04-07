@@ -34,7 +34,7 @@ options:
   strategy:
     description: The strategy of the maintenance.
     type: str
-    choices: ["manual", "single", "recurring-interval", "recurring-weekday", "recurring-day-of-month"]
+    choices: ["manual", "single", "recurring-interval", "recurring-weekday", "recurring-day-of-month", "cron"]
   active:
     description: True if the maintenance is active.
     type: bool
@@ -58,6 +58,15 @@ options:
   timeRange:
     description: The time range of the maintenance.
     type: list
+  cron:
+    description: The cron schedule of the maintenance.
+    type: str
+  durationMinutes:
+    description: The duration (in minutes) of the maintenance.
+    type: int
+  timezone:
+    description: The timezone of the maintenance.
+    type: str
   monitors:
     description: The monitors of the maintenance.
     type: list
@@ -85,6 +94,7 @@ EXAMPLES = r'''
         minutes: 0
       - hours: 3
         minutes: 0
+    timezone: "Europe/Berlin"
     monitors:
       - name: monitor 1
       - name: monitor 2
@@ -153,7 +163,7 @@ from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common impor
     get_docker_host_by_name, get_monitor_by_name
 
 try:
-    from uptime_kuma_api import UptimeKumaApi
+    from uptime_kuma_api import UptimeKumaApi, MaintenanceStrategy
     HAS_UPTIME_KUMA_API = True
 except ImportError:
     HAS_UPTIME_KUMA_API = False
@@ -172,17 +182,21 @@ def run(api, params, result):
             datetime.date.today().strftime("%Y-%m-%d 00:00:00")
         ]
 
-    if not params["timeRange"]:
-        params["timeRange"] = [
-            {
-                "hours": 2,
-                "minutes": 0,
-            },
-            {
-                "hours": 3,
-                "minutes": 0,
-            }
-        ]
+        if not params["timeRange"] and params["strategy"] in [
+            MaintenanceStrategy.RECURRING_INTERVAL,
+            MaintenanceStrategy.RECURRING_WEEKDAY,
+            MaintenanceStrategy.RECURRING_DAY_OF_MONTH
+        ]:
+            params["timeRange"] = [
+                {
+                    "hours": 2,
+                    "minutes": 0,
+                },
+                {
+                    "hours": 3,
+                    "minutes": 0,
+                }
+            ]
 
     if not params["weekdays"]:
         params["weekdays"] = []
@@ -268,7 +282,7 @@ def main():
     module_args = dict(
         id=dict(type="int"),
         title=dict(type="str"),
-        strategy=dict(type="str", choices=["manual", "single", "recurring-interval", "recurring-weekday", "recurring-day-of-month"]),
+        strategy=dict(type="str", choices=["manual", "single", "recurring-interval", "recurring-weekday", "recurring-day-of-month", "cron"]),
         active=dict(type="bool"),
         description=dict(type="str"),
         dateRange=dict(type="list"),
@@ -276,6 +290,9 @@ def main():
         weekdays=dict(type="list"),
         daysOfMonth=dict(type="list"),
         timeRange=dict(type="list"),
+        cron=dict(type="str"),
+        durationMinutes=dict(type="int"),
+        timezone=dict(type="str"),
         monitors=dict(type="list"),
         status_pages=dict(type="list"),
         state=dict(type="str", default="present", choices=["present", "absent", "paused", "resumed"])

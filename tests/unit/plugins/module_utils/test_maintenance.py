@@ -31,6 +31,9 @@ class TestMaintenance(ModuleTestCase):
             "timeRange": None,
             "monitors": None,
             "status_pages": None,
+            "cron": None,
+            "durationMinutes": None,
+            "timezone": None,
             "state": "present"
         }
 
@@ -55,18 +58,6 @@ class TestMaintenance(ModuleTestCase):
                 "2022-12-27 22:36:00",
                 "2022-12-29 22:36:00"
             ],
-            "timeRange": [
-                {
-                    "hours": 2,
-                    "minutes": 0,
-                    "seconds": 0
-                },
-                {
-                    "hours": 3,
-                    "minutes": 0,
-                    "seconds": 0
-                }
-            ],
             "weekdays": [],
             "daysOfMonth": [],
             "monitors": [
@@ -83,6 +74,11 @@ class TestMaintenance(ModuleTestCase):
             ]
         })
 
+        if parse_version(self.api.version) >= parse_version("1.21.2"):
+            self.params.update({
+                "timezone": "Europe/Berlin"
+            })
+
         result = self.run_module(module, self.params)
         self.assertTrue(result["changed"])
         maintenance = get_maintenance_by_title(self.api, self.params["title"])
@@ -91,7 +87,6 @@ class TestMaintenance(ModuleTestCase):
         self.assertEqual(maintenance["active"], self.params["active"])
         self.assertEqual(maintenance["intervalDay"], self.params["intervalDay"])
         self.assertEqual(maintenance["dateRange"], self.params["dateRange"])
-        self.assertEqual(maintenance["timeRange"], self.params["timeRange"])
         self.assertEqual(maintenance["weekdays"], self.params["weekdays"])
         self.assertEqual(maintenance["daysOfMonth"], self.params["daysOfMonth"])
 
