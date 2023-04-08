@@ -16,7 +16,7 @@ options:
     type: str
     default: http://127.0.0.1:3001
   api_wait_timeout:
-    description: How many seconds the client should wait for the connection (default: 1).
+    description: "How many seconds the client should wait for the connection (default: 1)."
     type: float
     default: 1
   api_headers:
