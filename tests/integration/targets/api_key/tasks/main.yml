@@ -3,6 +3,8 @@
     api_url: http://127.0.0.1:3001
     api_username: admin
     api_password: secret123
+    api_timeout: 1
+    api_wait_events: 0.01
     name: Api key 1
     expires: "2023-03-30 12:20:00"
     active: true

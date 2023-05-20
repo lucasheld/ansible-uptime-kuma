@@ -12,7 +12,7 @@ class ModuleTestCase(unittest.TestCase):
     password = "secret123"
 
     def setUp(self):
-        self.api = UptimeKumaApi(self.url)
+        self.api = UptimeKumaApi(self.url, timeout=1, wait_events=0.01)
 
         filepath = os.path.join(tempfile.gettempdir(), "uptime-kuma-token")
         token = None
