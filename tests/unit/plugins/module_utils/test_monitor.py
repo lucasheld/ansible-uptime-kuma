@@ -1,7 +1,6 @@
 from .module_test_case import ModuleTestCase
 import plugins.modules.monitor as module
 from plugins.module_utils.common import get_monitor_by_name
-from packaging.version import parse as parse_version
 
 from uptime_kuma_api import MonitorType
 
@@ -88,12 +87,9 @@ class TestMonitor(ModuleTestCase):
             "maxretries": 0,
             "notificationIDList": [notification_id_1, notification_id_2],
             "upsideDown": False,
-            "url": "http://127.0.0.1"
+            "url": "http://127.0.0.1",
+            "resendInterval": 0
         })
-        if parse_version(self.api.version) >= parse_version("1.18"):
-            self.params.update({
-                "resendInterval": 0
-            })
 
         result = self.run_module(module, self.params)
         self.assertTrue(result["changed"])

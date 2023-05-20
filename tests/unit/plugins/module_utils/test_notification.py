@@ -1,7 +1,6 @@
 from .module_test_case import ModuleTestCase
 import plugins.modules.notification as module
 from plugins.module_utils.common import get_notification_by_name
-from packaging.version import parse as parse_version
 
 from uptime_kuma_api import NotificationType
 

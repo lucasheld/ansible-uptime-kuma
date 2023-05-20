@@ -1,4 +1,3 @@
-from packaging.version import parse as parse_version
 import plugins.modules.maintenance_info as module
 from .module_test_case import ModuleTestCase
 
@@ -6,10 +5,6 @@ from .module_test_case import ModuleTestCase
 class TestMaintenanceInfo(ModuleTestCase):
     def setUp(self):
         super(TestMaintenanceInfo, self).setUp()
-
-        if parse_version(self.api.version) < parse_version("1.19"):
-            super(TestMaintenanceInfo, self).tearDown()
-            self.skipTest("Unsupported in this Uptime Kuma version")
 
         self.params = {
             "api_url": "http://127.0.0.1:3001",

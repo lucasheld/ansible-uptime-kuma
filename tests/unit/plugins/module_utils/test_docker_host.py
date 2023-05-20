@@ -1,4 +1,3 @@
-from packaging.version import parse as parse_version
 from uptime_kuma_api import DockerType
 
 import plugins.modules.docker_host as module
@@ -9,10 +8,6 @@ from .module_test_case import ModuleTestCase
 class TestDockerHost(ModuleTestCase):
     def setUp(self):
         super(TestDockerHost, self).setUp()
-
-        if parse_version(self.api.version) < parse_version("1.18"):
-            super(TestDockerHost, self).tearDown()
-            self.skipTest("Unsupported in this Uptime Kuma version")
 
         self.params = {
             "api_url": "http://127.0.0.1:3001",

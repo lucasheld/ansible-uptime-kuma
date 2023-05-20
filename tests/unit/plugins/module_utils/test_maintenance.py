@@ -1,4 +1,3 @@
-from packaging.version import parse as parse_version
 from uptime_kuma_api import MaintenanceStrategy
 
 import plugins.modules.maintenance as module
@@ -9,10 +8,6 @@ from .module_test_case import ModuleTestCase
 class TestMaintenance(ModuleTestCase):
     def setUp(self):
         super(TestMaintenance, self).setUp()
-
-        if parse_version(self.api.version) < parse_version("1.19"):
-            super(TestMaintenance, self).tearDown()
-            self.skipTest("Unsupported in this Uptime Kuma version")
 
         self.params = {
             "api_url": None,
@@ -71,13 +66,9 @@ class TestMaintenance(ModuleTestCase):
                     "id": status_page_id,
                     "name": status_page_title
                 }
-            ]
+            ],
+            "timezone": "Europe/Berlin"
         })
-
-        if parse_version(self.api.version) >= parse_version("1.21.2"):
-            self.params.update({
-                "timezone": "Europe/Berlin"
-            })
 
         result = self.run_module(module, self.params)
         self.assertTrue(result["changed"])

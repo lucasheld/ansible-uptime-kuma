@@ -1,5 +1,3 @@
-from packaging.version import parse as parse_version
-
 import plugins.modules.status_page as module
 from .module_test_case import ModuleTestCase
 
@@ -70,8 +68,7 @@ class TestStatusPage(ModuleTestCase):
         self.assertEqual(status_page["published"], self.params["published"])
         self.assertEqual(status_page["showTags"], self.params["showTags"])
         self.assertEqual(status_page["domainNameList"], self.params["domainNameList"])
-        if parse_version(self.api.version) >= parse_version("1.20"):
-            self.assertEqual(status_page["googleAnalyticsId"], self.params["googleAnalyticsId"])
+        self.assertEqual(status_page["googleAnalyticsId"], self.params["googleAnalyticsId"])
         self.assertEqual(status_page["customCSS"], self.params["customCSS"])
         self.assertEqual(status_page["footerText"], self.params["footerText"])
         self.assertEqual(status_page["showPoweredBy"], self.params["showPoweredBy"])
@@ -82,8 +79,6 @@ class TestStatusPage(ModuleTestCase):
             for j in i.get("monitorList", []):
                 j.pop("sendUrl", None)
                 j["name"] = None
-                if parse_version("1.19") <= parse_version(self.api.version) < parse_version("1.19.5"):
-                    j.pop("maintenance")
         self.assertEqual(public_group_list, self.params["publicGroupList"])
 
         result = self.run_module(module, self.params)

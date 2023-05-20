@@ -1,4 +1,3 @@
-from packaging.version import parse as parse_version
 from .module_test_case import ModuleTestCase
 import plugins.modules.game_list_info as module
 
@@ -6,10 +5,6 @@ import plugins.modules.game_list_info as module
 class TestGameListInfo(ModuleTestCase):
     def setUp(self):
         super(TestGameListInfo, self).setUp()
-
-        if parse_version(self.api.version) < parse_version("1.20"):
-            super(TestGameListInfo, self).tearDown()
-            self.skipTest("Unsupported in this Uptime Kuma version")
 
         self.params = {
             "api_url": "http://127.0.0.1:3001",

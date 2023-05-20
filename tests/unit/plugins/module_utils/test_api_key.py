@@ -1,5 +1,3 @@
-from packaging.version import parse as parse_version
-
 import plugins.modules.api_key as module
 from plugins.module_utils.common import get_api_key_by_name
 from .module_test_case import ModuleTestCase
@@ -8,10 +6,6 @@ from .module_test_case import ModuleTestCase
 class TestApiKey(ModuleTestCase):
     def setUp(self):
         super(TestApiKey, self).setUp()
-
-        if parse_version(self.api.version) < parse_version("1.21"):
-            super(TestApiKey, self).tearDown()
-            self.skipTest("Unsupported in this Uptime Kuma version")
 
         self.params = {
             "api_url": "http://127.0.0.1:3001",
