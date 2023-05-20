@@ -159,8 +159,7 @@ import traceback
 
 from ansible.module_utils.basic import AnsibleModule, missing_required_lib
 from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common import object_changed, clear_params, \
-    common_module_args, get_proxy_by_host_port, get_notification_by_name, get_maintenance_by_title, clear_unset_params, \
-    get_docker_host_by_name, get_monitor_by_name
+    common_module_args, get_maintenance_by_title, clear_unset_params, get_monitor_by_name
 
 try:
     from uptime_kuma_api import UptimeKumaApi, MaintenanceStrategy

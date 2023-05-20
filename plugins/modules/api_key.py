@@ -93,7 +93,7 @@ import traceback
 
 from ansible.module_utils.basic import AnsibleModule, missing_required_lib
 from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common import common_module_args,\
-    get_api_key_by_name, clear_params, clear_unset_params, object_changed
+    get_api_key_by_name, clear_params, clear_unset_params
 
 try:
     from uptime_kuma_api import UptimeKumaApi
@@ -129,6 +129,7 @@ def run(api, params, result):
         if api_key and api_key["active"]:
             api.disable_api_key(api_key["id"])
             result["changed"] = True
+
 
 def main():
     module_args = dict(
