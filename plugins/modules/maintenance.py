@@ -64,7 +64,7 @@ options:
   durationMinutes:
     description: The duration (in minutes) of the maintenance.
     type: int
-  timezone:
+  timezoneOption:
     description: The timezone of the maintenance.
     type: str
   monitors:
@@ -94,7 +94,7 @@ EXAMPLES = r'''
         minutes: 0
       - hours: 3
         minutes: 0
-    timezone: "Europe/Berlin"
+    timezoneOption: "Europe/Berlin"
     monitors:
       - name: monitor 1
       - name: monitor 2
@@ -292,7 +292,7 @@ def main():
         timeRange=dict(type="list"),
         cron=dict(type="str"),
         durationMinutes=dict(type="int"),
-        timezone=dict(type="str"),
+        timezoneOption=dict(type="str"),
         monitors=dict(type="list"),
         status_pages=dict(type="list"),
         state=dict(type="str", default="present", choices=["present", "absent", "paused", "resumed"])

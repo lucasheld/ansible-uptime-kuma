@@ -117,7 +117,7 @@ maintenances:
       returned: always
       type: int
       sample: 0
-    timezone:
+    timezoneOption:
       description: The timezone of the maintenance.
       returned: always
       type: str

@@ -28,7 +28,7 @@ class TestMaintenance(ModuleTestCase):
             "status_pages": None,
             "cron": None,
             "durationMinutes": None,
-            "timezone": None,
+            "timezoneOption": None,
             "state": "present"
         }
 
@@ -67,7 +67,7 @@ class TestMaintenance(ModuleTestCase):
                     "name": status_page_title
                 }
             ],
-            "timezone": "Europe/Berlin"
+            "timezoneOption": "Europe/Berlin"
         })
 
         result = self.run_module(module, self.params)
