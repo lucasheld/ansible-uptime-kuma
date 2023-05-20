@@ -106,7 +106,9 @@ def build_provider_args():
         for option, args in provider_options.items():
             if "password" in option.lower():
                 args["no_log"] = True
-            provider_args[option] = args
+            provider_args[option] = {
+                "type": args["type"]
+            }
     return provider_args
 
 

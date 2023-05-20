@@ -100,6 +100,10 @@ notifications:
       description: alerta provider option.
       returned: if type is alerta
       type: str
+    alertNowWebhookURL:
+      description: AlertNow provider option.
+      returned: if type is AlertNow
+      type: str
     phonenumber:
       description: AliyunSMS provider option.
       returned: if type is AliyunSMS
@@ -127,6 +131,18 @@ notifications:
     title:
       description: apprise provider option.
       returned: if type is apprise
+      type: str
+    barkEndpoint:
+      description: Bark provider option.
+      returned: if type is Bark
+      type: str
+    barkGroup:
+      description: Bark provider option.
+      returned: if type is Bark
+      type: str
+    barkSound:
+      description: Bark provider option.
+      returned: if type is Bark
       type: str
     clicksendsmsLogin:
       description: clicksendsms provider option.
@@ -168,6 +184,22 @@ notifications:
       description: Feishu provider option.
       returned: if type is Feishu
       type: str
+    freemobileUser:
+      description: FreeMobile provider option.
+      returned: if type is FreeMobile
+      type: str
+    freemobilePass:
+      description: FreeMobile provider option.
+      returned: if type is FreeMobile
+      type: str
+    goAlertBaseURL:
+      description: GoAlert provider option.
+      returned: if type is GoAlert
+      type: str
+    goAlertToken:
+      description: GoAlert provider option.
+      returned: if type is GoAlert
+      type: str
     googleChatWebhookURL:
       description: GoogleChat provider option.
       returned: if type is GoogleChat
@@ -191,7 +223,7 @@ notifications:
     gorushRetry:
       description: gorush provider option.
       returned: if type is gorush
-      type: str
+      type: int
     gorushTopic:
       description: gorush provider option.
       returned: if type is gorush
@@ -212,6 +244,26 @@ notifications:
       description: gotify provider option.
       returned: if type is gotify
       type: int
+    notificationService:
+      description: HomeAssistant provider option.
+      returned: if type is HomeAssistant
+      type: str
+    homeAssistantUrl:
+      description: HomeAssistant provider option.
+      returned: if type is HomeAssistant
+      type: str
+    longLivedAccessToken:
+      description: HomeAssistant provider option.
+      returned: if type is HomeAssistant
+      type: str
+    kookGuildID:
+      description: Kook provider option.
+      returned: if type is Kook
+      type: str
+    kookBotToken:
+      description: Kook provider option.
+      returned: if type is Kook
+      type: str
     lineChannelAccessToken:
       description: line provider option.
       returned: if type is line
@@ -219,6 +271,10 @@ notifications:
     lineUserID:
       description: line provider option.
       returned: if type is line
+      type: str
+    lineNotifyAccessToken:
+      description: LineNotify provider option.
+      returned: if type is LineNotify
       type: str
     lunaseaTarget:
       description: lunasea provider option.
@@ -264,6 +320,54 @@ notifications:
       description: mattermost provider option.
       returned: if type is mattermost
       type: str
+    ntfyusername:
+      description: ntfy provider option.
+      returned: if type is ntfy
+      type: str
+    ntfypassword:
+      description: ntfy provider option.
+      returned: if type is ntfy
+      type: str
+    ntfytopic:
+      description: ntfy provider option.
+      returned: if type is ntfy
+      type: str
+    ntfyPriority:
+      description: ntfy provider option.
+      returned: if type is ntfy
+      type: int
+    ntfyIcon:
+      description: ntfy provider option.
+      returned: if type is ntfy
+      type: str
+    ntfyserverurl:
+      description: ntfy provider option.
+      returned: if type is ntfy
+      type: str
+    octopushVersion:
+      description: octopush provider option.
+      returned: if type is octopush
+      type: str
+    octopushAPIKey:
+      description: octopush provider option.
+      returned: if type is octopush
+      type: str
+    octopushLogin:
+      description: octopush provider option.
+      returned: if type is octopush
+      type: str
+    octopushPhoneNumber:
+      description: octopush provider option.
+      returned: if type is octopush
+      type: str
+    octopushSMSType:
+      description: octopush provider option.
+      returned: if type is octopush
+      type: str
+    octopushSenderName:
+      description: octopush provider option.
+      returned: if type is octopush
+      type: str
     httpAddr:
       description: OneBot provider option.
       returned: if type is OneBot
@@ -279,6 +383,18 @@ notifications:
     recieverId:
       description: OneBot provider option.
       returned: if type is OneBot
+      type: str
+    opsgeniePriority:
+      description: Opsgenie provider option.
+      returned: if type is Opsgenie
+      type: int
+    opsgenieRegion:
+      description: Opsgenie provider option.
+      returned: if type is Opsgenie
+      type: str
+    opsgenieApiKey:
+      description: Opsgenie provider option.
+      returned: if type is Opsgenie
       type: str
     pagerdutyAutoResolve:
       description: PagerDuty provider option.
@@ -308,6 +424,10 @@ notifications:
       description: PagerTree provider option.
       returned: if type is PagerTree
       type: str
+    promosmsAllowLongSMS:
+      description: promosms provider option.
+      returned: if type is promosms
+      type: bool
     promosmsLogin:
       description: promosms provider option.
       returned: if type is promosms
@@ -328,10 +448,6 @@ notifications:
       description: promosms provider option.
       returned: if type is promosms
       type: str
-    promosmsAllowLongSMS:
-      description: promosms provider option.
-      returned: if type is promosms
-      type: bool
     pushbulletAccessToken:
       description: pushbullet provider option.
       returned: if type is pushbullet
@@ -388,9 +504,9 @@ notifications:
       description: rocket.chat provider option.
       returned: if type is rocket.chat
       type: str
-    rocketbutton:
-      description: rocket.chat provider option.
-      returned: if type is rocket.chat
+    serverChanSendKey:
+      description: ServerChan provider option.
+      returned: if type is ServerChan
       type: str
     serwersmsUsername:
       description: serwersms provider option.
@@ -420,10 +536,6 @@ notifications:
       description: signal provider option.
       returned: if type is signal
       type: str
-    slackbutton:
-      description: slack provider option.
-      returned: if type is slack
-      type: str
     slackchannel:
       description: slack provider option.
       returned: if type is slack
@@ -440,6 +552,42 @@ notifications:
       description: slack provider option.
       returned: if type is slack
       type: str
+    smseagleEncoding:
+      description: SMSEagle provider option.
+      returned: if type is SMSEagle
+      type: bool
+    smseaglePriority:
+      description: SMSEagle provider option.
+      returned: if type is SMSEagle
+      type: int
+    smseagleRecipientType:
+      description: SMSEagle provider option.
+      returned: if type is SMSEagle
+      type: str
+    smseagleToken:
+      description: SMSEagle provider option.
+      returned: if type is SMSEagle
+      type: str
+    smseagleRecipient:
+      description: SMSEagle provider option.
+      returned: if type is SMSEagle
+      type: str
+    smseagleUrl:
+      description: SMSEagle provider option.
+      returned: if type is SMSEagle
+      type: str
+    smsmanagerApiKey:
+      description: SMSManager provider option.
+      returned: if type is SMSManager
+      type: str
+    numbers:
+      description: SMSManager provider option.
+      returned: if type is SMSManager
+      type: str
+    messageType:
+      description: SMSManager provider option.
+      returned: if type is SMSManager
+      type: str
     smtpHost:
       description: smtp provider option.
       returned: if type is smtp
@@ -455,7 +603,7 @@ notifications:
     smtpIgnoreTLSError:
       description: smtp provider option.
       returned: if type is smtp
-      type: str
+      type: bool
     smtpDkimDomain:
       description: smtp provider option.
       returned: if type is smtp
@@ -508,9 +656,29 @@ notifications:
       description: smtp provider option.
       returned: if type is smtp
       type: str
+    splunkAutoResolve:
+      description: Splunk provider option.
+      returned: if type is Splunk
+      type: str
+    splunkSeverity:
+      description: Splunk provider option.
+      returned: if type is Splunk
+      type: str
+    splunkRestURL:
+      description: Splunk provider option.
+      returned: if type is Splunk
+      type: str
+    squadcastWebhookURL:
+      description: squadcast provider option.
+      returned: if type is squadcast
+      type: str
     stackfieldwebhookURL:
       description: stackfield provider option.
       returned: if type is stackfield
+      type: str
+    webhookUrl:
+      description: teams provider option.
+      returned: if type is teams
       type: str
     pushAPIKey:
       description: PushByTechulus provider option.
@@ -536,6 +704,22 @@ notifications:
       description: telegram provider option.
       returned: if type is telegram
       type: str
+    twilioAccountSID:
+      description: twilio provider option.
+      returned: if type is twilio
+      type: str
+    twilioAuthToken:
+      description: twilio provider option.
+      returned: if type is twilio
+      type: str
+    twilioToNumber:
+      description: twilio provider option.
+      returned: if type is twilio
+      type: str
+    twilioFromNumber:
+      description: twilio provider option.
+      returned: if type is twilio
+      type: str
     webhookContentType:
       description: webhook provider option.
       returned: if type is webhook
@@ -552,217 +736,9 @@ notifications:
       description: WeCom provider option.
       returned: if type is WeCom
       type: str
-    alertNowWebhookURL:
-      description: AlertNow provider option.
-      returned: if type is AlertNow
-      type: str
-    homeAssistantUrl:
-      description: HomeAssistant provider option.
-      returned: if type is HomeAssistant
-      type: str
-    longLivedAccessToken:
-      description: HomeAssistant provider option.
-      returned: if type is HomeAssistant
-      type: str
-    lineNotifyAccessToken:
-      description: LineNotify provider option.
-      returned: if type is LineNotify
-      type: str
-    barkEndpoint:
-      description: Bark provider option.
-      returned: if type is Bark
-      type: str
-    barkGroup:
-      description: Bark provider option.
-      returned: if type is Bark
-      type: str
-    barkSound:
-      description: Bark provider option.
-      returned: if type is Bark
-      type: str
-    goAlertBaseURL:
-      description: GoAlert provider option.
-      returned: if type is GoAlert
-      type: str
-    goAlertToken:
-      description: GoAlert provider option.
-      returned: if type is GoAlert
-      type: str
-    octopushVersion:
-      description: octopush provider option.
-      returned: if type is octopush
-      type: str
-    octopushAPIKey:
-      description: octopush provider option.
-      returned: if type is octopush
-      type: str
-    octopushLogin:
-      description: octopush provider option.
-      returned: if type is octopush
-      type: str
-    octopushPhoneNumber:
-      description: octopush provider option.
-      returned: if type is octopush
-      type: str
-    octopushSMSType:
-      description: octopush provider option.
-      returned: if type is octopush
-      type: str
-    octopushSenderName:
-      description: octopush provider option.
-      returned: if type is octopush
-      type: str
-    octopushDMLogin:
-      description: octopush provider option.
-      returned: if type is octopush
-      type: str
-    octopushDMAPIKey:
-      description: octopush provider option.
-      returned: if type is octopush
-      type: str
-    octopushDMPhoneNumber:
-      description: octopush provider option.
-      returned: if type is octopush
-      type: str
-    octopushDMSenderName:
-      description: octopush provider option.
-      returned: if type is octopush
-      type: str
-    octopushDMSMSType:
-      description: octopush provider option.
-      returned: if type is octopush
-      type: str
-    serverChanSendKey:
-      description: ServerChan provider option.
-      returned: if type is ServerChan
-      type: str
-    smsmanagerApiKey:
-      description: SMSManager provider option.
-      returned: if type is SMSManager
-      type: str
-    numbers:
-      description: SMSManager provider option.
-      returned: if type is SMSManager
-      type: str
-    messageType:
-      description: SMSManager provider option.
-      returned: if type is SMSManager
-      type: str
-    squadcastWebhookURL:
-      description: squadcast provider option.
-      returned: if type is squadcast
-      type: str
-    webhookUrl:
-      description: teams provider option.
-      returned: if type is teams
-      type: str
-    freemobileUser:
-      description: FreeMobile provider option.
-      returned: if type is FreeMobile
-      type: str
-    freemobilePass:
-      description: FreeMobile provider option.
-      returned: if type is FreeMobile
-      type: str
-    ntfyusername:
-      description: ntfy provider option.
-      returned: if type is ntfy
-      type: str
-    ntfypassword:
-      description: ntfy provider option.
-      returned: if type is ntfy
-      type: str
-    ntfytopic:
-      description: ntfy provider option.
-      returned: if type is ntfy
-      type: str
-    ntfyPriority:
-      description: ntfy provider option.
-      returned: if type is ntfy
-      type: int
-    ntfyIcon:
-      description: ntfy provider option.
-      returned: if type is ntfy
-      type: str
-    ntfyserverurl:
-      description: ntfy provider option.
-      returned: if type is ntfy
-      type: str
-    smseagleEncoding:
-      description: SMSEagle provider option.
-      returned: if type is SMSEagle
-      type: bool
-    smseaglePriority:
-      description: SMSEagle provider option.
-      returned: if type is SMSEagle
-      type: int
-    smseagleRecipientType:
-      description: SMSEagle provider option.
-      returned: if type is SMSEagle
-      type: str
-    smseagleToken:
-      description: SMSEagle provider option.
-      returned: if type is SMSEagle
-      type: str
-    smseagleRecipient:
-      description: SMSEagle provider option.
-      returned: if type is SMSEagle
-      type: str
-    smseagleUrl:
-      description: SMSEagle provider option.
-      returned: if type is SMSEagle
-      type: str
     webhookUrl:
       description: ZohoCliq provider option.
       returned: if type is ZohoCliq
-      type: str
-    kookGuildID:
-      description: Kook provider option.
-      returned: if type is Kook
-      type: str
-    kookBotToken:
-      description: Kook provider option.
-      returned: if type is Kook
-      type: str
-    splunkAutoResolve:
-      description: Splunk provider option.
-      returned: if type is Splunk
-      type: str
-    splunkSeverity:
-      description: Splunk provider option.
-      returned: if type is Splunk
-      type: str
-    splunkRestURL:
-      description: Splunk provider option.
-      returned: if type is Splunk
-      type: str
-    opsgeniePriority:
-      description: Opsgenie provider option.
-      returned: if type is Opsgenie
-      type: int
-    opsgenieRegion:
-      description: Opsgenie provider option.
-      returned: if type is Opsgenie
-      type: str
-    opsgenieApiKey:
-      description: Opsgenie provider option.
-      returned: if type is Opsgenie
-      type: str
-    twilioAccountSID:
-      description: twilio provider option.
-      returned: if type is twilio
-      type: str
-    twilioAuthToken:
-      description: twilio provider option.
-      returned: if type is twilio
-      type: str
-    twilioToNumber:
-      description: twilio provider option.
-      returned: if type is twilio
-      type: str
-    twilioFromNumber:
-      description: twilio provider option.
-      returned: if type is twilio
       type: str
 '''
 
