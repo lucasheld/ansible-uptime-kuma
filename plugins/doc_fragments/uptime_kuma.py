@@ -15,13 +15,26 @@ options:
     description: The Uptime Kuma URL.
     type: str
     default: http://127.0.0.1:3001
-  api_wait_timeout:
-    description: "How many seconds the client should wait for the connection (default: 1)."
+  api_timeout:
+    description: How many seconds the client should wait for the connection, an expected event or a server response.
     type: float
-    default: 1
+    default: 10
   api_headers:
     description: Headers that are passed to the socketio connection.
     type: dict
+  api_ssl_verify:
+    description:
+      - true to verify SSL certificates, or false to skip SSL certificate verification,
+      - allowing connections to servers with self signed certificates.
+    type: bool
+    default: true
+  api_wait_events:
+    description:
+      - How many seconds the client should wait for the next event of the same type.
+      - There is no way to determine when the last message of a certain type has arrived. Therefore, a timeout is required.
+      - If no further message has arrived within this time, it is assumed that it was the last message.
+    type: float
+    default: 0.2
   api_username:
     description:
       - The Uptime Kuma username.
