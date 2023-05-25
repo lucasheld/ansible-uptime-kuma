@@ -5,11 +5,17 @@ readme: README.md
 authors:
   - Lucas Held <lucasheld@hotmail.de>
 description: This collection contains modules that allow to configure Uptime Kuma with Ansible.
-license:
-  - GPL-3.0-or-later
 license_file: LICENSE
 tags: [uptime_kuma]
 repository: https://github.com/lucasheld/ansible-uptime-kuma
 documentation: https://github.com/lucasheld/ansible-uptime-kuma/wiki
 homepage: https://github.com/lucasheld/ansible-uptime-kuma
 issues: https://github.com/lucasheld/ansible-uptime-kuma/issues
+build_ignore:
+  - '*/.pytest_cache'
+  - .idea
+  - build
+  - scripts
+  - run_tests.sh
+  - build.sh
+  - .gitignore
