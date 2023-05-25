@@ -4,7 +4,12 @@ This collection contains modules that allow to configure [Uptime Kuma](https://g
 
 Python version 3.7+ and Ansible version 2.10+ are required.
 
-Supported Uptime Kuma versions: 1.17.0 - 1.21.2
+Supported Uptime Kuma versions:
+
+| Uptime Kuma     | ansible-uptime-kuma | uptime-kuma-api |
+|-----------------|---------------------|-----------------|
+| 1.21.3          | 1.0.0               | 1.0.0+          |
+| 1.17.0 - 1.21.2 | 0.1.0 - 0.14.0      | 0.1.0 - 0.13.0  |
 
 
 ## Installation

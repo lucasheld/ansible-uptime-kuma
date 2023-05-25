@@ -1,5 +1,22 @@
 ## Changelog
 
+### Release 1.0.0
+
+#### Feature
+- drop support for Uptime Kuma versions < 1.21.3
+- add `api_ssl_verify`, `api_wait_events`, `api_timeout` parameters
+- add support for uptime kuma 1.21.3
+- publish collection to ansible-galaxy
+
+#### Bugfixes
+- adjust notification arguments to uptime-kuma-api changes
+
+#### BREAKING CHANGES
+- Python 3.7+ required
+- maintenance parameter `timezone` renamed to `timezoneOption`
+- Removed the `api_wait_timeout` parameter. Use the new `api_timeout` parameter instead. The `api_timeout` parameter specifies how many seconds the client should wait for the connection, an expected event or a server response.
+- Uptime Kuma versions < 1.21.3 are not supported in ansible-uptime-kuma 1.0.0+
+
 ### Release 0.14.0
 
 #### Feature
