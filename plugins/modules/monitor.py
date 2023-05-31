@@ -293,7 +293,7 @@ from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common impor
     get_docker_host_by_name
 
 try:
-    from uptime_kuma_api import UptimeKumaApi, MonitorType
+    from uptime_kuma_api import UptimeKumaApi, MonitorType, UptimeKumaException
     HAS_UPTIME_KUMA_API = True
 except ImportError:
     HAS_UPTIME_KUMA_API = False
@@ -347,12 +347,18 @@ def run(api, params, result):
     options = clear_unset_params(options)
 
     if params["id"]:
-        monitor = api.get_monitor(params["id"])
+        try:
+            monitor = api.get_monitor(params["id"])
+        except UptimeKumaException:
+            monitor = False
     else:
         monitor = get_monitor_by_name(api, params["name"])
 
     if state == "present":
         if not monitor:
+            # ignore id on initial creation
+            if "id" in options:
+                options.pop('id', None)
             api.add_monitor(**options)
             result["changed"] = True
         else:
