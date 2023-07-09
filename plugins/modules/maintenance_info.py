@@ -136,7 +136,7 @@ maintenances:
       description: The monitors of the maintenance.
       returned: If I(id) or I(title) specified.
       type: list
-      sample: [{"id": 1,"name": "monitor 1"}]
+      sample: [{"id": 1}]
     status_pages:
       description: The status pages of the maintenance.
       returned: If I(id) or I(title) specified.

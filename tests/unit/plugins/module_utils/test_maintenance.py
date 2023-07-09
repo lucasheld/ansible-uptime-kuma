@@ -57,14 +57,12 @@ class TestMaintenance(ModuleTestCase):
             "daysOfMonth": [],
             "monitors": [
                 {
-                    "id": monitor_id,
-                    "name": monitor_name
+                    "id": monitor_id
                 }
             ],
             "status_pages": [
                 {
-                    "id": status_page_id,
-                    "name": status_page_title
+                    "id": status_page_id
                 }
             ],
             "timezoneOption": "Europe/Berlin"
@@ -86,8 +84,8 @@ class TestMaintenance(ModuleTestCase):
         maintenance_status_pages = self.api.get_status_page_maintenance(maintenance_id)
         for maintenance_status_page in maintenance_status_pages:
             maintenance_status_page["name"] = maintenance_status_page.pop("title")
-        self.assertEqual(maintenance_monitors, self.params["monitors"])
-        self.assertEqual(maintenance_status_pages, self.params["status_pages"])
+        self.assertEqual([{"id": i["id"]} for i in maintenance_monitors], self.params["monitors"])
+        self.assertEqual([{"id": i["id"]} for i in maintenance_status_pages], self.params["status_pages"])
 
         result = self.run_module(module, self.params)
         self.assertFalse(result["changed"])

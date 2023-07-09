@@ -69,7 +69,7 @@ status_pages:
       description: The theme of the status page.
       returned: always
       type: int
-      sample: light
+      sample: auto
     published:
       description: True if the status page is published.
       returned: always
@@ -119,7 +119,7 @@ status_pages:
       description: The public group list of the status page.
       returned: always
       type: list
-      sample: [{'id': 5, 'name': 'Services', 'weight': 1, 'monitorList': [{'id': 18, 'maintenance': False, 'name': 'sample monitor'}]}]
+      sample: [{'id': 5, 'name': 'Services', 'weight': 1, 'monitorList': [{'id': 18, 'name': 'sample monitor'}]}]
 '''
 
 import traceback

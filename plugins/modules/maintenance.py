@@ -235,20 +235,16 @@ def run(api, params, result):
             # add id or name to monitor
             for monitor in monitors:
                 if "id" not in monitor:
-                    r = get_monitor_by_name(api, monitor["name"])
+                    monitor_name = monitor.pop("name")
+                    r = get_monitor_by_name(api, monitor_name)
                     monitor["id"] = r["id"]
-                if "name" not in monitor:
-                    r = api.get_monitor(monitor["id"])
-                    monitor["name"] = r["name"]
 
             # add id or name to status page
             for status_page in status_pages:
                 if "id" not in status_page:
-                    r = get_status_page_by(api, "name", status_page["name"])
+                    status_page_name = status_page.pop("name")
+                    r = get_status_page_by(api, "name", status_page_name)
                     status_page["id"] = r["id"]
-                if "name" not in status_page:
-                    r = get_status_page_by(api, "id", status_page["id"])
-                    status_page["name"] = r["name"]
 
             # add monitors to maintenance if changed
             monitors_old = api.get_monitor_maintenance(maintenance_id)

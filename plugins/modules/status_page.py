@@ -33,7 +33,7 @@ options:
   theme:
     description: The theme of the status page.
     type: str
-    choices: ["light", "dark"]
+    choices: ["auto", "light", "dark"]
   published:
     description: True if the status page is published.
     type: bool
@@ -226,7 +226,7 @@ def main():
         # id_=dict(type="int"),
         title=dict(type="str"),
         description=dict(type="str"),
-        theme=dict(type="str", choices=["light", "dark"]),
+        theme=dict(type="str", choices=["auto", "light", "dark"]),
         published=dict(type="bool"),
         showTags=dict(type="bool"),
         domainNameList=dict(type="list", elements="str"),

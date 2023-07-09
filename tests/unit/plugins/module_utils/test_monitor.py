@@ -1,3 +1,4 @@
+from packaging.version import parse as parse_version
 from .module_test_case import ModuleTestCase
 import plugins.modules.monitor as module
 from plugins.module_utils.common import get_monitor_by_name
@@ -15,6 +16,8 @@ class TestMonitor(ModuleTestCase):
             "api_token": None,
             "id": None,
             "name": None,
+            "parent": None,
+            "parent_name": None,
             "description": None,
             "type": None,
             "interval": None,
@@ -147,3 +150,32 @@ class TestMonitor(ModuleTestCase):
         })
         result = self.run_module(module, self.params)
         self.assertTrue(result["changed"])
+
+    def test_monitor_group(self):
+        if parse_version(self.api.version) < parse_version("1.22"):
+            self.skipTest("Unsupported in this Uptime Kuma version")
+
+        parent_name = "monitor parent"
+        child_name = "monitor child"
+
+        # add parent monitor
+        self.params.update({
+            "type": MonitorType.GROUP,
+            "name": parent_name,
+        })
+        result = self.run_module(module, self.params)
+        self.assertTrue(result["changed"])
+
+        # add child monitor
+        self.params.update({
+            "type": MonitorType.PUSH,
+            "name": child_name,
+            "parent_name": parent_name
+        })
+        result = self.run_module(module, self.params)
+        self.assertTrue(result["changed"])
+
+        # check if child monitor uses parent monitor
+        monitor_parent = get_monitor_by_name(self.api, parent_name)
+        monitor_child = get_monitor_by_name(self.api, child_name)
+        self.assertEqual(monitor_child["parent"], monitor_parent["id"])

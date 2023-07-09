@@ -320,11 +320,19 @@ notifications:
       description: mattermost provider option.
       returned: if type is mattermost
       type: str
+    ntfyAuthenticationMethod:
+      description: ntfy provider option.
+      returned: if type is ntfy
+      type: str
     ntfyusername:
       description: ntfy provider option.
       returned: if type is ntfy
       type: str
     ntfypassword:
+      description: ntfy provider option.
+      returned: if type is ntfy
+      type: str
+    ntfyaccesstoken:
       description: ntfy provider option.
       returned: if type is ntfy
       type: str
@@ -336,11 +344,11 @@ notifications:
       description: ntfy provider option.
       returned: if type is ntfy
       type: int
-    ntfyIcon:
+    ntfyserverurl:
       description: ntfy provider option.
       returned: if type is ntfy
       type: str
-    ntfyserverurl:
+    ntfyIcon:
       description: ntfy provider option.
       returned: if type is ntfy
       type: str
@@ -480,6 +488,10 @@ notifications:
       description: pushover provider option.
       returned: if type is pushover
       type: str
+    pushoverttl:
+      description: pushover provider option.
+      returned: if type is pushover
+      type: int
     pushyAPIKey:
       description: pushy provider option.
       returned: if type is pushy

@@ -313,7 +313,7 @@ monitors:
       type: int
       sample: 56
     includeSensitiveData:
-      description: The includeSensitiveData of the monitor.
+      description: True if includes sensitive data.
       returned: always
       type: bool
       sample: True
@@ -332,6 +332,51 @@ monitors:
       returned: always
       type: str
       sample: ""
+    childrenIDs:
+      description: The children IDs of the monitor group.
+      returned: always
+      type: list
+      sample: []
+    description:
+      description: The description of the monitor.
+      returned: always
+      type: str
+      sample: None
+    forceInactive:
+      description: True if the parent monitor is inactive.
+      returned: always
+      type: bool
+      sample: False
+    httpBodyEncoding:
+      description: The HTTP Body Encoding of the monitor.
+      returned: always
+      type: str
+      sample: 'json'
+    parent:
+      description: Id of the parent monitor.
+      returned: always
+      type: int
+      sample: None
+    pathName:
+      description: The HTTP Body Encoding of the monitor.
+      returned: always
+      type: str
+      sample: 'test'
+    tlsCa:
+      description: The server TLS CA.
+      returned: always
+      type: str
+      sample: None
+    tlsCert:
+      description: The server TLS Cert.
+      returned: always
+      type: str
+      sample: None
+    tlsKey:
+      description: The server TLS Key.
+      returned: always
+      type: str
+      sample: None
 '''
 
 import traceback

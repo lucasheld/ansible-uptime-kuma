@@ -30,6 +30,16 @@ options:
       - The name of the monitor.
       - Only required if no I(id) specified.
     type: str
+  parent:
+    description:
+      - Id of the parent monitor.
+      - Only required if no I(parent_name) specified.
+    type: int
+  parent_name:
+    description:
+      - Name of the parent monitor.
+      - Only required if no I(parent) specified.
+    type: str
   description:
     description: The description of the monitor.
     type: str
@@ -89,7 +99,9 @@ options:
       - Only required if no I(proxy) specified.
     type: int
   proxy:
-    description: The proxy of the monitor.
+    description:
+      - The proxy of the monitor.
+      - Only required if no I(proxyId) specified.
     type: dict
     suboptions:
       host:
@@ -342,6 +354,12 @@ def run(api, params, result):
         params["docker_host"] = docker_host["id"]
     del params["docker_host_name"]
 
+    # parent_name -> parent
+    if params["parent_name"]:
+        monitor = get_monitor_by_name(api, params["parent_name"])
+        params["parent"] = monitor["id"]
+    del params["parent_name"]
+
     state = params["state"]
     options = clear_params(params)
     options = clear_unset_params(options)
@@ -378,7 +396,9 @@ def main():
     module_args = dict(
         id=dict(type="int"),
         name=dict(type="str"),
-        type=dict(type="str", choices=["http", "port", "ping", "keyword", "grpc-keyword", "dns", "docker", "push", "steam", "gamedig", "mqtt", "sqlserver", "postgres", "mysql", "mongodb", "radius", "redis"]),
+        parent=dict(type="int"),
+        parent_name=dict(type="str"),
+        type=dict(type="str", choices=[i.value for i in MonitorType]),
         description=dict(type="str"),
         interval=dict(type="int"),
         retryInterval=dict(type="int"),

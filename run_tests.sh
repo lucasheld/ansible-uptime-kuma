@@ -11,6 +11,7 @@
 # run all tests against specific uptime kuma version and specific modules:
 # ./run_tests.sh 1.19.4 maintenance maintenance_info
 
+venv_path="$(pwd)/venv/bin/python"
 collection_path="$HOME/.ansible/collections/ansible_collections/lucasheld/uptime_kuma"
 version="$1"
 modules="${@:2}"
@@ -26,7 +27,7 @@ if [ $version ] && [ "$version" != "all" ]
 then
   versions=("$version")
 else
-  versions=(1.21.3)
+  versions=(1.22.1 1.22.0 1.21.3)
 fi
 
 unit_targets=""
@@ -52,11 +53,11 @@ do
   done
 
   echo "Running unit tests..."
-  ansible-test units -v --target-python default --num-workers 1 $unit_targets
+  ansible-test units -v --requirements --python-interpreter "$venv_path"  --num-workers 1 $unit_targets
 
   echo ""
   echo "Running integration tests..."
-  ansible-test integration -v $integration_targets
+  ansible-test integration -v --requirements --python-interpreter "$venv_path" $integration_targets
 
   echo "Stopping uptime kuma..."
   docker stop uptimekuma > /dev/null
