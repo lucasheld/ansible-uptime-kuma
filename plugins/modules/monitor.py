@@ -344,7 +344,7 @@ def run(api, params, result):
 
     # proxy -> proxyId
     if params["proxy"]:
-        proxy = get_proxy_by_host_port(api, params["proxy_id"]["host"], params["proxy_id"]["port"])
+        proxy = get_proxy_by_host_port(api, params["proxy"]["host"], params["proxy"]["port"])
         params["proxyId"] = proxy["id"]
     del params["proxy"]
 
