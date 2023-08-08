@@ -38,7 +38,7 @@ options:
     description: The server timezone.
     type: str
   entryPage:
-    description: The entry page.
+    description: The entry page. The value requires the prefix "statusPage-". For example, if the slug is "1uhosting", then the entryPage is "statusPage-1uhosting".
     type: str
   searchEngineIndex:
     description: True if Uptime Kuma should be indexed by search engines.
