@@ -46,7 +46,7 @@ options:
   type:
     description: The type of the monitor.
     type: str
-    choices: ["http", "port", "ping", "keyword", "grpc-keyword", "dns", "docker", "push", "steam", "gamedig", "mqtt", "sqlserver", "postgres", "mysql", "mongodb", "radius", "redis"]
+    choices: ["http", "port", "ping", "keyword", "grpc-keyword", "dns", "docker", "push", "steam", "gamedig", "mqtt", "sqlserver", "postgres", "mysql", "mongodb", "radius", "redis", "group"]
   interval:
     description: The heartbeat interval of the monitor.
     type: int
