@@ -34,14 +34,15 @@ class TestMaintenance(ModuleTestCase):
 
     def test_maintenance(self):
         # add maintenance by name
-        monitor_name = "monitor 1"
-        monitor_id = self.add_monitor(monitor_name)
+        monitor_1_id = self.add_monitor("monitor 1")
+        monitor_2_id = self.add_monitor("monitor 2")
 
-        status_page_title = "status_page 1"
-        status_page_slug = "slug1"
-        self.add_status_page(status_page_slug, status_page_title)
-        # self.api.save_status_page(status_page_slug)
-        status_page_id = self.api.get_status_page(status_page_slug)["id"]
+        status_page_1_slug = "slug1"
+        self.add_status_page(status_page_1_slug, "status_page 1")
+        status_page_1_id = self.api.get_status_page(status_page_1_slug)["id"]
+        status_page_2_slug = "slug2"
+        self.add_status_page(status_page_2_slug, "status_page 2")
+        status_page_2_id = self.api.get_status_page(status_page_2_slug)["id"]
 
         self.params.update({
             "title": "maintenance 1",
@@ -57,12 +58,18 @@ class TestMaintenance(ModuleTestCase):
             "daysOfMonth": [],
             "monitors": [
                 {
-                    "id": monitor_id
+                    "id": monitor_1_id
+                },
+                {
+                    "id": monitor_2_id
                 }
             ],
             "status_pages": [
                 {
-                    "id": status_page_id
+                    "id": status_page_1_id
+                },
+                {
+                    "id": status_page_2_id
                 }
             ],
             "timezoneOption": "Europe/Berlin"

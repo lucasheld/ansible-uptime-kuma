@@ -248,16 +248,12 @@ def run(api, params, result):
 
             # add monitors to maintenance if changed
             monitors_old = api.get_monitor_maintenance(maintenance_id)
-            monitors_old.sort()
-            monitors.sort()
-            if monitors_old != monitors:
+            if sorted([tuple(i.items()) for i in monitors_old]) != sorted([tuple(i.items()) for i in monitors]):
                 api.add_monitor_maintenance(maintenance_id, monitors)
 
             # add status pages to maintenance if changed
             status_pages_old = api.get_status_page_maintenance(maintenance_id)
-            status_pages_old.sort()
-            status_pages.sort()
-            if status_pages_old != status_pages:
+            if sorted([tuple(i.items()) for i in status_pages_old]) != sorted([tuple(i.items()) for i in status_pages]):
                 api.add_status_page_maintenance(maintenance_id, status_pages)
     elif state == "absent":
         if maintenance:
