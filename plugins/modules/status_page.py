@@ -85,6 +85,9 @@ options:
               - The name of the monitor.
               - Only required if no I(id) specified.
             type: str
+          sendUrl:
+            description: True if the monitor URL is a publicly shown clickable link.
+            type: bool
   incident:
     description: The incident of the status page.
     type: dict
@@ -240,7 +243,8 @@ def main():
             weight=dict(type="int", required=False),
             monitorList=dict(type="list", elements="dict", options=dict(
                 id=dict(type="int", required=False),
-                name=dict(type="str", required=False)
+                name=dict(type="str", required=False),
+                sendUrl=dict(type="bool", required=False)
             ))
         )),
         incident=dict(type="dict", options=dict(
