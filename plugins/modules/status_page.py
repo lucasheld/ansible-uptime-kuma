@@ -190,6 +190,8 @@ def run(api, params, result):
             else:
                 monitor_name = monitor.pop("name")
                 monitor["id"] = get_monitor_by_name(api, monitor_name)["id"]
+            if monitor["sendUrl"] is None:
+                monitor.pop("sendUrl")
 
     try:
         status_page = api.get_status_page(slug)
