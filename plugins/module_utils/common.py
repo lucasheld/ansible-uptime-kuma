@@ -75,6 +75,12 @@ def get_monitor_by_name(api, name):
         if monitor["name"] == name:
             return monitor
 
+def get_monitor_by_name_and_parent(api, name, parent):
+    monitors = api.get_monitors()
+    for monitor in monitors:
+        if monitor["name"] == name && monitor["parent"] == parent:
+            return monitor
+
 
 def get_tag_by_name(api, name):
     tags = api.get_tags()
