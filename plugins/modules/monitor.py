@@ -367,7 +367,10 @@ def run(api, params, result):
     if params["id"]:
         monitor = api.get_monitor(params["id"])
     else:
-        monitor = get_monitor_by_name(api, params["name"])
+        if params["parent"]:
+            monitor = get_monitor_by_name_and_parent(api, params["name"], params["parent"])
+        else:
+            monitor = get_monitor_by_name(api, params["name"])
 
     if state == "present":
         if not monitor:
