@@ -1,5 +1,16 @@
 ## Changelog
 
+### Release 1.2.0
+
+#### Features
+- add support for uptime kuma 1.23.0 and 1.23.1
+- support sendUrl in status_page monitorList (Thanks @obfusk)
+
+#### Bugfixes
+- fix proxy retrieval (Thanks @TheLastProject)
+- fix maintenances with multiple monitors or status pages
+- fix failing status_page test (Thanks @Javex)
+
 ### Release 1.1.0
 
 #### Feature
