@@ -49,9 +49,15 @@ options:
   steamAPIKey:
     description: The Steam API key for monitoring a Steam game server.
     type: str
+  nscd:
+    description: Enable NSCD (Name Service Cache Daemon) for caching all DNS requests
+    type: bool
   dnsCache:
     description: True if dns cache should be enabled.
     type: bool
+  chromeExecutable:
+    description: Chrome/Chromium Executable
+    type: str
   tlsExpiryNotifyDays:
     description: HTTPS monitors trigger notification when the TLS certificate expires in the specified days.
     type: list
@@ -117,7 +123,9 @@ def main():
         searchEngineIndex=dict(type="bool"),
         primaryBaseURL=dict(type="str"),
         steamAPIKey=dict(type="str"),
+        nscd=dict(type="bool"),
         dnsCache=dict(type="bool"),
+        chromeExecutable=dict(type="str"),
         # notifications
         tlsExpiryNotifyDays=dict(type="list", elements="int"),
         # security

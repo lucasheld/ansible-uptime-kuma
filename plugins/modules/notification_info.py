@@ -184,6 +184,14 @@ notifications:
       description: Feishu provider option.
       returned: if type is Feishu
       type: str
+    flashdutySeverity:
+      description: FlashDuty provider option.
+      returned: if type is FlashDuty
+      type: str
+    flashdutyIntegrationKey:
+      description: FlashDuty provider option.
+      returned: if type is FlashDuty
+      type: str
     freemobileUser:
       description: FreeMobile provider option.
       returned: if type is FreeMobile
@@ -319,6 +327,18 @@ notifications:
     mattermosticonurl:
       description: mattermost provider option.
       returned: if type is mattermost
+      type: str
+    sender:
+      description: nostr provider option.
+      returned: if type is nostr
+      type: str
+    recipients:
+      description: nostr provider option.
+      returned: if type is nostr
+      type: str
+    relays:
+      description: nostr provider option.
+      returned: if type is nostr
       type: str
     ntfyAuthenticationMethod:
       description: ntfy provider option.
@@ -460,6 +480,10 @@ notifications:
       description: pushbullet provider option.
       returned: if type is pushbullet
       type: str
+    pushdeerServer:
+      description: PushDeer provider option.
+      returned: if type is PushDeer
+      type: str
     pushdeerKey:
       description: PushDeer provider option.
       returned: if type is PushDeer
@@ -548,6 +572,10 @@ notifications:
       description: signal provider option.
       returned: if type is signal
       type: str
+    slackchannelnotify:
+      description: slack provider option.
+      returned: if type is slack
+      type: bool
     slackchannel:
       description: slack provider option.
       returned: if type is slack
@@ -563,6 +591,26 @@ notifications:
     slackwebhookURL:
       description: slack provider option.
       returned: if type is slack
+      type: str
+    smscTranslit:
+      description: smsc provider option.
+      returned: if type is smsc
+      type: str
+    smscLogin:
+      description: smsc provider option.
+      returned: if type is smsc
+      type: str
+    smscPassword:
+      description: smsc provider option.
+      returned: if type is smsc
+      type: str
+    smscToNumber:
+      description: smsc provider option.
+      returned: if type is smsc
+      type: str
+    smscSenderName:
+      description: smsc provider option.
+      returned: if type is smsc
       type: str
     smseagleEncoding:
       description: SMSEagle provider option.
@@ -720,6 +768,10 @@ notifications:
       description: twilio provider option.
       returned: if type is twilio
       type: str
+    twilioApiKey:
+      description: twilio provider option.
+      returned: if type is twilio
+      type: str
     twilioAuthToken:
       description: twilio provider option.
       returned: if type is twilio
@@ -733,6 +785,10 @@ notifications:
       returned: if type is twilio
       type: str
     webhookContentType:
+      description: webhook provider option.
+      returned: if type is webhook
+      type: str
+    webhookCustomBody:
       description: webhook provider option.
       returned: if type is webhook
       type: str

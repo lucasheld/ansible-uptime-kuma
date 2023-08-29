@@ -79,6 +79,7 @@ class TestStatusPage(ModuleTestCase):
             for j in i.get("monitorList", []):
                 j.pop("sendUrl", None)
                 j["name"] = None
+                j.pop("type", None)
         self.assertEqual(public_group_list, self.params["publicGroupList"])
 
         result = self.run_module(module, self.params)

@@ -46,7 +46,7 @@ options:
   type:
     description: The type of the monitor.
     type: str
-    choices: ["http", "port", "ping", "keyword", "grpc-keyword", "dns", "docker", "push", "steam", "gamedig", "mqtt", "sqlserver", "postgres", "mysql", "mongodb", "radius", "redis", "group"]
+    choices: ["group", "http", "port", "ping", "keyword", "json-query", "grpc-keyword", "dns", "docker", "real-browser", "push", "steam", "gamedig", "mqtt", "kafka-producer", "sqlserver", "postgres", "mysql", "mongodb", "radius", "redis", "tailscale-ping"]
   interval:
     description: The heartbeat interval of the monitor.
     type: int
@@ -126,7 +126,7 @@ options:
   authMethod:
     description: The auth method of the monitor.
     type: str
-    choices: ["", "basic", "ntlm", "mtls"]
+    choices: ["", "basic", "ntlm", "mtls", "oauth2-cc"]
   tlsCert:
     description: The tls cert of the monitor.
     type: str
@@ -148,9 +148,30 @@ options:
   authWorkstation:
     description: The auth workstation of the monitor.
     type: str
+  oauth_auth_method:
+    description: Authentication Method
+    type: str
+  oauth_token_url:
+    description: OAuth Token URL
+    type: str
+  oauth_client_id:
+    description: Client ID
+    type: str
+  oauth_client_secret:
+    description: Client Secret
+    type: str
+  oauth_scopes:
+    description: OAuth Scope
+    type: str
+  timeout:
+    description: Request Timeout
+    type: int
   keyword:
     description: The keyword of the monitor.
     type: str
+  invertKeyword:
+    description: Invert Keyword. Look for the keyword to be absent rather than present.
+    type: bool
   grpcUrl:
     description: The grpc url of the monitor.
     type: str
@@ -236,6 +257,33 @@ options:
   game:
     description: The game of the monitor.
     type: str
+  gamedigGivenPortOnly:
+    description: Guess Gamedig Port. The port used by Valve Server Query Protocol may be different from the client port. Try this if the monitor cannot connect to your server.
+    type: bool
+  jsonPath:
+    description: Json Query
+    type: str
+  expectedValue:
+    description: Expected Value
+    type: str
+  kafkaProducerBrokers:
+    description: Kafka Broker list
+    type: str
+  kafkaProducerTopic:
+    description: Kafka Topic Name
+    type: str
+  kafkaProducerMessage:
+    description: Kafka Producer Message
+    type: str
+  kafkaProducerSsl:
+    description: Enable Kafka SSL
+    type: bool
+  kafkaProducerAllowAutoTopicCreation:
+    description: Enable Kafka Producer Auto Topic Creation
+    type: bool
+  kafkaProducerSaslOptions:
+    description: Kafka SASL Options
+    type: dict
   state:
     description:
       - Set to C(present) to create/update a monitor.
@@ -423,7 +471,7 @@ def main():
         method=dict(type="str"),
         body=dict(type="str"),
         headers=dict(type="str"),
-        authMethod=dict(type="str", choices=["", "basic", "ntlm", "mtls"]),
+        authMethod=dict(type="str", choices=["", "basic", "ntlm", "mtls", "oauth2-cc"]),
         tlsCert=dict(type="str"),
         tlsKey=dict(type="str"),
         tlsCa=dict(type="str"),
@@ -431,9 +479,16 @@ def main():
         basic_auth_pass=dict(type="str", no_log=True),
         authDomain=dict(type="str"),
         authWorkstation=dict(type="str"),
+        oauth_auth_method=dict(type="str"),
+        oauth_token_url=dict(type="str"),
+        oauth_client_id=dict(type="str"),
+        oauth_client_secret=dict(type="str"),
+        oauth_scopes=dict(type="str"),
+        timeout=dict(type="int"),
 
         # KEYWORD
         keyword=dict(type="str"),
+        invertKeyword=dict(type="bool"),
 
         # GRPC_KEYWORD
         grpcUrl=dict(type="str"),
@@ -483,6 +538,15 @@ def main():
 
         # GAMEDIG
         game=dict(type="str"),
+        gamedigGivenPortOnly=dict(type="bool"),
+        jsonPath=dict(type="str"),
+        expectedValue=dict(type="str"),
+        kafkaProducerBrokers=dict(type="str"),
+        kafkaProducerTopic=dict(type="str"),
+        kafkaProducerMessage=dict(type="str"),
+        kafkaProducerSsl=dict(type="bool"),
+        kafkaProducerAllowAutoTopicCreation=dict(type="bool"),
+        kafkaProducerSaslOptions=dict(type="dict"),
 
         state=dict(type="str", default="present", choices=["present", "absent", "paused", "resumed"])
     )
