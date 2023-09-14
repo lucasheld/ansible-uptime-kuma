@@ -75,6 +75,11 @@ status_pages:
       returned: always
       type: bool
       sample: True
+    showCertificateExpiry:
+      description: Show Certificate Expiry.
+      returned: always
+      type: bool
+      sample: False
     showTags:
       description: True if the show tags is enabled.
       returned: always
@@ -119,7 +124,7 @@ status_pages:
       description: The public group list of the status page.
       returned: always
       type: list
-      sample: [{'id': 5, 'name': 'Services', 'weight': 1, 'monitorList': [{'id': 18, 'name': 'sample monitor'}]}]
+      sample: [{'id': 5, 'name': 'Services', 'weight': 1, 'monitorList': [{'id': 18, 'name': 'sample monitor', 'type': 'http'}]}]
 '''
 
 import traceback

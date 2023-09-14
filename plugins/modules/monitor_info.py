@@ -377,6 +377,91 @@ monitors:
       returned: always
       type: str
       sample: None
+    expectedValue:
+      description: Expected Value
+      returned: always
+      type: str
+      sample: None
+    gamedigGivenPortOnly:
+      description: Guess Gamedig Port. The port used by Valve Server Query Protocol may be different from the client port. Try this if the monitor cannot connect to your server.
+      returned: always
+      type: bool
+      sample: True
+    invertKeyword:
+      description: Invert Keyword
+      returned: always
+      type: bool
+      sample: False
+    jsonPath:
+      description: Json Query
+      returned: always
+      type: str
+      sample: None
+    kafkaProducerAllowAutoTopicCreation:
+      description: Enable Kafka Producer Auto Topic Creation
+      returned: always
+      type: bool
+      sample: False
+    kafkaProducerBrokers:
+      description: Kafka Broker list
+      returned: always
+      type: list
+      sample: None
+    kafkaProducerMessage:
+      description: Kafka Producer Message
+      returned: always
+      type: str
+      sample: None
+    kafkaProducerSaslOptions:
+      description: Kafka SASL Options
+      returned: always
+      type: dict
+      sample: None
+    kafkaProducerSsl:
+      description: Enable Kafka SSL
+      returned: always
+      type: bool
+      sample: False
+    kafkaProducerTopic:
+      description: Kafka Topic Name
+      returned: always
+      type: str
+      sample: None
+    oauth_auth_method:
+      description: Authentication Method
+      returned: always
+      type: str
+      sample: None
+    oauth_client_id:
+      description: Client ID
+      returned: always
+      type: str
+      sample: None
+    oauth_client_secret:
+      description: Client Secret
+      returned: always
+      type: str
+      sample: None
+    oauth_scopes:
+      description: OAuth Scope
+      returned: always
+      type: str
+      sample: None
+    oauth_token_url:
+      description: OAuth Token URL
+      returned: always
+      type: str
+      sample: None
+    screenshot:
+      description: Path to the screenshot
+      returned: always
+      type: str
+      sample: None
+    timeout:
+      description: Request Timeout
+      returned: always
+      type: int
+      sample: 48
 '''
 
 import traceback

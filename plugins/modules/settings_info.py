@@ -95,6 +95,16 @@ settings:
       returned: always
       type: bool
       sample: false
+    chromeExecutable:
+      description: Value of the chromeExecutable setting.
+      returned: always
+      type: str
+      sample: ''
+    nscd:
+      description: Value of the nscd setting.
+      returned: always
+      type: bool
+      sample: false
 '''
 
 import traceback
