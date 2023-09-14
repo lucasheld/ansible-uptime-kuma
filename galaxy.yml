@@ -1,16 +1,16 @@
-namespace: lucasheld
+namespace: nennad
 name: uptime_kuma
 version: 1.2.0
 readme: README.md
 authors:
-  - Lucas Held <lucasheld@hotmail.de>
-description: This collection contains modules that allow to configure Uptime Kuma with Ansible.
+  - Nenad Gal <nennadgal@gmail.com>
+description: This collection contains modules that allow to configure Uptime Kuma with Ansible. This is a fork of a repository made by Lucas Held
 license_file: LICENSE
 tags: [uptime_kuma]
-repository: https://github.com/lucasheld/ansible-uptime-kuma
-documentation: https://github.com/lucasheld/ansible-uptime-kuma/wiki
-homepage: https://github.com/lucasheld/ansible-uptime-kuma
-issues: https://github.com/lucasheld/ansible-uptime-kuma/issues
+repository: https://github.com/nennad/ansible-uptime-kuma
+documentation: https://github.com/nennad/ansible-uptime-kuma/wiki
+homepage: https://github.com/nennad/ansible-uptime-kuma
+issues: https://github.com/nennad/ansible-uptime-kuma/issues
 build_ignore:
   - '*/.pytest_cache'
   - .idea
