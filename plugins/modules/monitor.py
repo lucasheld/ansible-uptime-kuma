@@ -382,7 +382,7 @@ def run(api, params, result):
             params["port"] = 1812
 
     # notification_names -> notificationIDList
-    if params["notification_names"]:
+    if params["notification_names"] is not None:
         notification_ids = []
         for notification_name in params["notification_names"]:
             notification = get_notification_by_name(api, notification_name)
