@@ -6,6 +6,21 @@ __metaclass__ = type
 
 
 def object_changed(superset, subset, ignore=None):
+    def list_changed(lst2, lst):
+        if len(lst2) != len(lst):
+            return True
+        for i in range(len(lst)):
+            if type(lst[i]) == list:
+                if list_changed(lst2[i], lst[i]):
+                    return True
+            elif type(lst[i]) == dict:
+                if len(lst2[i]) != len(lst[i]) or object_changed(lst2[i], lst[i]):
+                    return True
+            else:
+                if lst[i] != lst2[i]:
+                    return True
+        return False
+
     changed_keys = []
     for key, value in subset.items():
         value2 = superset.get(key)
@@ -18,17 +33,10 @@ def object_changed(superset, subset, ignore=None):
             elif ignore_value is None:
                 continue
         if type(value) == list:
-            for i in range(len(value)):
-                if not value2:
-                    changed_keys.append((key, superset.get(key), subset[key]))
-                elif type(value[i]) == list or type(value[i]) == dict:
-                    if i >= len(value2) or object_changed(value2[i], value[i]):
-                        changed_keys.append((key, superset.get(key), subset[key]))
-                else:
-                    if value[i] != value2[i]:
-                        changed_keys.append((key, superset.get(key), subset[key]))
+            if list_changed(value2, value):
+                changed_keys.append((key, superset.get(key), subset[key]))
         elif type(value) == dict:
-            if object_changed(value2, value):
+            if len(value2) != len(value) or object_changed(value2, value):
                 changed_keys.append((key, superset.get(key), subset[key]))
         else:
             if value != value2:
