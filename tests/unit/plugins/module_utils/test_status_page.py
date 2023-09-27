@@ -15,6 +15,7 @@ class TestStatusPage(ModuleTestCase):
             "description": None,
             "theme": None,
             "published": None,
+            "showCertificateExpiry": None,
             "showTags": None,
             "domainNameList": None,
             "googleAnalyticsId": None,
@@ -38,6 +39,7 @@ class TestStatusPage(ModuleTestCase):
             "description": "description 1",
             "theme": "light",
             "published": True,
+            "showCertificateExpiry": False,
             "showTags": False,
             "domainNameList": [],
             "googleAnalyticsId": None,
@@ -66,6 +68,7 @@ class TestStatusPage(ModuleTestCase):
         self.assertEqual(status_page["description"], self.params["description"])
         self.assertEqual(status_page["theme"], self.params["theme"])
         self.assertEqual(status_page["published"], self.params["published"])
+        self.assertEqual(status_page["showCertificateExpiry"], self.params["showCertificateExpiry"])
         self.assertEqual(status_page["showTags"], self.params["showTags"])
         self.assertEqual(status_page["domainNameList"], self.params["domainNameList"])
         self.assertEqual(status_page["googleAnalyticsId"], self.params["googleAnalyticsId"])
