@@ -37,6 +37,9 @@ options:
   published:
     description: True if the status page is published.
     type: bool
+  showCertificateExpiry:
+    description: Show Certificate Expiry.
+    type: bool
   showTags:
     description: True if the tags are shown.
     type: bool
@@ -233,6 +236,7 @@ def main():
         description=dict(type="str"),
         theme=dict(type="str", choices=["auto", "light", "dark"]),
         published=dict(type="bool"),
+        showCertificateExpiry=dict(type="bool"),
         showTags=dict(type="bool"),
         domainNameList=dict(type="list", elements="str"),
         googleAnalyticsId=dict(type="str"),
