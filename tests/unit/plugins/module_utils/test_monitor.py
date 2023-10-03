@@ -112,6 +112,24 @@ class TestMonitor(ModuleTestCase):
 
         result = self.run_module(module, self.params)
         self.assertTrue(result["changed"])
+        self.assertEqual(result["diff"]["before"], '')
+        expected_diff_after = f"""
+accepted_statuscodes:
+- 200-299
+interval: 60
+maxretries: 0
+name: monitor 1
+notificationIDList:
+- {notification_id_1}
+- {notification_id_2}
+resendInterval: 0
+retryInterval: 60
+type: http
+upsideDown: false
+url: http://127.0.0.1
+        """
+        self.assertEqual(result["diff"]["after"].strip(), expected_diff_after.strip())
+
         monitor = get_monitor_by_name(self.api, self.params["name"])
         self.assertEqual(monitor["type"], self.params["type"])
         self.assertEqual(monitor["interval"], self.params["interval"])
@@ -133,6 +151,41 @@ class TestMonitor(ModuleTestCase):
         })
         result = self.run_module(module, self.params)
         self.assertTrue(result["changed"])
+        expected_diff_before = f"""
+accepted_statuscodes:
+- 200-299
+hostname: null
+interval: 60
+maxretries: 0
+name: monitor 1
+notificationIDList:
+- {notification_id_1}
+- {notification_id_2}
+resendInterval: 0
+retryInterval: 60
+type: http
+upsideDown: false
+url: http://127.0.0.1
+        """
+        self.assertEqual(result["diff"]["before"].strip(), expected_diff_before.strip())
+        expected_diff_after = f"""
+accepted_statuscodes:
+- 200-299
+hostname: 127.0.0.10
+interval: 60
+maxretries: 0
+name: monitor 1
+notificationIDList:
+- {notification_id_1}
+- {notification_id_2}
+resendInterval: 0
+retryInterval: 60
+type: ping
+upsideDown: false
+url: http://127.0.0.1
+        """
+        self.assertEqual(result["diff"]["after"].strip(), expected_diff_after.strip())
+
         monitor = self.api.get_monitor(monitor_id)
         self.assertEqual(monitor["type"], self.params["type"])
         self.assertEqual(monitor["hostname"], self.params["hostname"])

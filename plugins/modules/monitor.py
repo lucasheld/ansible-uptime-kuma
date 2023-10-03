@@ -6,6 +6,9 @@
 
 from __future__ import absolute_import, division, print_function
 
+import yaml
+import enum
+
 __metaclass__ = type
 
 
@@ -359,6 +362,40 @@ except ImportError:
     HAS_UPTIME_KUMA_API = False
 
 
+def monitor_diff(before_monitor, new_options):
+    # Calculate diff
+    before_options = {}
+    after_options = {}
+    for option_key, option_value in new_options.items():
+        # Not returning "id" field in diff view
+        if option_key == "id":
+            continue
+        if before_monitor:
+            before_option_value = before_monitor[option_key]
+            # Have to translate enums into their values
+            # so they match input
+            if isinstance(before_option_value, enum.Enum):
+                before_option_value = before_option_value.value
+            before_options[option_key] = before_option_value
+
+        if isinstance(option_value, enum.Enum):
+            option_value = option_value.value
+        after_options[option_key] = option_value
+
+    # If it's a new object we need to make it an empty string
+    # Otherwise yaml will dump the string "{}"
+    if before_options:
+        before_str = yaml.safe_dump(before_options)
+    else:
+        before_str = ''
+
+    diff = {
+        'before': before_str,
+        'after': yaml.safe_dump(after_options),
+    }
+    return diff
+
+
 def run(api, params, result):
     if not params["accepted_statuscodes"]:
         params["accepted_statuscodes"] = ["200-299"]
@@ -421,11 +458,13 @@ def run(api, params, result):
         if not monitor:
             api.add_monitor(**options)
             result["changed"] = True
+            result["diff"] = monitor_diff({}, options)
         else:
             changed_keys = object_changed(monitor, options)
             if changed_keys:
                 api.edit_monitor(monitor["id"], **options)
                 result["changed"] = True
+                result["diff"] = monitor_diff(monitor, options)
     elif state == "absent":
         if monitor:
             api.delete_monitor(monitor["id"])
