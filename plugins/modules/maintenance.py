@@ -242,8 +242,8 @@ def run(api, params, result):
             # add id or name to status page
             for status_page in status_pages:
                 if "id" not in status_page:
-                    status_page_name = status_page.pop("name")
-                    r = get_status_page_by(api, "name", status_page_name)
+                    status_page_name = status_page.pop("title")
+                    r = get_status_page_by(api, "title", status_page_name)
                     status_page["id"] = r["id"]
 
             # add monitors to maintenance if changed
